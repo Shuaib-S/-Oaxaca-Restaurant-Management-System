@@ -86,7 +86,7 @@ function createCardElement(item) {
     const div = document.createElement('div');
     div.className = 'card';
     div.innerHTML = `
-        <div>
+        <div style="width: 200px; height: 200px;">
             <img src="images/menu_placeholder.jpg" alt=${item.title} class="images">
         </div>
         <div style="display: flex; flex-direction: column; justify-content: center;">
