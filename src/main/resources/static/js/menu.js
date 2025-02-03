@@ -75,10 +75,18 @@ function createCardElement(item) {
     const div = document.createElement('div');
     div.className = 'card';
     div.innerHTML = `
-        <h1>${item.title}</h1>
-        <p>${item.description}</p>
-        <p>${item.price}</p>
-        <img src="images/menu_placeholder.jpg" alt=${item.title} style="max-height: 200px; max-width: 200px;">
+        <div>
+            <div>
+                <h2>${item.title}</h2>
+            </div>
+            <div>
+                <img src="images/menu_placeholder.jpg" alt=${item.title} style="max-height: 200px; max-width: 200px;">
+            </div>
+        </div>
+        <div style="display: flex; flex-direction: column; justify-content: center;">
+            <p>${item.description}</p>
+            <p>${item.price}</p>
+        </div>
     `;
 
     return div;
@@ -88,8 +96,6 @@ const grid = document.getElementById('grid');
 
 async function loadItems(){
     const items = await fetchItems();
-
-    console.log(grid)
 
     items.forEach(item => {
         grid.appendChild(createCardElement(item));
