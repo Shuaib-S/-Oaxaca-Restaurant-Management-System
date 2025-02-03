@@ -1,6 +1,5 @@
 
 async function fetchItems() {
-
     try {
         const response = await fetch('api/items?sort=id,desc', {
             headers: {
@@ -28,3 +27,21 @@ function createCardElement(item) {
 
     return div;
 }
+
+const grid = document.getElementById('menuGrid');
+
+async function loadItems(){
+    const items = await fetchItems();
+
+    items.forEach(item => {
+        grid.appendChild(createCardElement(item));
+    })
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        await loadItems();
+    } catch (error) {
+        console.error('Failed to loa items: ', error);
+    }
+});
