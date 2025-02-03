@@ -76,14 +76,10 @@ function createCardElement(item) {
     div.className = 'card';
     div.innerHTML = `
         <div>
-            <div>
-                <h2>${item.title}</h2>
-            </div>
-            <div>
-                <img src="images/menu_placeholder.jpg" alt=${item.title} style="max-height: 200px; max-width: 200px;">
-            </div>
+            <img src="images/menu_placeholder.jpg" alt=${item.title} class="images">
         </div>
         <div style="display: flex; flex-direction: column; justify-content: center;">
+            <h2>${item.title}</h2>
             <p>${item.description}</p>
             <p>${item.price}</p>
         </div>
