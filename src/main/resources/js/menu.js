@@ -16,3 +16,13 @@ async function fetchItems() {
         return [];
     }
 }
+
+function createCardElement(item) {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.innerHTML = `
+        <h1>${item.title}</h1>
+        <p>${item.description}</p>   
+        <img src="images/menu_placholder.jpg" alt=${item.title}/>
+    `
+}
