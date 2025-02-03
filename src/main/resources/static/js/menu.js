@@ -1,4 +1,14 @@
 
+let currentCategory = 'all';
+let allItems = [];
+
+const grid = document.getElementById('grid');
+
+function filterItems(items) {
+    if (currentCategory === 'all') return items;
+    return items.filter(item => item.category === currentCategory);
+}
+
 async function fetchItems() {
     // try {
     //     const response = await fetch('api/items?sort=id,desc', {
@@ -23,35 +33,35 @@ async function fetchItems() {
                     title: "Carne Asada Tacos",
                     description: "Grilled marinated beef tacos with onions, cilantro, and lime. Served with salsa verde.",
                     price: 12.99,
-                    category: "Tacos"
+                    category: "Main"
                 },
                 {
                     id: 2,
                     title: "Enchiladas Rojas",
                     description: "Three chicken enchiladas covered in red chile sauce, topped with queso fresco.",
                     price: 15.99,
-                    category: "Enchiladas"
+                    category: "Main"
                 },
                 {
                     id: 3,
                     title: "Guacamole Fresco",
                     description: "Fresh avocados mixed with tomatoes, onions, cilantro, and lime juice.",
                     price: 8.99,
-                    category: "Appetizers"
+                    category: "Starter"
                 },
                 {
                     id: 4,
                     title: "Chiles Rellenos",
                     description: "Poblano peppers stuffed with cheese, battered and fried. Served with rice and beans.",
                     price: 16.99,
-                    category: "Specialties"
+                    category: "Main"
                 },
                 {
                     id: 5,
                     title: "Mole Poblano",
                     description: "Chicken in traditional mole sauce, served with rice and tortillas.",
                     price: 18.99,
-                    category: "Specialties"
+                    category: "Main"
                 },
                 {
                     id: 6,
@@ -63,6 +73,7 @@ async function fetchItems() {
             ]
         };
 
+        allItems = testData.content;
         return testData.content;
     } catch (error) {
         console.error('Error fetching items: ', error);
@@ -88,8 +99,6 @@ function createCardElement(item) {
     return div;
 }
 
-const grid = document.getElementById('grid');
-
 async function loadItems(){
     const items = await fetchItems();
 
@@ -104,4 +113,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (error) {
         console.error('Failed to load items: ', error);
     }
+});
+
+document.getElementById('filters').addEventListener('click', (e) => {
+    const activeButton = document.querySelector('.filter-btn.active');
+    if (activeButton) activeButton.classList.remove('active');
+    e.target.classList.add('active');
+
+    currentCategory = e.target.dataset.category;
+    grid.innerHTML = '';
+
+
+    filterItems(allItems).forEach(item => {
+        grid.appendChild(createCardElement(item));
+    });
 });

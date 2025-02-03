@@ -10,21 +10,12 @@
 <body>
 <h1>Menu</h1>
 
-<div>
-    <input type="checkbox" class="filter" id="drinks" value="Drinks">
-    <label for="drinks">Drinks</label>
-
-    <input type="checkbox" class="filter" id="starters" value="Starters">
-    <label for="starters">Starters</label>
-
-    <input type="checkbox" class="filter" id="mains" value="Mains">
-    <label for="mains">Mains</label>
-
-    <input type="checkbox" class="filter" id="desserts" value="Desserts">
-    <label for="desserts">Desserts</label>
-
-    <input type="checkbox" class="filter" id="sides" value="Sides">
-    <label for="sides">Sides</label>
+<div class="filters" id="filters">
+    <button class="filter-btn active" data-category="all">All</button>
+    <button class="filter-btn" data-category="Main">Mains</button>
+    <button class="filter-btn" data-category="Starter">Starters</button>
+    <button class="filter-btn" data-category="Drink">Drinks</button>
+    <button class="filter-btn" data-category="Desserts">Desserts</button>
 </div>
 
     <div class="menuGrid" id="grid">
