@@ -85,6 +85,8 @@ async function fetchItems() {
 function createCardElement(item) {
     const div = document.createElement('div');
     div.className = 'card';
+    div.style.opacity = '0';
+
     div.innerHTML = `
         <div style="width: 200px; height: 200px;">
             <img src="images/menu_placeholder.jpg" alt=${item.title} class="images">
@@ -95,6 +97,9 @@ function createCardElement(item) {
             <p>${item.price}</p>
         </div>
     `;
+
+    const img = div.querySelector('img');
+    img.onload = () => div.style.opacity = '1';
 
     return div;
 }
