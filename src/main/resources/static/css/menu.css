@@ -1,0 +1,34 @@
+
+.menuGrid {
+    display:flex;
+    flex-direction:column;
+}
+
+.card {
+    max-height: 200px;
+    display:flex;
+    border: 1px solid black;
+    border-radius: 7px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    transition: opacity 0.3s ease;
+}
+
+.images {
+    border-radius: 7px;
+    max-height: 200px;
+    max-width: 200px;
+}
+
+.filter-btn{
+    padding: 8px 12px;
+    border: 1px solid black;
+    border-radius: 4px;
+    background: lightgrey;
+    cursor: pointer;
+}
+
+.filter-btn.active {
+    background: blue;
+    color: white;
+}
