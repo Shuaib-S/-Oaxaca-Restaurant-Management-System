@@ -4,8 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 /**
- * A class that handles the name, description, price, calories and allergens of
- * each item on the
+ * A class that handles the name, description, price, calories and allergens of each item on the
  * menu.
  */
 @Entity
@@ -22,18 +21,17 @@ public class Item {
 
   /**
    * 
-   * Constructor that adds name, description, price, calories and allergens to an
-   * Item object.
+   * Constructor that adds name, description, price, calories and allergens to an Item object.
    * 
-   * @param title       Name of the item.
+   * @param title Name of the item.
    * @param description Description of the item.
-   * @param price       Price of the item.
-   * @param category    Category of items.
-   * @param calories    Calories of the item.
-   * @param allergens   Allergens found in the item.
+   * @param price Price of the item.
+   * @param category Category of items.
+   * @param calories Calories of the item.
+   * @param allergens Allergens found in the item.
    */
-  public Item(int id, String title, String description, double price, String category,
-      int calories, String allergens) {
+  public Item(int id, String title, String description, double price, String category, int calories,
+      String allergens) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -42,6 +40,11 @@ public class Item {
     this.calories = calories;
     this.allergens = allergens;
   }
+
+  public Item() {
+    // Default constructor required by Hibernate
+  }
+
 
   public int getId() {
     return id;
