@@ -1,15 +1,17 @@
 
-let currentCategory = 'all';
+let currentCategory = 'all';  //Current category as decided by the user to filter the menu by.
 let allItems = [];
 
 const grid = document.getElementById('grid');
 
 function filterItems(items) {
     if (currentCategory === 'all') return items;
-    return items.filter(item => item.category === currentCategory);
+    return items.filter(item => item.category === currentCategory);  //This line here is what actually filters the menu.
 }
 
 async function fetchItems() {
+    // UNCOMMENT THIS CODE WHEN THE BACKEND FOR IT IS IMPLEMENTED
+    // DON'T FORGET TO REMOVE THE TEST CODE
     // try {
     //     const response = await fetch('api/items?sort=id,desc', {
     //         headers: {
@@ -83,10 +85,11 @@ async function fetchItems() {
 }
 
 function createCardElement(item) {
-    const div = document.createElement('div');
+    const div = document.createElement('div');  // Creates the card div on the webpage
     div.className = 'card';
-    div.style.opacity = '0';
+    div.style.opacity = '0';  //Set to 0 to fade in the card - Makes the loading in less jarring to look at.
 
+    // Adds HTML to the div to add the content required.
     div.innerHTML = `
         <div style="width: 200px; height: 200px;">
             <img src="images/menu_placeholder.jpg" alt=${item.title} class="images">
@@ -99,19 +102,22 @@ function createCardElement(item) {
     `;
 
     const img = div.querySelector('img');
-    img.onload = () => div.style.opacity = '1';
+    img.onload = () => div.style.opacity = '1';  // When the image loads, the opacity is changed to 1.
 
     return div;
 }
 
+// async function to handle the promise of fetching the items from the backend.
 async function loadItems(){
     const items = await fetchItems();
 
+    // Loops through the items in the menu and creates cards for each one.
     items.forEach(item => {
         grid.appendChild(createCardElement(item));
     })
 }
 
+// Event listener for loading the content when the page has loaded.
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         await loadItems();
@@ -120,15 +126,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+// Event listener for the filter button clicks.
 document.getElementById('filters').addEventListener('click', (e) => {
     const activeButton = document.querySelector('.filter-btn.active');
-    if (activeButton) activeButton.classList.remove('active');
-    e.target.classList.add('active');
+    if (activeButton) activeButton.classList.remove('active'); // Remove old active button.
 
-    currentCategory = e.target.dataset.category;
+    e.target.classList.add('active'); // Change newly clicked button to active filter.
+
+    currentCategory = e.target.dataset.category;  // Change currentCategory to new category.
     grid.innerHTML = '';
 
-
+    // Create the new elements for the filtered items.
     filterItems(allItems).forEach(item => {
         grid.appendChild(createCardElement(item));
     });
