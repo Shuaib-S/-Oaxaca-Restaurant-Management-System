@@ -1,0 +1,9 @@
+stages:
+  - build
+cache:
+  paths:
+    - .m2/repository
+build:
+  stage: build
+  script:
+    - mvn compile
