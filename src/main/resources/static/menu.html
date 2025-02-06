@@ -9,83 +9,89 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-content">
-            <!-- Add navigation items if needed -->
+    <!-- Cart Section -->
+    <div class="cart">
+        <div class="cart-header">
+            <h2>Your Order:</h2>
         </div>
-    </nav>
-
-    <!-- Header Section -->
-    <header class="header">
-        <h1 class="restaurant-name">OAXACA</h1>
-        <p class="restaurant-tagline">Authentic Mexican Cuisine</p>
-    </header>
-
-    <!-- Menu Section -->
-    <main class="menu-container">
-        <h2 class="menu-title">Our Menu</h2>
-
-        <!-- Filter Buttons -->
-        <div class="filter-container" id="filters">
-            <button class="filter-btn active" data-category="all">
-                <i class="fas fa-th-large"></i> All Menu
-            </button>
-            <button class="filter-btn" data-category="Tacos">
-                <i class="fas fa-fire"></i> Tacos
-            </button>
-            <button class="filter-btn" data-category="Quesadillas">
-                <i class="fas fa-fire"></i> Quesadillas
-            </button>
-            <button class="filter-btn" data-category="Burritos">
-                <i class="fas fa-fire"></i> Burritos
-            </button>
-            <button class="filter-btn" data-category="Sides">
-                <i class="fas fa-fire"></i> Sides
-            </button>
-            <button class="filter-btn" data-category="Desserts">
-                <i class="fas fa-ice-cream"></i> Desserts
-            </button>
-            <button class="filter-btn" data-category="Drink">
-                <i class="fas fa-cocktail"></i> Beverages
-            </button>
+        <div class="cart-items">
+            Items
         </div>
 
-        <!-- Menu Grid -->
-        <div class="menu-grid" id="grid">
-            <!-- Items will be dynamically inserted here -->
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-info">
-                <h3>OAXACA</h3>
-                <p>Authentic Mexican cuisine in the heart of the city.</p>
+    </div>
+    <div class="main-page">
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-content">
+                <!-- Add navigation items if needed -->
             </div>
-            <div class="footer-info">
-                <h3>Hours</h3>
-                <ul class="footer-links">
-                    <li>Mon-Thu: 11:30am - 10pm</li>
-                    <li>Fri-Sat: 11:30am - 11pm</li>
-                    <li>Sun: 12pm - 9pm</li>
-                </ul>
+        </nav>
+
+        <!-- Header Section -->
+        <header class="header">
+            <h1 class="restaurant-name">OAXACA</h1>
+            <p class="restaurant-tagline">Authentic Mexican Cuisine</p>
+        </header>
+
+        <!-- Menu Section -->
+        <main class="menu-container">
+            <h2 class="menu-title">Our Menu</h2>
+
+            <!-- Filter Buttons -->
+            <div class="filter-container" id="filters">
+                <button class="filter-btn active" data-category="all">
+                    <i class="fas fa-th-large"></i> All Menu
+                </button>
+                <button class="filter-btn" data-category="Starter">
+                    <i class="fas fa-pepper-hot"></i> Appetizers
+                </button>
+                <button class="filter-btn" data-category="Main">
+                    <i class="fas fa-fire"></i> Main Courses
+                </button>
+                <button class="filter-btn" data-category="Desserts">
+                    <i class="fas fa-ice-cream"></i> Desserts
+                </button>
+                <button class="filter-btn" data-category="Drink">
+                    <i class="fas fa-cocktail"></i> Beverages
+                </button>
             </div>
-            <div class="footer-info">
-                <h3>Contact</h3>
-                <ul class="footer-links">
-                    <li>123 Restaurant Street</li>
-                    <li>London, UK</li>
-                    <li>Tel: (020) 1234-5678</li>
-                    <li>Email: info@oaxaca.com</li>
-                </ul>
+
+            <!-- Menu Grid -->
+            <div class="menu-grid" id="grid">
+                <!-- Items will be dynamically inserted here -->
             </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 OAXACA. All rights reserved.</p>
-        </div>
-    </footer>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>OAXACA</h3>
+                    <p>Authentic Mexican cuisine in the heart of the city.</p>
+                </div>
+                <div class="footer-info">
+                    <h3>Hours</h3>
+                    <ul class="footer-links">
+                        <li>Mon-Thu: 11:30am - 10pm</li>
+                        <li>Fri-Sat: 11:30am - 11pm</li>
+                        <li>Sun: 12pm - 9pm</li>
+                    </ul>
+                </div>
+                <div class="footer-info">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li>123 Restaurant Street</li>
+                        <li>London, UK</li>
+                        <li>Tel: (020) 1234-5678</li>
+                        <li>Email: info@oaxaca.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 OAXACA. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
 
     <script src="js/menu.js"></script>
 </body>

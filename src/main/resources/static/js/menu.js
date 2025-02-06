@@ -1,6 +1,8 @@
 // Global Variables
 let currentCategory = 'all';
 let allItems = [];
+const cartArray = [];
+
 
 // DOM Elements
 const grid = document.getElementById('grid');
@@ -53,9 +55,10 @@ function formatPrice(price) {
 }
 
 // Create HTML for a menu item
-function createMenuItemElement(item) {
+function createMenuItemElement(item, index) {
     const element = document.createElement('div');
     element.className = 'menu-item';
+    element.dataset.itemId = index;
     
     element.innerHTML = `
         <img src="images/menu_placeholder.jpg" 
@@ -70,12 +73,35 @@ function createMenuItemElement(item) {
                 <span class="calories">${item.calories} cal</span>
                 ${item.allergens ? `<span class="allergens">Contains: ${item.allergens}</span>` : ''}
             </div>
-            <button class="add-to-order">Add to Order</button>
+            <button class="add-to-order" data-item-id="${index}">Add to Order</button>
         </div>
     `;
 
+    element.querySelector('.add-to-order').addEventListener('click', (e) => {
+        console.log("button");
+        const itemId = e.target.dataset.itemId;
+        const itemData = allItems[itemId];
+        cartArray.push(itemData);
+        console.log(cartArray);
+        document.dispatchEvent(cartUpdate)
+    })
+
     return element;
 }
+
+const cartUpdate = new CustomEvent('cartUpdated');
+
+// Adds items to an order
+
+document.addEventListener('cartUpdated', () => {
+    const element = document.createElement('div');
+    element.innerHTML = ``;
+    cartArray.forEach(item => {
+        element.className = 'order-item';
+        element.innerHTML = `<p> ${item.title} </p>`;
+        document.querySelector('.cart-items').appendChild(element);
+    });
+});
 
 // Load and display menu items
 async function loadItems() {
@@ -93,7 +119,7 @@ async function loadItems() {
 
         const filteredItems = filterItems(items);
         filteredItems.forEach((item, index) => {
-            const element = createMenuItemElement(item);
+            const element = createMenuItemElement(item, index);
             element.style.animationDelay = `${index * 100}ms`;
             fragment.appendChild(element);
         });

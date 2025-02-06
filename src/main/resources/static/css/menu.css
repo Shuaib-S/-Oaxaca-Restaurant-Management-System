@@ -162,6 +162,34 @@ body {
     transform: translateY(0);
 }
 
+/* Order Table */
+.cart {
+    position:fixed;
+    top: 0;
+    right: 0;
+    width:400px;
+    height:100vh;
+    background: rgb(214, 214, 214);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index:2000;
+    overflow-y:auto;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: center;
+    background:white;
+    font-family: 'Playfair Display', serif;
+}
+
+.cart-items {
+    margin-left: 25px;
+}
+
+.main-page{
+    margin-right: 400px;
+}
+
 /* Menu Cards */
 .menu-item {
     background: var(--light);
