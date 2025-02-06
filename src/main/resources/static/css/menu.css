@@ -1,34 +1,86 @@
-
-.menuGrid {
-    display:flex;
-    flex-direction:column;
+/* Banner */
+.banner {
+    width: 100%;
+    background-color: rgb(255,203,125);
+    color: white;
+    padding: 2px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.banner-title {
+    font-size: 2.4rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
 }
 
-.card {
-    max-height: 200px;
-    display:flex;
-    border: 1px solid black;
-    border-radius: 7px;
-    margin-bottom: 2px;
-    margin-top: 2px;
-    transition: opacity 0.3s ease;
+/* Spacing */
+body {
+    padding-top: 80px;
 }
 
-.images {
-    border-radius: 7px;
-    max-height: 200px;
-    max-width: 200px;
+/* Menu Title */
+.menu-title {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
 }
 
-.filter-btn{
-    padding: 8px 12px;
-    border: 1px solid black;
-    border-radius: 4px;
-    background: lightgrey;
+/* Filter Buttons */
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px; 
+    margin-bottom: 20px;
+}
+.filter-btn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 20px;
+    background: #ddd;
     cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
 }
-
+.filter-btn:hover {
+    background: #bbb;
+}
 .filter-btn.active {
     background: blue;
     color: white;
+}
+
+/* Grid Layout */
+.menuGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Card Appearance */
+.card {
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease-in-out, opacity 0.3s ease;
+}
+.card:hover {
+    transform: scale(1.05);
+}
+.images {
+    border-radius: 10px;
+    max-height: 150px;
+    max-width: 150px;
 }
