@@ -2,12 +2,14 @@ package uk.ac.rhul.cs2810.RestaurantManager.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * A class that handles the name, description, price, calories and allergens of each item on the
  * menu.
  */
 @Entity
+@Table(name = "items")
 public class Item {
   @Id
   int id;
