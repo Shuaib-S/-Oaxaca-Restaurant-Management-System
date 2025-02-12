@@ -182,8 +182,26 @@ body {
     font-family: 'Playfair Display', serif;
 }
 
+.cart-footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width:400px;
+    height:100px;
+    display: flex;
+    margin-left: 25px;
+    background: white;
+}
+
+.cart-footer-contents {
+    margin-left: 25px;
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+}
+
 .cart-items {
     margin-left: 25px;
+    font-weight: bold;
 }
 
 .main-page{
