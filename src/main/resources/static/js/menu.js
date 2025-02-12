@@ -92,13 +92,16 @@ function createMenuItemElement(item, index) {
 const cartUpdate = new CustomEvent('cartUpdated');
 
 // Adds items to an order
-
 document.addEventListener('cartUpdated', () => {
     const element = document.createElement('div');
     element.innerHTML = ``;
     cartArray.forEach(item => {
         element.className = 'order-item';
-        element.innerHTML = `<p> ${item.title} </p>`;
+        element.innerHTML = `
+        <div class="order-content">
+            <p> ${item.title} </p>
+            <button class="remove-from-order"> Bin </button>
+        </div>`;
         document.querySelector('.cart-items').appendChild(element);
     });
 });
