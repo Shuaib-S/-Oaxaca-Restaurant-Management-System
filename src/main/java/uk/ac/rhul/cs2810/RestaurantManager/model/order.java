@@ -7,7 +7,7 @@ import jakarta.persistence.OneToMany;
 
 //@Entity
 //@Table(name = "orders") //Change this to the table name if not orders 
-public class order {
+public class Order {
 
   @Id
   int id;
@@ -18,13 +18,13 @@ public class order {
   private int tableNumber;
   // Probably need a time stamp
 
-  public order(int id, List<Item> itemList, int tableNo) {
+  public Order(int id, List<Item> itemList, int tableNo) {
     this.id = id;
     this.itemList = itemList;
     this.tableNumber = tableNo;
   }
 
-  public order() {
+  public Order() {
 
   }
 
