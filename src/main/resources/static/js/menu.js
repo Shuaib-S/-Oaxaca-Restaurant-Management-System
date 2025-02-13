@@ -77,11 +77,18 @@ function createMenuItemElement(item, index) {
         </div>
     `;
 
+
     element.querySelector('.add-to-order').addEventListener('click', (e) => {
         console.log("button");
         const itemId = e.target.dataset.itemId;
         const itemData = allItems[itemId];
         cartArray.push(itemData);
+        totalItem = 0;
+        for (i = 0; i<cartArray.length; i++) {
+            if (cartArray[i] == itemData) {
+                totalItem++;
+            }
+        }
         console.log(cartArray);
         document.dispatchEvent(cartUpdate)
     })
@@ -90,6 +97,7 @@ function createMenuItemElement(item, index) {
 }
 
 const cartUpdate = new CustomEvent('cartUpdated');
+let totalItem = 0;
 
 // Adds items to an order
 document.addEventListener('cartUpdated', () => {
@@ -99,12 +107,14 @@ document.addEventListener('cartUpdated', () => {
         element.className = 'order-item';
         element.innerHTML = `
         <div class="order-content">
-            <p> ${item.title} </p>
+            <p> ${item.title}: ${formatPrice(item.price)}    x${totalItem}</p>
             <button class="remove-from-order"> Bin </button>
         </div>`;
         document.querySelector('.cart-items').appendChild(element);
     });
 });
+
+
 
 // Load and display menu items
 async function loadItems() {
