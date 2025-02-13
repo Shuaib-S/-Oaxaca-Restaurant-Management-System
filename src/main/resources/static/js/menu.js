@@ -2,6 +2,7 @@
 let currentCategory = 'all';
 let allItems = [];
 const cartArray = [];
+const quantArray = [];
 
 
 // DOM Elements
@@ -82,14 +83,21 @@ function createMenuItemElement(item, index) {
         console.log("button");
         const itemId = e.target.dataset.itemId;
         const itemData = allItems[itemId];
-        cartArray.push(itemData);
-        totalItem = 0;
-        for (i = 0; i<cartArray.length; i++) {
-            if (cartArray[i] == itemData) {
+        totalItem = 1;
+
+        // cartArray.push(itemData);
+        for (i = 0; i<quantArray.length; i++) {
+            if (quantArray[i] == itemData) {
                 totalItem++;
             }
         }
+        if (totalItem == 1) {
+            cartArray.push(itemData);
+        }
+        quantArray[newItem] = itemData;
+        newItem++;
         console.log(cartArray);
+        console.log(quantArray);
         document.dispatchEvent(cartUpdate)
     })
 
@@ -97,7 +105,8 @@ function createMenuItemElement(item, index) {
 }
 
 const cartUpdate = new CustomEvent('cartUpdated');
-let totalItem = 0;
+let totalItem = 1;
+let newItem = 0;
 
 // Adds items to an order
 document.addEventListener('cartUpdated', () => {
