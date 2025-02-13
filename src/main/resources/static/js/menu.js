@@ -83,11 +83,10 @@ function createMenuItemElement(item, index) {
         console.log("button");
         const itemId = e.target.dataset.itemId;
         const itemData = allItems[itemId];
-        // const quantItems = allItems.map(item => ({
-        //     itemData, quantity : 0
-        // }));
-        // quantity = quantItems.get(itemData);
-        console.log(cartArray);
+        const quantItems = new Map(allItems.map(itemData => [itemData, 0])); //Made a map of the items linked to a quantity
+
+        quantity = quantItems.get(itemData);
+
         quantItems.set(itemData, 1);
         // console.log(quantArray);
         cartArray.push(itemData);
