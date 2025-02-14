@@ -83,12 +83,14 @@ function createMenuItemElement(item, index) {
         console.log("button");
         const itemId = e.target.dataset.itemId;
         const itemData = allItems[itemId];
-        const quantItems = new Map(allItems.map(itemData => [itemData, 0])); //Made a map of the items linked to a quantity
-
+        if (quantItems.get(itemData) > 0) {
+            quantItems.set(itemData, quantItems.get(itemData) + 1);
+        }
+        else {
+            quantItems.set(itemData, 1);
+        }
         quantity = quantItems.get(itemData);
-
-        quantItems.set(itemData, 1);
-        // console.log(quantArray);
+        console.log(cartArray);
         cartArray.push(itemData);
         document.dispatchEvent(cartUpdate)
     })
@@ -96,7 +98,9 @@ function createMenuItemElement(item, index) {
     return element;
 }
 
+const quantItems = new Map();
 const cartUpdate = new CustomEvent('cartUpdated');
+
 
 // Adds items to an order
 document.addEventListener('cartUpdated', () => {
@@ -106,7 +110,7 @@ document.addEventListener('cartUpdated', () => {
         element.className = 'order-item';
         element.innerHTML = `
         <div class="order-content">
-            <p> ${item.title}: ${formatPrice(item.price)}    </p>
+            <p> ${item.title}: ${formatPrice(item.price)}    ${quantity}</p>
             <button class="remove-from-order"> Bin </button>
         </div>`;
         document.querySelector('.cart-items').appendChild(element);
