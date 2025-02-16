@@ -60,7 +60,7 @@ function createMenuItemElement(item, index) {
     const element = document.createElement('div');
     element.className = 'menu-item';
     element.dataset.itemId = index;
-    
+
     element.innerHTML = `
         <img src="images/menu_placeholder.jpg" 
              alt="${item.title}" 
@@ -78,22 +78,14 @@ function createMenuItemElement(item, index) {
         </div>
     `;
 
-
     element.querySelector('.add-to-order').addEventListener('click', (e) => {
         console.log("button");
         const itemId = e.target.dataset.itemId;
         const itemData = allItems[itemId];
-        if (quantItems.get(itemData) > 0) {
-            quantItems.set(itemData, quantItems.get(itemData) + 1);
-        }
-        else {
-            quantItems.set(itemData, 1);
-        }
-        quantity = quantItems.get(itemData);
-        console.log(cartArray);
-        cartArray.push(itemData);
-        document.dispatchEvent(cartUpdate)
-    })
+        quantItems.set(itemData, (quantItems.get(itemData) || 0) + 1);
+        console.log(quantItems);
+        document.dispatchEvent(cartUpdate);
+    });
 
     return element;
 }
@@ -101,23 +93,31 @@ function createMenuItemElement(item, index) {
 const quantItems = new Map();
 const cartUpdate = new CustomEvent('cartUpdated');
 
-
-// Adds items to an order
-document.addEventListener('cartUpdated', () => {
-    const element = document.createElement('div');
-    element.innerHTML = ``;
-    cartArray.forEach(item => {
+// Adds items to an order | Removes items from an order
+function orderSystem() {
+    const cartContainer = document.querySelector('.cart-items');
+    cartContainer.innerHTML = '';
+    quantItems.forEach((quantity, item) => {
+        const element = document.createElement('div');
         element.className = 'order-item';
         element.innerHTML = `
         <div class="order-content">
-            <p> ${item.title}: ${formatPrice(item.price)}    ${quantity}</p>
-            <button class="remove-from-order"> Bin </button>
+            <p>${item.title}: ${formatPrice(item.price)} x ${quantity}</p>
+            <button class="remove-from-order">Bin</button>
         </div>`;
-        document.querySelector('.cart-items').appendChild(element);
+        element.querySelector('.remove-from-order').addEventListener('click', () => {
+            if (quantity > 1) {
+                quantItems.set(item, quantity - 1);
+            } else {
+                quantItems.delete(item);
+            }
+            document.dispatchEvent(cartUpdate);
+        });
+        cartContainer.appendChild(element);
     });
-});
+}
 
-
+document.addEventListener('cartUpdated', orderSystem);
 
 // Load and display menu items
 async function loadItems() {
