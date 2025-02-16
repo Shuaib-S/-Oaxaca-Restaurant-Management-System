@@ -22,6 +22,12 @@ public class OrderController {
     this.orderRepository = orderRepository;
   }
 
+  /**
+   * Response from the front end.
+   * 
+   * @param order Change this with whatever comes from frontend
+   * @return The response code.
+   */
   @PostMapping
   public ResponseEntity<Order> addOrder(@RequestBody Order order) { // update this with post data
     orderRepository.save(order);

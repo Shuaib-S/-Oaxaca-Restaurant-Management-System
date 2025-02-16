@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
+import java.time.Duration;
 
 @Entity
 @Table(name = "orders") // Change this to the table name if not orders
@@ -19,7 +21,7 @@ public class Order {
 
   private int tableNumber;
 
-  // Probably need a time stamp
+  private LocalDateTime orderTime;
 
   /**
    * Order Contrstructor
@@ -32,10 +34,20 @@ public class Order {
     this.id = id;
     this.itemList = itemList;
     this.tableNumber = tableNo;
+    this.orderTime = LocalDateTime.now();
   }
 
   public Order() {
+    this.orderTime = LocalDateTime.now();
+  }
 
+  public LocalDateTime getOrderTime() {
+    return this.orderTime;
+  }
+
+  // If the Duration type isn't good then this needs to change to something else
+  public Duration getTimeSinceOrder() {
+    return Duration.between(this.orderTime, LocalDateTime.now());
   }
 
   public int getId() {
