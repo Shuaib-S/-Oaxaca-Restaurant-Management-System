@@ -1,6 +1,7 @@
 // Global Variables
 let currentCategory = 'all';
 let allItems = [];
+let filteredItems = [];
 const cartArray = [];
 
 
@@ -82,7 +83,12 @@ function createMenuItemElement(item, index) {
     element.querySelector('.add-to-order').addEventListener('click', (e) => {
         console.log("button");
         const itemId = e.target.dataset.itemId;
-        const itemData = allItems[itemId];
+        let itemData = {};
+        if (currentCategory === "all"){
+            itemData = allItems[itemId];
+        } else {
+            itemData = filteredItems[itemId];
+        }
         cartArray.push(itemData);
         console.log(cartArray);
         document.dispatchEvent(cartUpdate)
@@ -119,7 +125,7 @@ async function loadItems() {
         grid.innerHTML = '';
         const fragment = document.createDocumentFragment();
 
-        const filteredItems = filterItems(items);
+        filteredItems = filterItems(items);
         filteredItems.forEach((item, index) => {
             const element = createMenuItemElement(item, index);
             element.style.animationDelay = `${index * 100}ms`;
