@@ -90,6 +90,7 @@ function createMenuItemElement(item, index) {
     return element;
 }
 
+// Map to store cart items
 const quantItems = new Map();
 const cartUpdate = new CustomEvent('cartUpdated');
 
@@ -102,7 +103,7 @@ function orderSystem() {
         element.className = 'order-item';
         element.innerHTML = `
         <div class="order-content">
-            <p>${item.title}: ${formatPrice(item.price)} x ${quantity}</p>
+            <p>${item.title}: ${formatPrice(item.price)}    x ${quantity}</p>
             <button class="remove-from-order">Bin</button>
         </div>`;
         element.querySelector('.remove-from-order').addEventListener('click', () => {
