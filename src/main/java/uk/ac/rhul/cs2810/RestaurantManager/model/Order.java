@@ -1,19 +1,21 @@
 package uk.ac.rhul.cs2810.RestaurantManager.model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
-
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
-import java.time.Duration;
 
 @Entity
 @Table(name = "orders") // Change this to the table name if not orders
 public class Order {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   int id;
 
   @OneToMany
@@ -26,9 +28,9 @@ public class Order {
   /**
    * Order Contrstructor
    * 
-   * @param id       The Id for the order.
+   * @param id The Id for the order.
    * @param itemList The list of items that the order has.
-   * @param tableNo  The table number for the order (Required for UserStory)
+   * @param tableNo The table number for the order (Required for UserStory)
    */
   public Order(int id, List<Item> itemList, int tableNo) {
     this.id = id;
