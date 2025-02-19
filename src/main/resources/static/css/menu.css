@@ -25,7 +25,7 @@ body {
 /* Header Section */
 .header {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                url('/images/header-bg.jpg') center/cover;
+    url('/images/header-bg.jpg') center/cover;
     height: 15vh;
     min-height: 120px;
     display: flex;
@@ -136,6 +136,59 @@ body {
     justify-content: center;
 }
 
+/* Popup container */
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+.popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+
 .add-to-order {
     margin-top: 1rem;
     padding: 0.8rem 1.5rem;
@@ -161,6 +214,7 @@ body {
 .add-to-order:active {
     transform: translateY(0);
 }
+
 
 /* Order Table */
 .cart {
@@ -342,11 +396,11 @@ body {
     .restaurant-name {
         font-size: 3rem;
     }
-    
+
     .menu-container {
         padding: 2rem 1rem;
     }
-    
+
     .filter-btn {
         padding: 0.6rem 1rem;
         font-size: 0.8rem;

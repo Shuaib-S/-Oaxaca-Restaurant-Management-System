@@ -1,9 +1,9 @@
 // Global Variables
 let currentCategory = 'all';
 let allItems = [];
+let filteredItems = [];
 const cartArray = [];
 const quantArray = [];
-
 
 // DOM Elements
 const grid = document.getElementById('grid');
@@ -75,13 +75,23 @@ function createMenuItemElement(item, index) {
                 ${item.allergens ? `<span class="allergens">Contains: ${item.allergens}</span>` : ''}
             </div>
             <button class="add-to-order" data-item-id="${index}">Add to Order</button>
+            <div class="popup" onclick="ShowNutriInfo()">i
+                <span class="popuptext" id="myPopup">Contains: ${item.allergens}</span>
+            </div>
         </div>
     `;
 
     element.querySelector('.add-to-order').addEventListener('click', (e) => {
         console.log("button");
         const itemId = e.target.dataset.itemId;
-        const itemData = allItems[itemId];
+
+        let itemData = {};
+        if (currentCategory === "all"){
+            itemData = allItems[itemId];
+        } else {
+            itemData = filteredItems[itemId];
+        }
+
         quantItems.set(itemData, (quantItems.get(itemData) || 0) + 1);
         console.log(quantItems);
         document.dispatchEvent(cartUpdate);
@@ -125,7 +135,7 @@ async function loadItems() {
     try {
         grid.innerHTML = '<div class="loading">Loading menu items...</div>';
         const items = await fetchItems();
-        
+
         if (items.length === 0) {
             grid.innerHTML = '<div class="no-items">No menu items available</div>';
             return;
@@ -134,7 +144,7 @@ async function loadItems() {
         grid.innerHTML = '';
         const fragment = document.createDocumentFragment();
 
-        const filteredItems = filterItems(items);
+        filteredItems = filterItems(items);
         filteredItems.forEach((item, index) => {
             const element = createMenuItemElement(item, index);
             element.style.animationDelay = `${index * 100}ms`;
@@ -152,7 +162,7 @@ async function loadItems() {
 // Filter button click handler
 document.getElementById('filters').addEventListener('click', (e) => {
     e.preventDefault(); // Prevent default behavior
-    
+
     const button = e.target.closest('.filter-btn');
     if (!button) return;
 
@@ -162,13 +172,13 @@ document.getElementById('filters').addEventListener('click', (e) => {
 
     // Update category and reload items
     currentCategory = button.dataset.category;
-    
+
     const currentScrollPosition = window.scrollY; // Store current scroll position
-    
+
     // Fade out current items
     grid.style.opacity = '0';
     grid.style.transform = 'translateY(10px)';
-    
+
     // Load new items with a subtle animation
     setTimeout(() => {
         loadItems().then(() => {
@@ -203,3 +213,8 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.menu-item').forEach(item => {
     observer.observe(item);
 });
+
+function ShowNutriInfo() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+}
