@@ -1,6 +1,7 @@
 // Global Variables
 let currentCategory = 'all';
 let allItems = [];
+let filteredItems = [];
 const cartArray = [];
 
 
@@ -71,16 +72,23 @@ function createMenuItemElement(item, index) {
             <div class="item-price">${formatPrice(item.price)}</div>
             <div class="item-meta">
                 <span class="calories">${item.calories} cal</span>
-                ${item.allergens ? `<span class="allergens">Contains: ${item.allergens}</span>` : ''}
             </div>
             <button class="add-to-order" data-item-id="${index}">Add to Order</button>
+            <div class="popup" onclick="ShowNutriInfo()">i
+                <span class="popuptext" id="myPopup">Contains: ${item.allergens}</span>
+            </div>
         </div>
     `;
 
     element.querySelector('.add-to-order').addEventListener('click', (e) => {
         console.log("button");
         const itemId = e.target.dataset.itemId;
-        const itemData = allItems[itemId];
+        let itemData = {};
+        if (currentCategory === "all"){
+            itemData = allItems[itemId];
+        } else {
+            itemData = filteredItems[itemId];
+        }
         cartArray.push(itemData);
         console.log(cartArray);
         document.dispatchEvent(cartUpdate)
@@ -117,7 +125,7 @@ async function loadItems() {
         grid.innerHTML = '';
         const fragment = document.createDocumentFragment();
 
-        const filteredItems = filterItems(items);
+        filteredItems = filterItems(items);
         filteredItems.forEach((item, index) => {
             const element = createMenuItemElement(item, index);
             element.style.animationDelay = `${index * 100}ms`;
@@ -186,3 +194,8 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.menu-item').forEach(item => {
     observer.observe(item);
 });
+
+function ShowNutriInfo() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+}
