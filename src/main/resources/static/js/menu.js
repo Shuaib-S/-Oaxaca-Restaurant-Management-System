@@ -71,11 +71,12 @@ function createMenuItemElement(item, index) {
             <div class="item-price">${formatPrice(item.price)}</div>
             <div class="item-meta">
                 <span class="calories">${item.calories} cal</span>
+                <div class="popup" onclick="ShowNutriInfo(${index})">i
+                    <span class="popuptext" id="popup-${index}">Contains: ${item.allergens}</span>
+                </div>
             </div>
+            
             <button class="add-to-order" data-item-id="${index}">Add to Order</button>
-            <div class="popup" onclick="ShowNutriInfo(${index})">i
-                <span class="popuptext" id="popup-${index}">Contains: ${item.allergens}</span>
-            </div>
         </div>
     `;
 
