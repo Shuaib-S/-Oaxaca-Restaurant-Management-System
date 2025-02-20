@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Cart functionality
-// Cart functionality
 document.addEventListener('DOMContentLoaded', function() {
     const cart = document.querySelector('.cart');
     const cartToggle = document.getElementById('cart-toggle');
@@ -120,6 +119,7 @@ function formatPrice(price) {
         minimumFractionDigits: 2
     }).format(price);
 }
+
 
 // Create HTML for a menu item
 function createMenuItemElement(item, index) {
@@ -351,6 +351,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 });
+
 
 
 // toggle whether the popup is visible
