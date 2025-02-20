@@ -3,7 +3,7 @@ let currentCategory = 'all';
 let allItems = [];
 let filteredItems = [];
 const cartArray = [];
-
+const quantArray = [];
 
 // DOM Elements
 const grid = document.getElementById('grid');
@@ -60,7 +60,7 @@ function createMenuItemElement(item, index) {
     const element = document.createElement('div');
     element.className = 'menu-item';
     element.dataset.itemId = index;
-    
+
     element.innerHTML = `
         <img src="images/menu_placeholder.jpg" 
              alt="${item.title}" 
@@ -72,6 +72,7 @@ function createMenuItemElement(item, index) {
             <div class="item-price">${formatPrice(item.price)}</div>
             <div class="item-meta">
                 <span class="calories">${item.calories} cal</span>
+                ${item.allergens ? `<span class="allergens">Contains: ${item.allergens}</span>` : ''}
             </div>
             <button class="add-to-order" data-item-id="${index}">Add to Order</button>
             <div class="popup" onclick="ShowNutriInfo()">i
@@ -83,40 +84,58 @@ function createMenuItemElement(item, index) {
     element.querySelector('.add-to-order').addEventListener('click', (e) => {
         console.log("button");
         const itemId = e.target.dataset.itemId;
+
         let itemData = {};
         if (currentCategory === "all"){
             itemData = allItems[itemId];
         } else {
             itemData = filteredItems[itemId];
         }
-        cartArray.push(itemData);
-        console.log(cartArray);
-        document.dispatchEvent(cartUpdate)
-    })
+
+        quantItems.set(itemData, (quantItems.get(itemData) || 0) + 1);
+        console.log(quantItems);
+        document.dispatchEvent(cartUpdate);
+    });
 
     return element;
 }
 
+// Map to store cart items
+const quantItems = new Map();
 const cartUpdate = new CustomEvent('cartUpdated');
 
-// Adds items to an order
-
-document.addEventListener('cartUpdated', () => {
-    const element = document.createElement('div');
-    element.innerHTML = ``;
-    cartArray.forEach(item => {
+// Adds items to an order | Removes items from an order
+function orderSystem() {
+    const cartContainer = document.querySelector('.cart-items');
+    cartContainer.innerHTML = '';
+    quantItems.forEach((quantity, item) => {
+        const element = document.createElement('div');
         element.className = 'order-item';
-        element.innerHTML = `<p> ${item.title} </p>`;
-        document.querySelector('.cart-items').appendChild(element);
+        element.innerHTML = `
+        <div class="order-content">
+            <p>${item.title}: ${formatPrice(item.price)}    x ${quantity}</p>
+            <button class="remove-from-order">Bin</button>
+        </div>`;
+        element.querySelector('.remove-from-order').addEventListener('click', () => {
+            if (quantity > 1) {
+                quantItems.set(item, quantity - 1);
+            } else {
+                quantItems.delete(item);
+            }
+            document.dispatchEvent(cartUpdate);
+        });
+        cartContainer.appendChild(element);
     });
-});
+}
+
+document.addEventListener('cartUpdated', orderSystem);
 
 // Load and display menu items
 async function loadItems() {
     try {
         grid.innerHTML = '<div class="loading">Loading menu items...</div>';
         const items = await fetchItems();
-        
+
         if (items.length === 0) {
             grid.innerHTML = '<div class="no-items">No menu items available</div>';
             return;
@@ -143,7 +162,7 @@ async function loadItems() {
 // Filter button click handler
 document.getElementById('filters').addEventListener('click', (e) => {
     e.preventDefault(); // Prevent default behavior
-    
+
     const button = e.target.closest('.filter-btn');
     if (!button) return;
 
@@ -153,13 +172,13 @@ document.getElementById('filters').addEventListener('click', (e) => {
 
     // Update category and reload items
     currentCategory = button.dataset.category;
-    
+
     const currentScrollPosition = window.scrollY; // Store current scroll position
-    
+
     // Fade out current items
     grid.style.opacity = '0';
     grid.style.transform = 'translateY(10px)';
-    
+
     // Load new items with a subtle animation
     setTimeout(() => {
         loadItems().then(() => {
