@@ -142,6 +142,7 @@ function createMenuItemElement(item, index) {
                     <span class="popuptext" id="popup-${index}">Contains: ${item.allergens}</span>
                 </div>
             </div>
+            
             <button class="add-to-order" data-item-id="${index}">Add to Order</button>
         </div>
     `;
