@@ -103,9 +103,11 @@ function createMenuItemElement(item, index) {
 // Map to store cart items
 const quantItems = new Map();
 const cartUpdate = new CustomEvent('cartUpdated');
+let totalPrice = 0;
 
 // Adds items to an order | Removes items from an order
 function orderSystem() {
+    totalPrice = 0;
     const cartContainer = document.querySelector('.cart-items');
     cartContainer.innerHTML = '';
     quantItems.forEach((quantity, item) => {
@@ -126,6 +128,11 @@ function orderSystem() {
         });
         cartContainer.appendChild(element);
     });
+
+    quantItems.forEach((quantity, item) => {
+        totalPrice = totalPrice + ((item.price)*quantity);
+    });
+    document.getElementById("order-total").innerHTML = "Order Total: " + formatPrice(totalPrice);
 }
 
 document.addEventListener('cartUpdated', orderSystem);
