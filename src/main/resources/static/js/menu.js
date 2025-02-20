@@ -73,8 +73,8 @@ function createMenuItemElement(item, index) {
                 <span class="calories">${item.calories} cal</span>
             </div>
             <button class="add-to-order" data-item-id="${index}">Add to Order</button>
-            <div class="popup" onclick="ShowNutriInfo()">i
-                <span class="popuptext" id="myPopup">Contains: ${item.allergens}</span>
+            <div class="popup" onclick="ShowNutriInfo(${index})">i
+                <span class="popuptext" id="popup-${index}">Contains: ${item.allergens}</span>
             </div>
         </div>
     `;
@@ -190,7 +190,7 @@ document.querySelectorAll('.menu-item').forEach(item => {
 });
 
 // toggle whether the popup is visible
-function ShowNutriInfo() {
-    var popup = document.getElementById("myPopup");
+function ShowNutriInfo(index) {
+    var popup = document.getElementById(`popup-${index}`);
     popup.classList.toggle("show");
 }
