@@ -15,29 +15,102 @@
 
 <body>
     <!-- Cart Section -->
-    <div class="cart">
-        <div class="cart-header">
-            <h2>Your Order:</h2>
-        </div>
-        <div class="cart-items">
-            Items:
-        </div>
-        <div class="cart-actions">
-            <!--<button id="clear-cart" class="clear-btn">Clear Cart</button> -->
-            <button id="submit-order" class="submit-btn">Submit Order</button>
-        </div>
-        <footer class="cart-footer">
-            <div class="cart-footer-contents">
-                <p id="order-total">Order Total: </p>
+    <div class="cart-container">
+        <div class="cart">
+            <div class="cart-header">
+                <h2 class="cart-title">Your Order</h2>
+                <button class="cart-toggle" id="cart-toggle">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-        </footer>
-
-
+            
+            <div class="cart-content">
+                <div class="cart-items">
+                    <!-- Items will be dynamically inserted here -->
+                </div>
+                
+                <div class="cart-summary">
+                    <div class="cart-subtotal">
+                        <span>Subtotal:</span>
+                        <span id="subtotal-amount">£0.00</span>
+                    </div>
+                    <div class="cart-tax">
+                        <span>VAT (20%):</span>
+                        <span id="tax-amount">£0.00</span>
+                    </div>
+                    <div class="cart-total">
+                        <span>Total:</span>
+                        <span id="order-total">£0.00</span>
+                    </div>
+                </div>
+                
+                <div class="cart-actions">
+                    <button id="submit-order" class="submit-btn">
+                        <i class="fas fa-check-circle"></i>
+                        Place Order
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile cart toggle -->
+        <button class="mobile-cart-toggle" id="mobile-cart-toggle">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="cart-item-count">0</span>
+        </button>
     </div>
+    
     <div class="main-page">
         <nav class="nav">
             <div class="nav-content">
-                <!-- Add navigation items if needed -->
+                <a href="/" class="nav-logo">OAXACA</a>
+                <div class="nav-links">
+                    <a href="/" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="/menu" class="nav-link">
+                        <i class="fas fa-book-open"></i>
+                        <span>Menu</span>
+                    </a>
+                    <a href="/specials" class="nav-link">
+                        <i class="fas fa-coffee"></i>
+                        <span>Specials</span>
+                    </a>
+                    <a href="/contact" class="nav-link">
+                        <i class="fas fa-phone"></i>
+                        <span>Contact</span>
+                    </a>
+                    <a href="/order" class="nav-link nav-button">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Order Now</span>
+                    </a>
+                </div>
+                <button class="mobile-menu-button">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="mobile-menu">
+                <a href="/" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="/menu" class="nav-link">
+                    <i class="fas fa-book-open"></i>
+                    <span>Menu</span>
+                </a>
+                <a href="/specials" class="nav-link">
+                    <i class="fas fa-coffee"></i>
+                    <span>Specials</span>
+                </a>
+                <a href="/contact" class="nav-link">
+                    <i class="fas fa-phone"></i>
+                    <span>Contact</span>
+                </a>
+                <a href="/order" class="nav-link nav-button">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Order Now</span>
+                </a>
             </div>
         </nav>
 

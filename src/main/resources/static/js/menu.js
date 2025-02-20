@@ -40,6 +40,72 @@ async function fetchItems() {
     }
 }
 
+// Navbar functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const nav = document.querySelector('.nav');
+    const mobileMenuButton = document.querySelector('.mobile-menu-button');
+    const mobileMenu = document.querySelector('.mobile-menu');
+
+    // Scroll effect
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+
+    // Mobile menu toggle
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+        mobileMenuButton.querySelector('i').classList.toggle('fa-bars');
+        mobileMenuButton.querySelector('i').classList.toggle('fa-times');
+    });
+});
+
+// Cart functionality
+// Cart functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const cart = document.querySelector('.cart');
+    const cartToggle = document.getElementById('cart-toggle');
+    const mobileCartToggle = document.getElementById('mobile-cart-toggle');
+    
+    function openCart() {
+        cart.classList.add('open');
+    }
+
+    function closeCart() {
+        cart.classList.remove('open');
+    }
+    
+    cartToggle?.addEventListener('click', () => {
+        cart.classList.toggle('open');
+    });
+    
+    mobileCartToggle?.addEventListener('click', () => {
+        cart.classList.toggle('open');
+    });
+    
+    // Update cart item count and visibility
+    function updateCartState() {
+        const count = Array.from(quantItems.values()).reduce((a, b) => a + b, 0);
+        const cartItemCount = document.querySelector('.cart-item-count');
+        if (cartItemCount) {
+            cartItemCount.textContent = count;
+        }
+        
+        // Auto open/close based on items
+        if (count > 0) {
+            openCart();
+        } else {
+            closeCart();
+        }
+    }
+    
+    // Listen for cart updates
+    document.addEventListener('cartUpdated', updateCartState);
+});
+
 // Filter items by category
 function filterItems(items) {
     if (currentCategory === 'all') return items;
@@ -111,14 +177,20 @@ function orderSystem() {
     totalPrice = 0;
     const cartContainer = document.querySelector('.cart-items');
     cartContainer.innerHTML = '';
+    
     quantItems.forEach((quantity, item) => {
         const element = document.createElement('div');
-        element.className = 'order-item';
+        element.className = 'cart-item';
         element.innerHTML = `
-        <div class="order-content">
-            <p>${item.title}: ${formatPrice(item.price)}    x ${quantity}</p>
-            <button class="remove-from-order">Bin</button>
-        </div>`;
+            <div class="cart-item-info">
+                <div class="cart-item-title">${item.title}</div>
+                <div class="cart-item-price">${formatPrice(item.price)} × ${quantity}</div>
+            </div>
+            <button class="remove-from-order">
+                <i class="fas fa-trash"></i>
+            </button>
+        `;
+        
         element.querySelector('.remove-from-order').addEventListener('click', () => {
             if (quantity > 1) {
                 quantItems.set(item, quantity - 1);
@@ -126,14 +198,27 @@ function orderSystem() {
                 quantItems.delete(item);
             }
             document.dispatchEvent(cartUpdate);
+            
+            // Check if cart is empty and close if it is
+            if (quantItems.size === 0) {
+                document.querySelector('.cart').classList.remove('open');
+            }
         });
+        
         cartContainer.appendChild(element);
     });
 
     quantItems.forEach((quantity, item) => {
-        totalPrice = totalPrice + ((item.price)*quantity);
+        totalPrice = totalPrice + ((item.price) * quantity);
     });
-    document.getElementById("order-total").innerHTML = "Order Total: " + formatPrice(totalPrice);
+    
+    // Update totals
+    document.getElementById("order-total").innerHTML = formatPrice(totalPrice);
+    
+    // Open cart when items are added
+    if (quantItems.size > 0) {
+        document.querySelector('.cart').classList.add('open');
+    }
 }
 
 document.addEventListener('cartUpdated', orderSystem);
