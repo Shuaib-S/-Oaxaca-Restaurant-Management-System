@@ -1,8 +1,9 @@
 // Global Variables
 let currentCategory = 'all';
 let allItems = [];
+let filteredItems = [];
 const cartArray = [];
-
+const quantArray = [];
 
 // DOM Elements
 const grid = document.getElementById('grid');
@@ -83,35 +84,66 @@ function createMenuItemElement(item, index) {
     element.querySelector('.add-to-order').addEventListener('click', (e) => {
         console.log("button");
         const itemId = e.target.dataset.itemId;
-        const itemData = allItems[itemId];
-        cartArray.push(itemData);
-        console.log(cartArray);
-        document.dispatchEvent(cartUpdate)
-    })
+
+        let itemData = {};
+        if (currentCategory === "all") {
+            itemData = allItems[itemId];
+        } else {
+            itemData = filteredItems[itemId];
+        }
+
+        quantItems.set(itemData, (quantItems.get(itemData) || 0) + 1);
+        console.log(quantItems);
+        document.dispatchEvent(cartUpdate);
+    });
 
     return element;
 }
 
+// Map to store cart items
+const quantItems = new Map();
 const cartUpdate = new CustomEvent('cartUpdated');
+let totalPrice = 0;
+document.getElementById("order-total").innerHTML = "Order Total: " + formatPrice(totalPrice);
 
-// Adds items to an order
-
-document.addEventListener('cartUpdated', () => {
-    const element = document.createElement('div');
-    element.innerHTML = ``;
-    cartArray.forEach(item => {
+// Adds items to an order | Removes items from an order
+function orderSystem() {
+    totalPrice = 0;
+    const cartContainer = document.querySelector('.cart-items');
+    cartContainer.innerHTML = '';
+    quantItems.forEach((quantity, item) => {
+        const element = document.createElement('div');
         element.className = 'order-item';
-        element.innerHTML = `<p> ${item.title} </p>`;
-        document.querySelector('.cart-items').appendChild(element);
+        element.innerHTML = `
+        <div class="order-content">
+            <p>${item.title}: ${formatPrice(item.price)}    x ${quantity}</p>
+            <button class="remove-from-order">Bin</button>
+        </div>`;
+        element.querySelector('.remove-from-order').addEventListener('click', () => {
+            if (quantity > 1) {
+                quantItems.set(item, quantity - 1);
+            } else {
+                quantItems.delete(item);
+            }
+            document.dispatchEvent(cartUpdate);
+        });
+        cartContainer.appendChild(element);
     });
-});
+
+    quantItems.forEach((quantity, item) => {
+        totalPrice = totalPrice + ((item.price)*quantity);
+    });
+    document.getElementById("order-total").innerHTML = "Order Total: " + formatPrice(totalPrice);
+}
+
+document.addEventListener('cartUpdated', orderSystem);
 
 // Load and display menu items
 async function loadItems() {
     try {
         grid.innerHTML = '<div class="loading">Loading menu items...</div>';
         const items = await fetchItems();
-        
+
         if (items.length === 0) {
             grid.innerHTML = '<div class="no-items">No menu items available</div>';
             return;
@@ -120,7 +152,7 @@ async function loadItems() {
         grid.innerHTML = '';
         const fragment = document.createDocumentFragment();
 
-        const filteredItems = filterItems(items);
+        filteredItems = filterItems(items);
         filteredItems.forEach((item, index) => {
             const element = createMenuItemElement(item, index);
             element.style.animationDelay = `${index * 100}ms`;
@@ -138,7 +170,7 @@ async function loadItems() {
 // Filter button click handler
 document.getElementById('filters').addEventListener('click', (e) => {
     e.preventDefault(); // Prevent default behavior
-    
+
     const button = e.target.closest('.filter-btn');
     if (!button) return;
 
@@ -148,13 +180,13 @@ document.getElementById('filters').addEventListener('click', (e) => {
 
     // Update category and reload items
     currentCategory = button.dataset.category;
-    
+
     const currentScrollPosition = window.scrollY; // Store current scroll position
-    
+
     // Fade out current items
     grid.style.opacity = '0';
     grid.style.transform = 'translateY(10px)';
-    
+
     // Load new items with a subtle animation
     setTimeout(() => {
         loadItems().then(() => {
@@ -190,8 +222,54 @@ document.querySelectorAll('.menu-item').forEach(item => {
     observer.observe(item);
 });
 
-// toggle whether the popup is visible
-function ShowNutriInfo(index) {
-    var popup = document.getElementById(`popup-${index}`);
+
+// connect Submit order button to api/orders
+document.addEventListener("DOMContentLoaded", function () {
+    const submitOrderBtn = document.getElementById("submit-order");
+
+    submitOrderBtn.addEventListener("click", function () {
+        if (quantItems.size === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+
+        const quantItemsArray = Array.from(quantItems, ([item, quantity]) => ({ item, quantity: quantity }));
+
+        const orderData = {
+            tableNumber: 12,
+            itemList: quantItemsArray
+        };
+
+
+
+        fetch('http://localhost:8080/api/orders', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(orderData)
+        })
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to submit order");
+                return response.json();
+            })
+            .then(data => {
+                alert("Order placed successfully!");
+                quantItems.clear();
+                totalPrice = 0;
+                document.getElementById("order-total").innerHTML = "Order Total: " + formatPrice(totalPrice);
+                document.querySelector(".cart-items").innerHTML = "";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Error placing order. Please try again.");
+            });
+    });
+});
+
+
+function ShowNutriInfo() {
+    var popup = document.getElementById("myPopup");
     popup.classList.toggle("show");
 }
+
