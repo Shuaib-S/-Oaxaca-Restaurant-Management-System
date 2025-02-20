@@ -86,7 +86,7 @@ function createMenuItemElement(item, index) {
         const itemId = e.target.dataset.itemId;
 
         let itemData = {};
-        if (currentCategory === "all"){
+        if (currentCategory === "all") {
             itemData = allItems[itemId];
         } else {
             itemData = filteredItems[itemId];
@@ -227,19 +227,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const submitOrderBtn = document.getElementById("submit-order");
 
     submitOrderBtn.addEventListener("click", function () {
-        if (cartArray.length === 0) {
+        if (quantItems.size === 0) {
             alert("Your cart is empty!");
             return;
         }
 
-        // Create the order payload
+        const quantItemsArray = Array.from(quantItems, ([item, quantity]) => ({ item, quantity: quantity }));
+
         const orderData = {
-            tableNumber: 12, 
-            itemList: cartArray 
+            tableNumber: 12,
+            itemList: quantItemsArray
         };
 
 
-        // Send order to backend
+
         fetch('http://localhost:8080/api/orders', {
             method: "POST",
             headers: {
@@ -247,19 +248,19 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             body: JSON.stringify(orderData)
         })
-        .then(response => {
-            if (!response.ok) throw new Error("Failed to submit order");
-            return response.json();
-        })
-        .then(data => {
-            alert("Order placed successfully!");
-            cartArray.length = 0; // Clear cart array
-            document.querySelector(".cart-items").innerHTML = ""; // Clear UI
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Error placing order. Please try again.");
-        });
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to submit order");
+                return response.json();
+            })
+            .then(data => {
+                alert("Order placed successfully!");
+                quantItems.clear();
+                document.querySelector(".cart-items").innerHTML = "";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Error placing order. Please try again.");
+            });
     });
 });
 
