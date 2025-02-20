@@ -189,6 +189,7 @@ document.querySelectorAll('.menu-item').forEach(item => {
     observer.observe(item);
 });
 
+// toggle whether the popup is visible
 function ShowNutriInfo() {
     var popup = document.getElementById("myPopup");
     popup.classList.toggle("show");
