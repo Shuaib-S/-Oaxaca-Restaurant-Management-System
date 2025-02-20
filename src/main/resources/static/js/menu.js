@@ -221,7 +221,51 @@ document.querySelectorAll('.menu-item').forEach(item => {
     observer.observe(item);
 });
 
+
+// connect Submit order button to api/orders
+document.addEventListener("DOMContentLoaded", function () {
+    const submitOrderBtn = document.getElementById("submit-order");
+
+    submitOrderBtn.addEventListener("click", function () {
+        if (cartArray.length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+
+        // Create the order payload
+        const orderData = {
+            tableNumber: 12, 
+            itemList: cartArray 
+        };
+
+
+        // Send order to backend
+        fetch('http://localhost:8080/api/orders', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(orderData)
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to submit order");
+            return response.json();
+        })
+        .then(data => {
+            alert("Order placed successfully!");
+            cartArray.length = 0; // Clear cart array
+            document.querySelector(".cart-items").innerHTML = ""; // Clear UI
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Error placing order. Please try again.");
+        });
+    });
+});
+
+
 function ShowNutriInfo() {
     var popup = document.getElementById("myPopup");
     popup.classList.toggle("show");
 }
+
