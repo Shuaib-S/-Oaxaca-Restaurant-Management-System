@@ -104,6 +104,7 @@ function createMenuItemElement(item, index) {
 const quantItems = new Map();
 const cartUpdate = new CustomEvent('cartUpdated');
 let totalPrice = 0;
+document.getElementById("order-total").innerHTML = "Order Total: " + formatPrice(totalPrice);
 
 // Adds items to an order | Removes items from an order
 function orderSystem() {
@@ -255,6 +256,8 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 alert("Order placed successfully!");
                 quantItems.clear();
+                totalPrice = 0;
+                document.getElementById("order-total").innerHTML = "Order Total: " + formatPrice(totalPrice);
                 document.querySelector(".cart-items").innerHTML = "";
             })
             .catch(error => {
