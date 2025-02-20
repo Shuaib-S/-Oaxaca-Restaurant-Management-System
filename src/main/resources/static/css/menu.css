@@ -65,13 +65,12 @@
     justify-content: center;
 }
 
-/* Popup container */
+/* nutrition Popup container */
 .popup {
     position: relative;
     display: inline-block;
     cursor: pointer;
 }
-
 /* The actual popup (appears on top) */
 .popup .popuptext {
     visibility: hidden;
@@ -81,13 +80,12 @@
     text-align: center;
     border-radius: 6px;
     padding: 8px 0;
-    position: absolute;
+    position: absolute; /* having the position be absolute may be why it's bugging out */
     z-index: 1;
     bottom: 125%;
     left: 50%;
-    margin-left: -80px;
+    margin-left: -160px;
 }
-
 /* Popup arrow */
 .popup .popuptext::after {
     content: "";
@@ -99,20 +97,17 @@
     border-style: solid;
     border-color: #555 transparent transparent transparent;
 }
-
 /* Toggle this class when clicking on the popup container (hide and show the popup) */
 .popup .show {
     visibility: visible;
     -webkit-animation: fadeIn 1s;
     animation: fadeIn 1s
 }
-
 /* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
     from {opacity: 0;}
     to {opacity: 1;}
 }
-
 @keyframes fadeIn {
     from {opacity: 0;}
     to {opacity:1 ;}
@@ -338,21 +333,21 @@
         right: -100%;
         transform: none;
     }
-    
+
     .cart.open {
         transform: translateX(-100%);
     }
-    
+
     .cart-toggle {
         display: block;
     }
-    
+
     .mobile-cart-toggle {
         display: flex;
         bottom: 1rem;
         right: 1rem;
     }
-    
+
     .main-page {
         margin-right: 0;
     }

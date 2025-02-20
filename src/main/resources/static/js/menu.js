@@ -64,12 +64,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Cart functionality
-// Cart functionality
 document.addEventListener('DOMContentLoaded', function() {
     const cart = document.querySelector('.cart');
     const cartToggle = document.getElementById('cart-toggle');
     const mobileCartToggle = document.getElementById('mobile-cart-toggle');
-    
+
     function openCart() {
         cart.classList.add('open');
     }
@@ -77,15 +76,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeCart() {
         cart.classList.remove('open');
     }
-    
+
     cartToggle?.addEventListener('click', () => {
         cart.classList.toggle('open');
     });
-    
+
     mobileCartToggle?.addEventListener('click', () => {
         cart.classList.toggle('open');
     });
-    
+
     // Update cart item count and visibility
     function updateCartState() {
         const count = Array.from(quantItems.values()).reduce((a, b) => a + b, 0);
@@ -93,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (cartItemCount) {
             cartItemCount.textContent = count;
         }
-        
+
         // Auto open/close based on items
         if (count > 0) {
             openCart();
@@ -101,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             closeCart();
         }
     }
-    
+
     // Listen for cart updates
     document.addEventListener('cartUpdated', updateCartState);
 });
@@ -121,6 +120,7 @@ function formatPrice(price) {
     }).format(price);
 }
 
+
 // Create HTML for a menu item
 function createMenuItemElement(item, index) {
     const element = document.createElement('div');
@@ -138,12 +138,12 @@ function createMenuItemElement(item, index) {
             <div class="item-price">${formatPrice(item.price)}</div>
             <div class="item-meta">
                 <span class="calories">${item.calories} cal</span>
-                ${item.allergens ? `<span class="allergens">Contains: ${item.allergens}</span>` : ''}
+                <div class="popup" onclick="ShowNutriInfo(${index})">i
+                    <span class="popuptext" id="popup-${index}">Contains: ${item.allergens}</span>
+                </div>
             </div>
+            
             <button class="add-to-order" data-item-id="${index}">Add to Order</button>
-            <div class="popup" onclick="ShowNutriInfo()">i
-                <span class="popuptext" id="myPopup">Contains: ${item.allergens}</span>
-            </div>
         </div>
     `;
 
@@ -177,7 +177,7 @@ function orderSystem() {
     totalPrice = 0;
     const cartContainer = document.querySelector('.cart-items');
     cartContainer.innerHTML = '';
-    
+
     quantItems.forEach((quantity, item) => {
         const element = document.createElement('div');
         element.className = 'cart-item';
@@ -190,7 +190,7 @@ function orderSystem() {
                 <i class="fas fa-trash"></i>
             </button>
         `;
-        
+
         element.querySelector('.remove-from-order').addEventListener('click', () => {
             if (quantity > 1) {
                 quantItems.set(item, quantity - 1);
@@ -198,23 +198,23 @@ function orderSystem() {
                 quantItems.delete(item);
             }
             document.dispatchEvent(cartUpdate);
-            
+
             // Check if cart is empty and close if it is
             if (quantItems.size === 0) {
                 document.querySelector('.cart').classList.remove('open');
             }
         });
-        
+
         cartContainer.appendChild(element);
     });
 
     quantItems.forEach((quantity, item) => {
         totalPrice = totalPrice + ((item.price) * quantity);
     });
-    
+
     // Update totals
     document.getElementById("order-total").innerHTML = formatPrice(totalPrice);
-    
+
     // Open cart when items are added
     if (quantItems.size > 0) {
         document.querySelector('.cart').classList.add('open');
@@ -353,8 +353,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-function ShowNutriInfo() {
-    var popup = document.getElementById("myPopup");
+
+// toggle whether the popup is visible
+function ShowNutriInfo(index) {
+    var popup = document.getElementById(`popup-${index}`);
     popup.classList.toggle("show");
 }
 
