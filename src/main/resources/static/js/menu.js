@@ -40,6 +40,29 @@ async function fetchItems() {
     }
 }
 
+// Navbar functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const nav = document.querySelector('.nav');
+    const mobileMenuButton = document.querySelector('.mobile-menu-button');
+    const mobileMenu = document.querySelector('.mobile-menu');
+
+    // Scroll effect
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            nav.classList.add('scrolled');
+        } else {
+            nav.classList.remove('scrolled');
+        }
+    });
+
+    // Mobile menu toggle
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+        mobileMenuButton.querySelector('i').classList.toggle('fa-bars');
+        mobileMenuButton.querySelector('i').classList.toggle('fa-times');
+    });
+});
+
 // Filter items by category
 function filterItems(items) {
     if (currentCategory === 'all') return items;
