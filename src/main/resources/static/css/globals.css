@@ -52,17 +52,12 @@ body {
     margin-bottom: 2rem;
 }
 
-<<<<<<< HEAD
 /* Navbar Styles */
-=======
-/* Navigation */
->>>>>>> ecf75962ae1d90f887bbc99b7540b91d52e66440
 .nav {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-<<<<<<< HEAD
     height: 64px;
     z-index: 1000;
     transition: all 0.3s ease-in-out;
@@ -177,49 +172,6 @@ body {
         text-align: center;
         margin-top: 1rem;
     }
-=======
-    background: transparent;
-    padding: 1.5rem;
-    transition: background-color 0.3s ease;
-    z-index: 1000;
-}
-
-.nav.scrolled {
-    background: rgba(0, 0, 0, 0.95);
-    padding: 1rem;
-}
-
-.nav-content {
-    display: flex;
-    justify-content: space-between;
-}
-
-.nav-button {
-    background-color: transparent;
-    border: 2px solid var(--primary);
-    color: var(--light);
-    padding: 0.8rem 1.5rem;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.nav-button:hover {
-    background-color: var(--primary);
-    color: var(--light);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(193, 154, 107, 0.2);
-}
-
-.nav-button:active {
-    transform: translateY(0);
-    box-shadow: none;
->>>>>>> ecf75962ae1d90f887bbc99b7540b91d52e66440
 }
 
 /* Footer */
