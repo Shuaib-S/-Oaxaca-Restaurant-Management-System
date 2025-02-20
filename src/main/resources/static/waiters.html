@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OAXACA | Waiters Panel</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  />
+  
+  <link rel="stylesheet" href="css/waiters.css" />
+</head>
+
+<body>
+  <nav class="nav">
+    <div class="nav-content">
+    </div>
+  </nav>
+
+  <!-- Header Section -->
+  <header class="header">
+    <h1 class="restaurant-name">OAXACA - Waiters Panel</h1>
+    <p class="restaurant-tagline">Manage Menu Visibility</p>
+  </header>
+
+  <!--Title-->>
+  <main class="menu-container">
+    <h2 class="menu-title">Manage Menu Items</h2>
+
+    <!--Add and remove tabs-->
+    <div class="tabs">
+      <button class="tab active" data-target="#removeTab">
+        <i class="fas fa-minus-circle"></i> Remove
+      </button>
+      <button class="tab" data-target="#addTab">
+        <i class="fas fa-plus-circle"></i> Add
+      </button>
+    </div>
+
+    <!--remove items placeholder-->
+    <div id="removeTab" class="tab-content active">
+      <div class="menu-grid">
+        <div class="menu-item active" data-item-id="0">
+          <img
+            src="images/menu_placeholder.jpg"
+            alt="Chicken Tacos"
+            class="item-image"
+            loading="lazy"
+          />
+          <div class="item-content">
+            <h3 class="item-title">Chicken Tacos</h3>
+            <p class="item-description">
+              Delicious grilled chicken tacos with fresh salsa.
+            </p>
+            <div class="item-price">£8.99</div>
+            <div class="item-meta">
+              <span class="calories">450 cal</span>
+            </div>
+            <button class="toggle-visibility-btn">
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--add items placeholder-->
+    <div id="addTab" class="tab-content">
+      <div class="menu-grid">
+        <div class="menu-item inactive" data-item-id="1">
+          <img
+            src="images/menu_placeholder.jpg"
+            alt="Veggie Burrito"
+            class="item-image"
+            loading="lazy"
+          />
+          <div class="item-content">
+            <h3 class="item-title">Veggie Burrito</h3>
+            <p class="item-description">
+              A hearty burrito filled with seasonal veggies and beans.
+            </p>
+            <div class="item-price">£7.99</div>
+            <div class="item-meta">
+              <span class="calories">400 cal</span>
+            </div>
+            <button class="toggle-visibility-btn">
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <h3>OAXACA</h3>
+        <p>Authentic Mexican cuisine in the heart of the city.</p>
+      </div>
+      <div class="footer-info">
+        <h3>Hours</h3>
+        <ul class="footer-links">
+          <li>Mon-Thu: 11:30am - 10pm</li>
+          <li>Fri-Sat: 11:30am - 11pm</li>
+          <li>Sun: 12pm - 9pm</li>
+        </ul>
+      </div>
+      <div class="footer-info">
+        <h3>Contact</h3>
+        <ul class="footer-links">
+          <li>123 Restaurant Street</li>
+          <li>London, UK</li>
+          <li>Tel: (020) 1234-5678</li>
+          <li>Email: info@oaxaca.com</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 OAXACA. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Simple tab-switching script (or put in waiters.js) -->
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active state from all tabs
+        tabs.forEach(t => t.classList.remove('active'));
+        // Hide all tab contents
+        tabContents.forEach(tc => tc.classList.remove('active'));
+
+        // Add active to clicked tab
+        tab.classList.add('active');
+        // Show the corresponding content
+        const target = tab.getAttribute('data-target');
+        document.querySelector(target).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
