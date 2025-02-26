@@ -38,6 +38,7 @@ public class OrderController {
 
     Order orderItem = new Order();
     List<Map<String, Object>> itemList = (List<Map<String, Object>>) order.get("itemList");
+    int tableNum = (int) order.get("tableNumber");
     List<Item> items = new ArrayList<>();
     for (Map<String, Object> itemEntry : itemList) {
       Map<String, Object> itemMap = (Map<String, Object>) itemEntry.get("item");
@@ -58,6 +59,7 @@ public class OrderController {
       }
 
     }
+    orderItem.setTableNumber(tableNum);
     this.orderRepository.save(orderItem);
     return ResponseEntity.ok(order);
   }
