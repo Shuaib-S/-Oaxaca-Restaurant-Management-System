@@ -138,9 +138,7 @@ function createMenuItemElement(item, index) {
             <div class="item-price">${formatPrice(item.price)}</div>
             <div class="item-meta">
                 <span class="calories">${item.calories} cal</span>
-                <div class="popup" onclick="ShowNutriInfo(${index})">i
-                    <span class="popuptext" id="popup-${index}">Contains: ${item.allergens}</span>
-                </div>
+                <span class="nutrition-info">${item.allergens} cal</span>
             </div>
             
             <button class="add-to-order" data-item-id="${index}">Add to Order</button>
@@ -360,14 +358,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
-
-// toggle whether the popup is visible
-function ShowNutriInfo(index) {
-    var popup = document.getElementById(`popup-${index}`);
-    popup.classList.toggle("show");
-}
-
+// RIP nutri popup :(
 
 // table number drop down menu
 document.addEventListener("DOMContentLoaded", function () {
