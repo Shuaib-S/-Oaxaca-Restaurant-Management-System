@@ -140,7 +140,6 @@ function createMenuItemElement(item, index) {
                 <span class="calories">${item.calories} cal</span>
                 <span class="nutrition-info">Contains: ${item.allergens}</span>
             </div>
-            
             <button class="add-to-order" data-item-id="${index}">Add to Order</button>
         </div>
     `;
