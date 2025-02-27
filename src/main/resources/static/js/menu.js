@@ -311,6 +311,9 @@ document.querySelectorAll('.menu-item').forEach(item => {
 // connect Submit order button to api/orders
 document.addEventListener("DOMContentLoaded", function () {
     const submitOrderBtn = document.getElementById("submit-order");
+    const tableNumberSelect = document.getElementById("table-number");
+
+
 
     submitOrderBtn.addEventListener("click", function () {
         if (quantItems.size === 0) {
@@ -319,11 +322,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const quantItemsArray = Array.from(quantItems, ([item, quantity]) => ({ item, quantity: quantity }));
+        
+        
+
 
         const orderData = {
-            tableNumber: 12,
+            tableNumber: parseInt(tableNumberSelect.value), 
             itemList: quantItemsArray
         };
+
+
 
 
 
@@ -359,4 +367,21 @@ function ShowNutriInfo(index) {
     var popup = document.getElementById(`popup-${index}`);
     popup.classList.toggle("show");
 }
+
+
+// table number drop down menu
+document.addEventListener("DOMContentLoaded", function () {
+    const tableSelect = document.getElementById("table-number");
+
+    // Populate dropdown with tables
+    for (let i = 1; i <= 12; i++) {
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = `Table ${i}`;
+        option.classList.add("table-option"); // class for styling
+        tableSelect.appendChild(option);
+    }
+});
+
+
 
