@@ -5,12 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import uk.ac.rhul.cs2810.RestaurantManager.model.Item;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Order;
-
 import uk.ac.rhul.cs2810.RestaurantManager.repository.OrderRepository;
 
 @RestController
@@ -19,6 +16,11 @@ public class OrderGetController {
 
   private final OrderRepository orderRepository;
 
+  /**
+   * orderRepository thaty holds the orders
+   * 
+   * @param orderRepository the repository object that has the order database in.
+   */
   @Autowired
   public OrderGetController(OrderRepository orderRepository) {
     this.orderRepository = orderRepository;
