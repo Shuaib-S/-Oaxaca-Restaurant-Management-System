@@ -140,6 +140,9 @@
 }
 
 
+
+
+
 /* Order Table */
 /* Cart Styles */
 .cart-container {
@@ -427,6 +430,16 @@
     display: flex;
     justify-content: space-between;
 }
+
+
+
+/* Table drop down menu -- needs work*/
+#table-number {
+    width: 100%;
+    padding: 8px;
+    font-size: 21px;
+}
+
 
 /* Animations */
 @keyframes fadeInUp {

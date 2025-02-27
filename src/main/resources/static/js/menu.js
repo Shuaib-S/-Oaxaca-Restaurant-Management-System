@@ -311,7 +311,8 @@ document.querySelectorAll('.menu-item').forEach(item => {
 // connect Submit order button to api/orders
 document.addEventListener("DOMContentLoaded", function () {
     const submitOrderBtn = document.getElementById("submit-order");
-    const tableNumberInput = document.getElementById("table-number");
+    const tableNumberSelect = document.getElementById("table-number");
+
 
 
     submitOrderBtn.addEventListener("click", function () {
@@ -322,18 +323,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const quantItemsArray = Array.from(quantItems, ([item, quantity]) => ({ item, quantity: quantity }));
         
-        //table nmbers can be inputted 
-        const tableNumber = parseInt(tableNumberInput.value, 10); 
-        if (isNaN(tableNumber) || tableNumber <= 0) {
-            alert("Please enter a valid table number.");
-            return;
-        }
+        
 
 
         const orderData = {
-            tableNumber: tableNumber,
+            tableNumber: parseInt(tableNumberSelect.value), 
             itemList: quantItemsArray
         };
+
 
 
 
@@ -370,4 +367,21 @@ function ShowNutriInfo(index) {
     var popup = document.getElementById(`popup-${index}`);
     popup.classList.toggle("show");
 }
+
+
+// table number drop down menu
+document.addEventListener("DOMContentLoaded", function () {
+    const tableSelect = document.getElementById("table-number");
+
+    // Populate dropdown with tables
+    for (let i = 1; i <= 12; i++) {
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = `Table ${i}`;
+        option.classList.add("table-option"); // class for styling
+        tableSelect.appendChild(option);
+    }
+});
+
+
 
