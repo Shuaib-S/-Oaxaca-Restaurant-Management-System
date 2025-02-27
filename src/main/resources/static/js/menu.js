@@ -311,6 +311,8 @@ document.querySelectorAll('.menu-item').forEach(item => {
 // connect Submit order button to api/orders
 document.addEventListener("DOMContentLoaded", function () {
     const submitOrderBtn = document.getElementById("submit-order");
+    const tableNumberInput = document.getElementById("table-number");
+
 
     submitOrderBtn.addEventListener("click", function () {
         if (quantItems.size === 0) {
@@ -319,11 +321,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const quantItemsArray = Array.from(quantItems, ([item, quantity]) => ({ item, quantity: quantity }));
+        
+        //table nmbers can be inputted 
+        const tableNumber = parseInt(tableNumberInput.value, 10); 
+        if (isNaN(tableNumber) || tableNumber <= 0) {
+            alert("Please enter a valid table number.");
+            return;
+        }
+
 
         const orderData = {
-            tableNumber: 12,
+            tableNumber: tableNumber,
             itemList: quantItemsArray
         };
+
 
 
 
