@@ -233,6 +233,19 @@ body {
   transform: translateY(0);
 }
 
+svg {
+  border: 2px solid black;
+  background-color: grey;
+}
+
+.table {
+  fill: lightblue;
+}
+
+.table:hover {
+  fill: red;
+}
+
 /* Footer */
 .footer {
   background-color: var(--secondary);
