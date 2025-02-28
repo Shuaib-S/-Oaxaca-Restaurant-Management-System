@@ -50,7 +50,7 @@ public class OrderGetController {
   public Map<String, Integer> itemsToMap(Order order) {
     Map<String, Integer> itemQuant = new HashMap<>();
     for (Item item : order.getItemList()) {
-      itemQuant.put(item.getTitle(), itemQuant.getOrDefault(item, 0) + 1);
+      itemQuant.put(item.getTitle(), itemQuant.getOrDefault(item.getTitle(), 0) + 1);
     }
     return itemQuant;
   }
