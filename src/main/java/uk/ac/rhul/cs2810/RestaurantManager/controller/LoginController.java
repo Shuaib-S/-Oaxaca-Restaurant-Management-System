@@ -19,7 +19,7 @@ import uk.ac.rhul.cs2810.RestaurantManager.model.Item;
 
 
 @RestController
-@RequestMapping("/api/login")
+@RequestMapping("/37.27.219.79:8080/api/login")
 public class LoginController {
 
 
