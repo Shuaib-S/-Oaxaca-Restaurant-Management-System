@@ -18,13 +18,19 @@ public class OrderDeleteController {
   private final OrderRepository orderRepository;
 
   @Autowired
-  public OrderController(OrderRepository orderRepository) {
+  public OrderDeleteController(OrderRepository orderRepository) {
     this.orderRepository = orderRepository;
   }
 
+  /**
+   * Deleting an order method
+   * 
+   * @param orderID the id of the order in the database
+   * @return if the delete was ok
+   */
   @PostMapping
   public ResponseEntity<Integer> deleteOrder(@RequestBody Integer orderID) {
     orderRepository.deleteById(orderID);
-
+    return ResponseEntity.ok(orderID);
   }
 }
