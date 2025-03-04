@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import uk.ac.rhul.cs2810.RestaurantManager.repository.OrderRepository;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.LoginRepository;
-import uk.ac.rhul.cs2810.RestaurantManager.model.Order;
-import uk.ac.rhul.cs2810.RestaurantManager.model.Item;
+import uk.ac.rhul.cs2810.RestaurantManager.model.Login;
 
 
 @RestController
@@ -31,9 +30,11 @@ public class LoginController {
   }
 
   @PostMapping
-  public ResponseEntity<Integer> checkLogin(@RequestBody Object login){
-    System.out.println(login);
-    return ResponseEntity.ok(1);
+  public ResponseEntity<Login> checkLogin(@RequestBody Login login) {
+    BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+    String username = bc.encode(login.getUsername());
+    String password = bc.encode(login.getPassword());
+    return ResponseEntity.ok(login);
   }
 
 }
