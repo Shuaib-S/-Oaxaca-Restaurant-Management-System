@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OAXACA | Authentic Mexican Cuisine</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/loginConfirmation.css">
     <link rel="stylesheet" href="css/globals.css">
     <link
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap"
@@ -57,19 +57,19 @@
             <h1 class="restaurant-name">OAXACA</h1>
             <p class="restaurant-tagline">Authentic Mexican Cuisine</p>
         </header>
-        <div class="flex-box">
-            <div class="login-info">
-                <form id="loginForm">
-                    <label for="username">Username:</label><br>
-                    <input type="text" id="username" name="username" required><br>
-                    <label for="password">Password:</label><br>
-                    <input type="password" id="password" name="password" required><br><br>
-                    <input type="submit" class="nav-button" value="Submit">
-                </form>
-                <p id="responseMessage"></p>
-            </div>
+
+        <div class="confirmation">
+            <p id="responseMessage"> Logged in successfully. </p>
         </div>
 
+        <div class="flex-box">
+            <div class="continue-button">
+                <a href="/waiters.html" class="nav-link nav-button">
+                    <span>Continue</span>
+                </a>
+            </div>
+        </div>
+        
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
@@ -101,7 +101,6 @@
     </footer>
     </div>
     
-<script src="js/login.js"></script>
 </body>
 
 </html>
