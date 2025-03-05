@@ -21,18 +21,19 @@ async function fetchOrders() {
 
         orders.forEach(order => {
             const orderElement = document.createElement('div');
-            orderElement.className = 'order';
+            orderElement.className = 'order-card';
+
             orderElement.innerHTML = `
-                <div class="order-header">
+                <div class="order-card-header">
                     <strong>Order #${order.id}</strong> - Table ${order.tableNumber}
                 </div>
-                <div class="order-items">
-                    Items: ${formatOrderItems(order.items)}
-                </div>
-                <div class="order-time">
-                    Ordered: ${formatOrderTime(order.orderTime)} (${formatTimeSinceOrder(order.timeSinceOrder)})
+                <div class="order-card-body">
+                    <p><strong>Items:</strong> ${formatOrderItems(order.items)}</p>
+                    <p><strong>Ordered:</strong> ${formatOrderTime(order.orderTime)} 
+                    (${formatTimeSinceOrder(order.timeSinceOrder)})</p>
                 </div>
             `;
+
             ordersContainer.appendChild(orderElement);
         });
 
@@ -41,6 +42,7 @@ async function fetchOrders() {
         document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
     }
 }
+
 
 function formatOrderItems(items) {
     return Object.entries(items).map(([name, quantity]) => `${name} x${quantity}`).join(', ');
