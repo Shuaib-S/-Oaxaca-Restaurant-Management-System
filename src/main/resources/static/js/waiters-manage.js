@@ -52,7 +52,8 @@ function formatOrderItems(items) {
 
 function formatOrderTime(timestamp) {
     const date = new Date(timestamp);
-    return date.toLocaleString('en-GB');  // British date format
+    return date.toLocaleString();
+
 }
 
 function formatTimeSinceOrder(durationString) {
