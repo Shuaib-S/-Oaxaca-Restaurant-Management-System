@@ -14,13 +14,14 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
             body: JSON.stringify(loginData)
         })
         .then(async response => {
-            if (response.ok) {
-            const redirect = await response.text(); 
-            window.location.href = redirect; 
-            console.log("HELLO WORLD"); // I'll remove console logs later, I'm using these to test which statement the frontend uses when entering test data. Backend requires a security config before further progress can be made.
-            } else {
-            document.getElementById("responseMessage").innerText = "Login failed. Please try again.";
-            console.log("HELLO");
+            if ((response.ok)) {
+                const redirect = await response.text(); 
+                if (redirect == "http://localhost:8080/login-confirmation.html") {
+                    window.location.href = redirect; 
+                } 
+                else {
+                    document.getElementById("responseMessage").innerText = "Login failed. Please try again.";
+                }
             }
         })
         .catch (error => {
