@@ -11,47 +11,51 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "logins")
 public class Login {
-    @Id
-    int id;
+  @Id
+  int id;
 
-    private String username;
-    private String password;
+  private String username;
+  private String password;
 
-      /**
+  /**
    * 
    * Constructor that adds the id, username and password of the login.
    * 
    * @param username The username of a staff member.
    * @param password The password of a staff member.
    */
-    public Login(int id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-    }
+  public Login(int id, String username, String password) {
+    this.id = id;
+    this.username = username;
+    this.password = password;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public Login() {
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  }
 
-    public String getUsername() {
-        return username;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public String getUsername() {
+    return username;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
 }
