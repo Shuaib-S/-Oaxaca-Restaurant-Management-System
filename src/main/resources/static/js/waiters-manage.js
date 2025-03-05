@@ -32,6 +32,9 @@ async function fetchOrders() {
                     <p><strong>Ordered:</strong> ${formatOrderTime(order.orderTime)} 
                     (${formatTimeSinceOrder(order.timeSinceOrder)})</p>
                 </div>
+                <div class="order-card-footer">
+                    <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Delete Order</button>
+                </div>
             `;
 
             ordersContainer.appendChild(orderElement);
@@ -43,14 +46,13 @@ async function fetchOrders() {
     }
 }
 
-
 function formatOrderItems(items) {
     return Object.entries(items).map(([name, quantity]) => `${name} x${quantity}`).join(', ');
 }
 
 function formatOrderTime(timestamp) {
     const date = new Date(timestamp);
-    return date.toLocaleString();
+    return date.toLocaleString('en-GB');  // British date format
 }
 
 function formatTimeSinceOrder(durationString) {
@@ -70,5 +72,31 @@ function generateTablesOverview() {
         tableDiv.className = 'table';
         tableDiv.textContent = `Table ${i}`;
         tablesContainer.appendChild(tableDiv);
+    }
+}
+
+async function deleteOrder(orderId) {
+    if (!confirm(`Are you sure you want to delete Order #${orderId}?`)) {
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/DeleteOrder', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(orderId)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete order');
+        }
+
+        alert(`Order #${orderId} deleted successfully!`);
+        fetchOrders();  // Refresh orders list after deletion
+    } catch (error) {
+        console.error('Error deleting order:', error);
+        alert('Failed to delete order.');
     }
 }
