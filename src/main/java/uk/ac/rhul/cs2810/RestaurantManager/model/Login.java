@@ -1,9 +1,9 @@
 package uk.ac.rhul.cs2810.RestaurantManager.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
 
 /**
  * A class that handles the logins of staff members in the restaurant.
@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 @Table(name = "logins")
 public class Login {
   @Id
+  @GeneratedValue
   int id;
 
   private String username;

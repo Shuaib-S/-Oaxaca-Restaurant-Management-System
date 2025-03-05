@@ -28,3 +28,8 @@ CREATE TABLE items (id INT PRIMARY KEY,
                                                            category VARCHAR(255),
                                                                     calories INT, allergens VARCHAR(255));
 
+-- Logins table
+
+CREATE TABLE logins ( id SERIAL PRIMARY KEY,
+                                        username VARCHAR(255) NOT NULL UNIQUE,
+                                                                       password VARCHAR(255) NOT NULL);

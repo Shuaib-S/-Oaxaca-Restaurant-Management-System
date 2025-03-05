@@ -19,7 +19,6 @@ import uk.ac.rhul.cs2810.RestaurantManager.model.Login;
 @RequestMapping("/api/login")
 public class LoginController {
 
-
   private final LoginRepository loginRepository;
 
   @Autowired
@@ -52,6 +51,5 @@ public class LoginController {
     }
     return null;
   }
-
 
 }
