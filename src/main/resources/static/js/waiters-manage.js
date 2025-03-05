@@ -59,4 +59,14 @@ function formatTimeSinceOrder(durationString) {
     return `${hours}${minutes}${seconds}`.trim();
 }
 
+function generateTablesOverview() {
+    const tablesContainer = document.getElementById('tables-container');
+    tablesContainer.innerHTML = '';
 
+    for (let i = 1; i <= 12; i++) {
+        const tableDiv = document.createElement('div');
+        tableDiv.className = 'table';
+        tableDiv.textContent = `Table ${i}`;
+        tablesContainer.appendChild(tableDiv);
+    }
+}
