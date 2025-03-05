@@ -1,0 +1,72 @@
+/* Premium Restaurant Theme */
+:root {
+    --primary: #C19A6B;     /* Warm gold */
+    --secondary: #4A4A4A;   /* Charcoal */
+    --accent: #9B2335;      /* Deep Mexican red */
+    --background: #FAFAFA;  /* Off-white */
+    --text: #2C2C2C;        /* Near-black */
+    --light: #FFFFFF;       /* Pure white */
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* Header Section */
+header {
+    padding: 20px;
+    background: var(--primary);
+    color: var(--light);
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Navigation Bar  */
+.nav {
+    background-color: var(--primary);
+    color: var(--light);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-weight: bold;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+}
+
+.nav-links a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: var(--light);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+}
+
+
+/*  Placeholder text for errors because cool */
+.error-message {
+    color: var(--accent);
+    font-weight: bold;
+    text-align: center;
+}
+
+

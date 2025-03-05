@@ -1,0 +1,62 @@
+document.addEventListener('DOMContentLoaded', function () {
+    fetchOrders();
+    generateTablesOverview();
+});
+
+async function fetchOrders() {
+    try {
+        const response = await fetch('/api/CurrentOrders');
+        if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+        }
+
+        const orders = await response.json();
+        const ordersContainer = document.getElementById('orders-container');
+        ordersContainer.innerHTML = '';
+
+        if (orders.length === 0) {
+            ordersContainer.innerHTML = '<p>No orders found.</p>';
+            return;
+        }
+
+        orders.forEach(order => {
+            const orderElement = document.createElement('div');
+            orderElement.className = 'order';
+            orderElement.innerHTML = `
+                <div class="order-header">
+                    <strong>Order #${order.id}</strong> - Table ${order.tableNumber}
+                </div>
+                <div class="order-items">
+                    Items: ${formatOrderItems(order.items)}
+                </div>
+                <div class="order-time">
+                    Ordered: ${formatOrderTime(order.orderTime)} (${formatTimeSinceOrder(order.timeSinceOrder)})
+                </div>
+            `;
+            ordersContainer.appendChild(orderElement);
+        });
+
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
+    }
+}
+
+function formatOrderItems(items) {
+    return Object.entries(items).map(([name, quantity]) => `${name} x${quantity}`).join(', ');
+}
+
+function formatOrderTime(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleString();
+}
+
+function formatTimeSinceOrder(durationString) {
+    const match = durationString.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+    const hours = match[1] ? match[1].replace('H', ' hours ') : '';
+    const minutes = match[2] ? match[2].replace('M', ' minutes ') : '';
+    const seconds = match[3] ? match[3].replace('S', ' seconds') : '';
+    return `${hours}${minutes}${seconds}`.trim();
+}
+
+
