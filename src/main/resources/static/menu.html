@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OAXACA | Menu - Authentic Mexican Cuisine</title>
-    <link rel="stylesheet" href="css/globals.css">
+    <title>OAXACA | Authentic Mexican Cuisine</title>
     <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/globals.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap"
         rel="stylesheet">
@@ -14,13 +14,7 @@
 </head>
 
 <body>
-    <!-- Mobile cart toggle -->
-    <button class="mobile-cart-toggle" id="mobile-cart-toggle">
-        <i class="fas fa-shopping-bag"></i>
-        <span class="cart-item-count">0</span>
-    </button>
-
-    <!-- Cart Sidebar -->
+    <!-- Cart Section -->
     <div class="cart-container">
         <div class="cart">
             <div class="cart-header">
@@ -32,8 +26,7 @@
 
             <div class="cart-content">
                 <div class="cart-items">
-                    <!-- Cart items will be added here dynamically -->
-                    <div class="empty-cart">Your cart is empty</div>
+
                 </div>
 
                 <div class="cart-summary">
@@ -54,32 +47,35 @@
                 <div class="cart-actions">
                     <label for="table-number">Table Number:</label>
                     <select id="table-number">
-                        <!-- Table numbers will be added here dynamically -->
+
                     </select>
+
 
                     <button id="submit-order" class="submit-btn">
                         <i class="fas fa-check-circle"></i>
                         Place Order
                     </button>
                 </div>
+
+
             </div>
         </div>
     </div>
 
+
+
+    <!-- Mobile cart toggle -->
+    <button class="mobile-cart-toggle" id="mobile-cart-toggle">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-item-count">0</span>
+    </button>
+    </div>
+
     <div class="main-page">
-        <!-- Navigation -->
         <nav class="nav">
             <div class="nav-content">
                 <a href="/" class="nav-logo">OAXACA</a>
                 <div class="nav-links">
-                    <a href="/" class="nav-link">
-                        <i class="fas fa-home"></i>
-                        <span>Home</span>
-                    </a>
-                    <a href="/menu.html" class="nav-link">
-                        <i class="fas fa-utensils"></i>
-                        <span>Menu</span>
-                    </a>
                     <a href="/contact" class="nav-link">
                         <i class="fas fa-phone"></i>
                         <span>Contact</span>
@@ -88,24 +84,12 @@
                         <i class="fas fa-shopping-bag"></i>
                         <span>Order Now</span>
                     </a>
-                    <a href="/waiters-login.html" class="nav-link">
-                        <i class="fas fa-user"></i>
-                        <span>Login</span>
-                    </a>
                 </div>
                 <button class="mobile-menu-button">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
             <div class="mobile-menu">
-                <a href="/" class="nav-link">
-                    <i class="fas fa-home"></i>
-                    <span>Home</span>
-                </a>
-                <a href="/menu.html" class="nav-link">
-                    <i class="fas fa-utensils"></i>
-                    <span>Menu</span>
-                </a>
                 <a href="/contact" class="nav-link">
                     <i class="fas fa-phone"></i>
                     <span>Contact</span>
@@ -114,24 +98,20 @@
                     <i class="fas fa-shopping-bag"></i>
                     <span>Order Now</span>
                 </a>
-                <a href="/waiters-login.html" class="nav-link">
-                    <i class="fas fa-user"></i>
-                    <span>Login</span>
-                </a>
             </div>
         </nav>
 
         <!-- Header Section -->
         <header class="header">
             <h1 class="restaurant-name">OAXACA</h1>
-            <p class="restaurant-tagline">Authentic Mexican Cuisine in the Heart of London</p>
+            <p class="restaurant-tagline">Authentic Mexican Cuisine</p>
         </header>
 
         <!-- Menu Section -->
         <main class="menu-container">
             <h2 class="menu-title">Our Menu</h2>
 
-            <!-- Category Filter Buttons -->
+            <!-- Filter Buttons -->
             <div class="filter-container" id="filters">
                 <button class="filter-btn active" data-category="all">
                     <i class="fas fa-th-large"></i> All Menu
@@ -155,8 +135,6 @@
                     <i class="fas fa-cocktail"></i> Beverages
                 </button>
             </div>
-
-            <!-- Allergen Filter Buttons -->
             <div id="allergen-filters">
                 <button class="allergen-btn active" data-allergen="null">No Filter</button>
                 <button class="allergen-btn" data-allergen="eggs">No Eggs</button>
@@ -165,10 +143,19 @@
                 <button class="allergen-btn" data-allergen="dairy">No Dairy</button>
             </div>
 
-            <!-- Menu Grid -->
-            <div class="menu-grid" id="grid">
-                <!-- Menu items will be loaded dynamically -->
-            </div>
+            <div id="call-assistance">
+                <button id="help-btn">Call Assistance</button>
+                <div id="help-popup" class="popup">
+                    <div class="popup-content">
+                        <span class="close">&times;</span>
+                        <p>A waiter is on their way to assist you.</p>
+                    </div>
+                </div>
+
+                <!-- Menu Grid -->
+                <div class="menu-grid" id="grid">
+
+                </div>
         </main>
 
         <!-- Footer -->
@@ -176,48 +163,31 @@
             <div class="footer-content">
                 <div class="footer-info">
                     <h3>OAXACA</h3>
-                    <p>Authentic Mexican cuisine serving traditional flavors with modern flair since 2010.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    </div>
+                    <p>Authentic Mexican cuisine in the heart of the city.</p>
                 </div>
-                
                 <div class="footer-info">
                     <h3>Hours</h3>
                     <ul class="footer-links">
-                        <li>Monday - Thursday: 11:30am - 10pm</li>
-                        <li>Friday - Saturday: 11:30am - 11pm</li>
-                        <li>Sunday: 12pm - 9pm</li>
+                        <li>Mon-Thu: 11:30am - 10pm</li>
+                        <li>Fri-Sat: 11:30am - 11pm</li>
+                        <li>Sun: 12pm - 9pm</li>
                     </ul>
                 </div>
-                
                 <div class="footer-info">
                     <h3>Contact</h3>
                     <ul class="footer-links">
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Restaurant Street, London, UK</li>
-                        <li><i class="fas fa-phone"></i> (020) 1234-5678</li>
-                        <li><i class="fas fa-envelope"></i> info@oaxaca.com</li>
+                        <li>123 Restaurant Street</li>
+                        <li>London, UK</li>
+                        <li>Tel: (020) 1234-5678</li>
+                        <li>Email: info@oaxaca.com</li>
                     </ul>
                 </div>
-                
-                <div class="footer-info">
-                    <h3>Newsletter</h3>
-                    <p>Subscribe to receive updates on special events and exclusive offers.</p>
-                    <div class="footer-newsletter">
-                        <form>
-                            <input type="email" placeholder="Your email address">
-                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
-                        </form>
-                    </div>
-                </div>
             </div>
-            
             <div class="footer-bottom">
-                <p>&copy; 2025 OAXACA Mexican Restaurant. All rights reserved.</p>
+                <p>&copy; 2025 OAXACA. All rights reserved.</p>
             </div>
         </footer>
+
     </div>
 
     <script src="js/menu.js"></script>
