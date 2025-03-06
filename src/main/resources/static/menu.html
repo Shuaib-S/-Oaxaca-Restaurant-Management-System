@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OAXACA | Authentic Mexican Cuisine</title>
-    <link rel="stylesheet" href="css/menu.css">
+    <title>OAXACA | Menu - Authentic Mexican Cuisine</title>
     <link rel="stylesheet" href="css/globals.css">
+    <link rel="stylesheet" href="css/menu.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap"
         rel="stylesheet">
@@ -14,7 +14,13 @@
 </head>
 
 <body>
-    <!-- Cart Section -->
+    <!-- Mobile cart toggle -->
+    <button class="mobile-cart-toggle" id="mobile-cart-toggle">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-item-count">0</span>
+    </button>
+
+    <!-- Cart Sidebar -->
     <div class="cart-container">
         <div class="cart">
             <div class="cart-header">
@@ -26,7 +32,8 @@
 
             <div class="cart-content">
                 <div class="cart-items">
-
+                    <!-- Cart items will be added here dynamically -->
+                    <div class="empty-cart">Your cart is empty</div>
                 </div>
 
                 <div class="cart-summary">
@@ -47,31 +54,20 @@
                 <div class="cart-actions">
                     <label for="table-number">Table Number:</label>
                     <select id="table-number">
-
+                        <!-- Table numbers will be added here dynamically -->
                     </select>
-
 
                     <button id="submit-order" class="submit-btn">
                         <i class="fas fa-check-circle"></i>
                         Place Order
                     </button>
                 </div>
-
-
             </div>
         </div>
     </div>
 
-
-
-    <!-- Mobile cart toggle -->
-    <button class="mobile-cart-toggle" id="mobile-cart-toggle">
-        <i class="fas fa-shopping-bag"></i>
-        <span class="cart-item-count">0</span>
-    </button>
-    </div>
-
     <div class="main-page">
+        <!-- Navigation -->
         <nav class="nav">
             <div class="nav-content">
                 <a href="/" class="nav-logo">OAXACA</a>
@@ -83,6 +79,10 @@
                     <a href="/menu.html" class="nav-link nav-button">
                         <i class="fas fa-shopping-bag"></i>
                         <span>Order Now</span>
+                    </a>
+                    <a href="/waiters-login.html" class="nav-link nav-button">
+                        <i class="fas fa-user"></i>
+                        <span>Login</span>
                     </a>
                 </div>
                 <button class="mobile-menu-button">
@@ -98,6 +98,10 @@
                     <i class="fas fa-shopping-bag"></i>
                     <span>Order Now</span>
                 </a>
+                <a href="/waiters-login.html" class="nav-link nav-button">
+                    <i class="fas fa-user"></i>
+                    <span>Login</span>
+                </a>
             </div>
         </nav>
 
@@ -111,7 +115,7 @@
         <main class="menu-container">
             <h2 class="menu-title">Our Menu</h2>
 
-            <!-- Filter Buttons -->
+            <!-- Category Filter Buttons -->
             <div class="filter-container" id="filters">
                 <button class="filter-btn active" data-category="all">
                     <i class="fas fa-th-large"></i> All Menu
@@ -135,6 +139,8 @@
                     <i class="fas fa-cocktail"></i> Beverages
                 </button>
             </div>
+
+            <!-- Allergen Filter Buttons -->
             <div id="allergen-filters">
                 <button class="allergen-btn active" data-allergen="null">No Filter</button>
                 <button class="allergen-btn" data-allergen="eggs">No Eggs</button>
@@ -143,10 +149,9 @@
                 <button class="allergen-btn" data-allergen="dairy">No Dairy</button>
             </div>
 
-
             <!-- Menu Grid -->
             <div class="menu-grid" id="grid">
-
+                <!-- Menu items will be loaded dynamically -->
             </div>
         </main>
 
@@ -179,7 +184,6 @@
                 <p>&copy; 2025 OAXACA. All rights reserved.</p>
             </div>
         </footer>
-
     </div>
 
     <script src="js/menu.js"></script>
