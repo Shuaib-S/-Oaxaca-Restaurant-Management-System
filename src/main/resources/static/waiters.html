@@ -11,10 +11,11 @@
   />
   <link
     rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
   />
   
   <link rel="stylesheet" href="css/waiters.css" />
+  <link rel="stylesheet" href="css/globals.css" />
 </head>
 
 <body>
@@ -25,7 +26,7 @@
 
   <!-- Header Section -->
   <header class="header">
-    <h1 class="restaurant-name">OAXACA - Waiters Panel</h1>
+    <h1 class="restaurant-name">OAXACA Waiters</h1>
     <p class="restaurant-tagline">Manage Menu Visibility</p>
   </header>
 
@@ -33,7 +34,7 @@
   <main class="menu-container">
     <h2 class="menu-title">Manage Menu Items</h2>
 
-    <!--Add and remove tabs-->
+    <!--tabs-->
     <div class="tabs">
       <button class="tab active" data-target="#removeTab">
         <i class="fas fa-minus-circle"></i> Remove
@@ -41,7 +42,31 @@
       <button class="tab" data-target="#addTab">
         <i class="fas fa-plus-circle"></i> Add
       </button>
+      <button class="tab" data-target="#ordersTab">
+        <i class="fa-solid fa-shopping-cart"></i> Orders
+      </button>
     </div>
+    
+    <nav class="nav">
+      <div class="nav-content">
+        <a href="/" class="nav-logo">OAXACA</a>
+        <div class="nav-links">
+          <a href="/contact" class="nav-link">
+            <i class="fas fa-phone"></i>
+            <span>Contact</span>
+          </a>
+        </div>
+        <button class="mobile-menu-button">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      <div class="mobile-menu">
+        <a href="/contact" class="nav-link">
+          <i class="fas fa-phone"></i>
+          <span>Contact</span>
+        </a>
+      </div>
+    </nav>
 
     <!--remove items placeholder-->
     <div id="removeTab" class="tab-content active">
@@ -131,22 +156,7 @@
     </div>
   </footer>
 
-  <!--removes the old tab from the page and then displays the new one clicked-->>
-  <script>
-    const tabs = document.querySelectorAll('.tab');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tabContents.forEach(tc => tc.classList.remove('active'));
-
-        tab.classList.add('active');
-        const target = tab.getAttribute('data-target');
-        document.querySelector(target).classList.add('active');
-      });
-    });
-  </script>
+  <script src="js/waiters.js"> </script>
 </body>
 <script src="js/waiters.js"></script>
 </html>
