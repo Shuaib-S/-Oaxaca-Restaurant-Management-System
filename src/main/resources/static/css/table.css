@@ -1,14 +1,194 @@
-.table-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.table-header {
+.title-container {
     display: flex;
     justify-content: center;
 }
 
 .list-container {
-    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    min-height: 500px; /* Ensure minimum height to prevent content jump */
+    position: relative; /* Establish positioning context */
+}
+
+/* Menu Grid */
+.list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 300px));
+    gap: 2.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
     justify-content: center;
+}
+
+/* Menu Cards */
+.menu-item {
+    background: var(--light);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.menu-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.item-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.menu-item:hover .item-image {
+    transform: scale(1.05);
+}
+
+.item-content {
+    padding: 1.5rem;
+}
+
+.item-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.item-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    height: 69px;
+}
+
+.item-price {
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 1.2rem;
+}
+
+.item-meta {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    font-size: 0.8rem;
+    color: #888;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+/* Table drop down menu -- needs work*/
+#table-number {
+    width: 100%;
+    padding: 8px;
+    font-size: 21px;
+}
+
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .restaurant-name {
+        font-size: 3rem;
+    }
+
+    .menu-container {
+        padding: 2rem 1rem;
+    }
+
+    .filter-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Loading State */
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    color: var(--secondary);
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.loading::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.remove-item {
+    min-width: 50px;
+    min-height: 50px;
+    border-radius: 2px;
+    background: red;
+}
+
+.fa-minus {
+    color: white;
+}
+
+.add-item {
+    min-width: 50px;
+    min-height: 50px;
+    border-radius: 2px;
+    background: green;
+}
+
+.fa-plus {
+    color: white;
+}
+
+.add-note {
+    min-width: 50px;
+    border-radius: 2px;
+    min-height: 50px;
+    background: black;
+}
+
+.fa-sticky-note {
+    color: white;
 }

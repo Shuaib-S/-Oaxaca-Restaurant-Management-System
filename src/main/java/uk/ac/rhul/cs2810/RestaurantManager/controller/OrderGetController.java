@@ -53,6 +53,7 @@ public class OrderGetController {
     return orderRepository.findByTableNumber(tableId);
   }
 
+
   public Map<String, Integer> itemsToMap(Order order) {
     Map<String, Integer> itemQuant = new HashMap<>();
     for (Item item : order.getItemList()) {

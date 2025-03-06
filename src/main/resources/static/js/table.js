@@ -16,16 +16,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const order = await response.json();
 
-        const orderList = document.getElementById("order-list");
+        const orderList = document.getElementById("list-grid");
         orderList.innerHTML = "";
+
+        order[0].itemList.forEach((item, index) => {
+            const element = createItemElement(item, index);
+            element.style.animationDelay = `${index * 100}ms`;
+            orderList.appendChild(element);
+        })
+
 
         console.log(order);
 
-        order[0].itemList.forEach(item => {
-            const li = document.createElement("li");
-            li.textContent = `ITEM: ${item.title} - PRICE: ${item.price}`;
-            orderList.appendChild(li);
-        });
+        createItemElement(order);
 
         } catch (error) {
             console.error('Error fetching order:', error);
@@ -34,3 +37,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fetchOrder();
 })
+
+function createItemElement(item, index) {
+    const element = document.createElement('div');
+    element.className = 'menu-item';
+    element.dataset.itemId = index;
+
+    element.innerHTML = `
+        <img src="images/menu_placeholder.jpg" 
+             alt="${item.title}" 
+             class="item-image"
+             loading="lazy">
+        <div class="item-content">
+            <h3 class="item-title">${item.title}</h3>
+            <p class="item-description">${item.description}</p>
+            <div class="item-price">${formatPrice(item.price)}</div>
+            <div class="item-meta">
+                <span class="calories">${item.calories} cal</span>
+                ${item.allergens ? `<span class="nutrition-info">Contains: ${item.allergens}</span>` : `Contains: No allergens`}
+            </div>
+            <div class="button-container">
+            <button class="remove-item" data-item-id="${index}">
+                <i class='fas fa-minus'></i>
+            </button>
+            <button class="add-note" data-item-id="${index}">
+                <i class='fas fa-sticky-note'></i>
+            </button>
+            <button class="add-item" data-item-id="${index}">
+                <i class='fas fa-plus'></i>
+            </button>
+            
+            </div>
+        </div>
+    `;
+
+    return element;
+}
+
+// Format price to GBP
+function formatPrice(price) {
+    return new Intl.NumberFormat('en-GB', {
+        style: 'currency',
+        currency: 'GBP',
+        minimumFractionDigits: 2
+    }).format(price);
+}
