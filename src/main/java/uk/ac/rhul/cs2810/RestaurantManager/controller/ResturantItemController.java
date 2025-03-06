@@ -42,8 +42,7 @@ public class ResturantItemController {
   }
 
   /**
-   * Updates only the active status of an item. Expected JSON payload: { "active": true } or {
-   * "active": false }
+   * Updates the active status of an item. Expected JSON: { "active": true } or { "active": false }
    */
   @PatchMapping("/{id}/active")
   public ResponseEntity<Item> updateActiveStatus(@PathVariable("id") Integer id,

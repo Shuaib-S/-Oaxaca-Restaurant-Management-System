@@ -39,6 +39,14 @@
       </button>
     </div>
     
+    <!--content beneath tabs-->
+    <div id="removeTab" class="tab-content active">
+      <div class="menu-grid"></div>
+    </div>
+    <div id="addTab" class="tab-content">
+      <div class="menu-grid"></div>
+    </div>
+    
     <nav class="nav">
       <div class="nav-content">
         <a href="/" class="nav-logo">OAXACA</a>
@@ -48,60 +56,6 @@
         </div>
       </div>
     </nav>
-
-    <!--remove items placeholder-->
-    <div id="removeTab" class="tab-content active">
-      <div class="menu-grid">
-        <div class="menu-item active" data-item-id="0">
-          <img
-            src="images/menu_placeholder.jpg"
-            alt="Chicken Tacos"
-            class="item-image"
-            loading="lazy"
-          />
-          <div class="item-content">
-            <h3 class="item-title">Chicken Tacos</h3>
-            <p class="item-description">
-              Delicious grilled chicken tacos with fresh salsa.
-            </p>
-            <div class="item-price">£8.99</div>
-            <div class="item-meta">
-              <span class="calories">450 cal</span>
-            </div>
-            <button class="toggle-visibility-btn">
-              Remove
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!--add items placeholder-->
-    <div id="addTab" class="tab-content">
-      <div class="menu-grid">
-        <div class="menu-item inactive" data-item-id="1">
-          <img
-            src="images/menu_placeholder.jpg"
-            alt="Veggie Burrito"
-            class="item-image"
-            loading="lazy"
-          />
-          <div class="item-content">
-            <h3 class="item-title">Veggie Burrito</h3>
-            <p class="item-description">
-              A hearty burrito filled with seasonal veggies and beans.
-            </p>
-            <div class="item-price">£7.99</div>
-            <div class="item-meta">
-              <span class="calories">400 cal</span>
-            </div>
-            <button class="toggle-visibility-btn">
-              Add
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <h2 class="table-map-header">Table Map</h2>
     <div class="table-map" id="table-map"></div>
@@ -139,5 +93,4 @@
 
   <script src="js/waiters.js"> </script>
 </body>
-<script src="js/waiters.js"></script>
 </html>
