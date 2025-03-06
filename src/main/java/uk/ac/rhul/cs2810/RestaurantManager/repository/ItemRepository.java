@@ -13,4 +13,21 @@ public interface ItemRepository extends CrudRepository<Item, Integer> {
    * @return A list of items matching the specified category.
    */
   List<Item> findByCategory(String category);
+
+  /**
+   * Retrieves a list of items by their active status.
+   *
+   * @param active The active status to filter items by.
+   * @return A list of items matching the specified active status.
+   */
+  List<Item> findByActive(boolean active);
+
+  /**
+   * Retrieves a list of items by category and active status.
+   *
+   * @param category The category to filter items by.
+   * @param active The active status to filter items by.
+   * @return A list of items matching both category and active status.
+   */
+  List<Item> findByCategoryAndActive(String category, boolean active);
 }
