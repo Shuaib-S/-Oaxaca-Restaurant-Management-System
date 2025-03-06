@@ -234,6 +234,10 @@ function orderSystem() {
     });
 
     // Update totals
+    const subtotal = totalPrice * 0.8;
+    const VAT = totalPrice * 0.2;
+    document.getElementById("subtotal-amount").innerHTML = formatPrice(subtotal);
+    document.getElementById("tax-amount").innerHTML = formatPrice(VAT);
     document.getElementById("order-total").innerHTML = formatPrice(totalPrice);
 
     // Open cart when items are added
