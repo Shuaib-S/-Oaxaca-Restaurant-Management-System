@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function fetchOrders() {
     try {
-        const response = await fetch('/api/CurrentOrders');
+        const response = await fetch('/api/CurrentOrders/all');
         if (!response.ok) {
             throw new Error('Failed to fetch orders');
         }
