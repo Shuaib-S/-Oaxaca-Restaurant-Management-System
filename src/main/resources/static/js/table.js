@@ -10,4 +10,5 @@ document.addEventListener("DOMContentLoaded", function () {
     async function fetchOrder() {
         // CODE TO BE ADDED HERE WHEN THE BACKEND EXISTS
     }
+
 })
