@@ -1,3 +1,11 @@
+fetch('api/login/validate')
+    .then(response => response.json())
+    .then(data => {
+        if (data.authenticated) {
+            window.location.href= 'login-confirmation.html';
+        }
+    })
+
 document.getElementById("loginForm").addEventListener("submit", async function(event) {
     event.preventDefault(); 
 
@@ -13,17 +21,14 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
             },
             body: JSON.stringify(loginData)
         })
-        .then(async response => {
-            if ((response.ok)) {
-                const redirect = await response.text(); 
-                if (redirect == "http://localhost:8080/login-confirmation.html") {
-                    window.location.href = redirect; 
-                } 
-                else {
+        .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = data.redirect;
+                } else {
                     document.getElementById("responseMessage").innerText = "Login failed. Please try again.";
                 }
-            }
-        })
+            })
         .catch (error => {
             console.error("Error:", error);
             document.getElementById("responseMessage").innerText = "An error occurred. Please try again.";

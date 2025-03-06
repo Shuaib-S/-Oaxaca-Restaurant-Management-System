@@ -35,26 +35,36 @@ public class AuthenticationFilter implements Filter {
     HttpServletResponse httpResponse = (HttpServletResponse) response;
 
     String requestURI = httpRequest.getRequestURI();
-    if (requestURI.contains("/api/login")) {
+
+    if (requestURI.endsWith("/waiters-login.html") ||
+        requestURI.contains("/api/login") ||
+        requestURI.endsWith("/menu.html") ||
+        requestURI.endsWith(".css") ||
+        requestURI.endsWith(".js")) {
       chain.doFilter(request, response);
+      return;
     }
 
-    String sessionId = null;
-    Cookie[] cookies = httpRequest.getCookies();
+    if (isProtectedResource(requestURI)) {
+      String sessionId = null;
+      Cookie[] cookies = httpRequest.getCookies();
 
-    if (cookies != null) {
-      for (Cookie cookie : cookies) {
-        if ("RESTAURANT_SESSION".equals(cookie.getName())) {
-          sessionId = cookie.getValue();
-          break;
+      if (cookies != null) {
+        for (Cookie cookie : cookies) {
+          if ("RESTAURANT_SESSION".equals(cookie.getName())) {
+            sessionId = cookie.getValue();
+            break;
+          }
         }
       }
-    }
 
-    if (sessionId != null && sessionService.isSessionValid(sessionId)) {
-      chain.doFilter(request, response);
+      if (sessionId != null && sessionService.isSessionValid(sessionId)) {
+        chain.doFilter(request, response);
+      } else {
+        httpResponse.sendRedirect("/waiters-login.html");
+      }
     } else {
-      httpResponse.sendRedirect("/login.html");
+      chain.doFilter(request, response);
     }
   }
 
