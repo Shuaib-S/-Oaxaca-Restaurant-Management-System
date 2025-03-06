@@ -8,7 +8,29 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function fetchOrder() {
-        // CODE TO BE ADDED HERE WHEN THE BACKEND EXISTS
+        try {
+        const response = await fetch(`/api/CurrentOrders/table/${tableId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+            }
+
+        const order = await response.json();
+
+        const orderList = document.getElementById("order-list");
+        orderList.innerHTML = "";
+
+        console.log(order);
+
+        order[0].itemList.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = `ITEM: ${item.title} - PRICE: ${item.price}`;
+            orderList.appendChild(li);
+        });
+
+        } catch (error) {
+            console.error('Error fetching order:', error);
+        }
     }
 
+    fetchOrder();
 })

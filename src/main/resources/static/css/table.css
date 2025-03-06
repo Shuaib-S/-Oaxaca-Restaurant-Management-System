@@ -1,4 +1,14 @@
 .table-container {
     display: flex;
+    flex-direction: column;
+}
+
+.table-header {
+    display: flex;
+    justify-content: center;
+}
+
+.list-container {
+    display: flex;
     justify-content: center;
 }
