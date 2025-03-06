@@ -165,9 +165,18 @@ function createMenuItemElement(item, index) {
 
         let itemData = {};
         if (currentCategory === "all") {
-            itemData = allItems[itemId];
+            if (currentAllergen === "null") {
+                itemData = allItems[itemId];
+            } else {
+                itemData = filteredItems[itemId];
+            }
         } else {
-            itemData = filteredItems[itemId];
+            if (currentAllergen === "null") {
+                itemData = allItems[itemId];
+            } else {
+                itemData = filteredItems[itemId];
+            }
+
         }
 
         quantItems.set(itemData, (quantItems.get(itemData) || 0) + 1);
