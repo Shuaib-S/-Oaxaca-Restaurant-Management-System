@@ -122,6 +122,8 @@ function filterItems(items) {
         );
     }
 
+    console.log(filtered);
+
     return filtered;
 }
 
@@ -190,7 +192,7 @@ function createMenuItemElement(item, index) {
             }
         } else {
             if (currentAllergen === "null") {
-                itemData = allItems[itemId];
+                itemData = filteredItems[itemId];
             } else {
                 itemData = filteredItems[itemId];
             }
