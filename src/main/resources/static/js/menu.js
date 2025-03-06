@@ -4,6 +4,8 @@ let allItems = [];
 let filteredItems = [];
 const cartArray = [];
 const quantArray = [];
+let currentAllergen = 'null';
+
 
 // DOM Elements
 const grid = document.getElementById('grid');
@@ -41,7 +43,7 @@ async function fetchItems() {
 }
 
 // Navbar functionality
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const nav = document.querySelector('.nav');
     const mobileMenuButton = document.querySelector('.mobile-menu-button');
     const mobileMenu = document.querySelector('.mobile-menu');
@@ -64,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Cart functionality
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const cart = document.querySelector('.cart');
     const cartToggle = document.getElementById('cart-toggle');
     const mobileCartToggle = document.getElementById('mobile-cart-toggle');
@@ -105,11 +107,24 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('cartUpdated', updateCartState);
 });
 
-// Filter items by category
+// Filter items by category and allergen
 function filterItems(items) {
-    if (currentCategory === 'all') return items;
-    return items.filter(item => item.category === currentCategory);
+    let filtered = items;
+
+    if (currentCategory !== 'all') {
+        filtered = filtered.filter(item => item.category === currentCategory);
+    }
+
+    if (currentAllergen !== 'null') {
+        filtered = filtered.filter(item =>
+            // Allergens sometimes have captials, sometimes dont the in database. 
+            !item.allergens || !item.allergens.toLowerCase().includes(currentAllergen)
+        );
+    }
+
+    return filtered;
 }
+
 
 // Format price to GBP
 function formatPrice(price) {
@@ -249,6 +264,30 @@ async function loadItems() {
     }
 }
 
+//Allergen filter event handler 
+document.getElementById('allergen-filters').addEventListener('click', (e) => {
+    const button = e.target.closest('.allergen-btn');
+    if (!button) return;
+    document.querySelector('.allergen-btn.active')?.classList.remove('active');
+    button.classList.add('active');
+    currentAllergen = button.dataset.allergen;
+    const currentScrollPosition = window.scrollY;
+    grid.style.opacity = '0';
+    grid.style.transform = 'translateY(10px)';
+
+    setTimeout(() => {
+        loadItems().then(() => {
+            requestAnimationFrame(() => {
+                grid.style.opacity = '1';
+                grid.style.transform = 'translateY(0)';
+                window.scrollTo(0, currentScrollPosition);
+            });
+        });
+    }, 200);
+});
+
+
+
 // Filter button click handler
 document.getElementById('filters').addEventListener('click', (e) => {
     e.preventDefault(); // Prevent default behavior
@@ -319,12 +358,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const quantItemsArray = Array.from(quantItems, ([item, quantity]) => ({ item, quantity: quantity }));
-        
-        
+
+
 
 
         const orderData = {
-            tableNumber: parseInt(tableNumberSelect.value), 
+            tableNumber: parseInt(tableNumberSelect.value),
             itemList: quantItemsArray
         };
 
