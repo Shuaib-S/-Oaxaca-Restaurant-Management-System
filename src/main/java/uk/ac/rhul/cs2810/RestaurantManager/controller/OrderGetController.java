@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,7 @@ public class OrderGetController {
     this.orderRepository = orderRepository;
   }
 
-  @GetMapping
+  @GetMapping("/all")
   public List<Map<String, Object>> getOrders() { // Depending on how status is handled @RequestParam may be needed
     List<Order> orders = (List<Order>) orderRepository.findAll();
     List<Map<String, Object>> orderMAIN = new ArrayList<>();
@@ -45,6 +46,11 @@ public class OrderGetController {
     }
 
     return orderMAIN;
+  }
+
+  @GetMapping("/table/{tableId}")
+  public List<Order> getOrderByTable(@PathVariable int tableId) {
+    return orderRepository.findByTableNumber(tableId);
   }
 
   public Map<String, Integer> itemsToMap(Order order) {
