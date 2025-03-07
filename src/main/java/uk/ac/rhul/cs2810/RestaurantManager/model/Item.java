@@ -20,7 +20,7 @@ public class Item {
   private String category;
   private int calories;
   private String allergens;
-
+  private Boolean active = true;
   /**
    * 
    * Constructor that adds name, description, price, calories and allergens to an Item object.
@@ -41,6 +41,7 @@ public class Item {
     this.category = category;
     this.calories = calories;
     this.allergens = allergens;
+    this.active = true;
   }
 
   public Item() {
@@ -102,6 +103,14 @@ public class Item {
 
   public void setAllergens(String allergens) {
     this.allergens = allergens;
+  }
+
+  public boolean isActive() {
+    return active;
+  }
+
+  public void setActive(boolean active) {
+    this.active = active;
   }
 
 }

@@ -40,7 +40,8 @@ public class AuthenticationFilter implements Filter {
         requestURI.contains("/api/login") ||
         requestURI.endsWith("/menu.html") ||
         requestURI.endsWith(".css") ||
-        requestURI.endsWith(".js")) {
+        requestURI.endsWith(".js") ||
+        requestURI.endsWith(".jpg")) {
       chain.doFilter(request, response);
       return;
     }

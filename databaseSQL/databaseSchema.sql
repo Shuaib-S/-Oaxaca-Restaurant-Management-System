@@ -50,6 +50,8 @@ VALUES
 (16, 'Teas', 'English Tea, Green Tea, Mint Tea', 2.95, 'Drink', 1, NULL),
 (17, 'Juices', 'Orange and Mango, Pineapple, Guava', 4.95, 'Drink', 100, NULL);
 
+ALTER TABLE items
+ADD COLUMN active BOOLEAN DEFAULT TRUE;
 -- Logins table
 
 CREATE TABLE logins ( id SERIAL PRIMARY KEY,
