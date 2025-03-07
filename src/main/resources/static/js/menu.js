@@ -122,9 +122,29 @@ function filterItems(items) {
         );
     }
 
+    console.log(filtered);
+
     return filtered;
 }
 
+// gets popup, button, and closing element
+var popup = document.getElementById("help-popup");
+var helpbtn = document.getElementById("help-btn");
+var closespan = document.getElementsByClassName("close")[0];
+// opens popup
+helpbtn.onclick = function() {
+  popup.style.display = "block";
+}
+// closes popup
+closespan.onclick = function() {
+  popup.style.display = "none";
+}
+window.onclick = function(event) {
+  if (event.target == popup) {
+    popup.style.display = "none";
+  }
+}
+//^^doesn't actually have a function yet so feel free to add the actual code to make it call a waiter
 
 // Format price to GBP
 function formatPrice(price) {
@@ -172,7 +192,7 @@ function createMenuItemElement(item, index) {
             }
         } else {
             if (currentAllergen === "null") {
-                itemData = allItems[itemId];
+                itemData = filteredItems[itemId];
             } else {
                 itemData = filteredItems[itemId];
             }
@@ -424,6 +444,4 @@ document.addEventListener("DOMContentLoaded", function () {
         tableSelect.appendChild(option);
     }
 });
-
-
 

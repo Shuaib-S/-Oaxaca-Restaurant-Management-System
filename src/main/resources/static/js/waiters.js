@@ -8,7 +8,7 @@ for (let i = 1; i <= numTables; i++) {
   table.dataset.tableId = i;
 
   table.addEventListener("click", function() {
-    window.location.href = `/table.html?tableId=${this.dataset.tableId}`;
+    window.location.href = `/protected/table.html?tableId=${this.dataset.tableId}`;
   });
 
   tableMap.appendChild(table);
@@ -64,7 +64,7 @@ function renderItems(items, tabSelector, isActive) {
     itemDiv.className = `menu-item ${isActive ? 'active' : 'inactive'}`;
     itemDiv.setAttribute('data-item-id', item.id);
     itemDiv.innerHTML = `
-      <img src="images/menu_placeholder.jpg" alt="${item.title}" class="item-image" loading="lazy" />
+      <img src="../images/menu_placeholder.jpg" alt="${item.title}" class="item-image" loading="lazy" />
       <div class="item-content">
         <h3 class="item-title">${item.title}</h3>
         <p class="item-description">${item.description}</p>
