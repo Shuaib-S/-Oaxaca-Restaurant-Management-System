@@ -8,7 +8,7 @@ for (let i = 1; i <= numTables; i++) {
   table.dataset.tableId = i;
 
   table.addEventListener("click", function() {
-    window.location.href = `/table.html?tableId=${this.dataset.tableId}`;
+    window.location.href = `/protected/table.html?tableId=${this.dataset.tableId}`;
   });
 
   tableMap.appendChild(table);
