@@ -34,6 +34,7 @@ async function fetchOrders() {
                 </div>
                 <div class="order-card-footer">
                     <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Delete Order</button>
+                    <button id="order-status-btn" onclick="orderStatus()">Order Status</button>
                 </div>
             `;
 
@@ -44,6 +45,19 @@ async function fetchOrders() {
         console.error('Error fetching orders:', error);
         document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
     }
+}
+
+function orderStatus() {
+    const select = document.createElement("select");
+    select.id = "order-status-btn";
+    const statuses = ["Pending","Completed"];
+    statuses.forEach(status => {
+        const statusElement = document.createElement("option");
+        statusElement.textContent = status;
+        select.appendChild(statusElement);
+    });
+    const button = document.getElementById("order-status-btn");
+    button.replaceWith(select);
 }
 
 function formatOrderItems(items) {
