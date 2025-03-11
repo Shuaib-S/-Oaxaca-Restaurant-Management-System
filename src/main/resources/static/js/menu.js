@@ -132,17 +132,17 @@ var popup = document.getElementById("help-popup");
 var helpbtn = document.getElementById("help-btn");
 var closespan = document.getElementsByClassName("close")[0];
 // opens popup
-helpbtn.onclick = function() {
-  popup.style.display = "block";
+helpbtn.onclick = function () {
+    popup.style.display = "block";
 }
 // closes popup
-closespan.onclick = function() {
-  popup.style.display = "none";
-}
-window.onclick = function(event) {
-  if (event.target == popup) {
+closespan.onclick = function () {
     popup.style.display = "none";
-  }
+}
+window.onclick = function (event) {
+    if (event.target == popup) {
+        popup.style.display = "none";
+    }
 }
 //^^doesn't actually have a function yet so feel free to add the actual code to make it call a waiter
 
@@ -163,7 +163,7 @@ function createMenuItemElement(item, index) {
     element.dataset.itemId = index;
 
     element.innerHTML = `
-        <img src="images/menu_placeholder.jpg" 
+        <img src="images/${item.id}.png" 
              alt="${item.title}" 
              class="item-image"
              loading="lazy">
