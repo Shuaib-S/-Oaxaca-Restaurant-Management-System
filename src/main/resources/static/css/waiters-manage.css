@@ -165,6 +165,8 @@ h2 {
 
 .table:hover {
     transform: scale(1.05);
+    background-color: var(--primary);
+    color: var(--light); /
 }
 
 /* Header to keep dot next to table name */
@@ -176,19 +178,15 @@ h2 {
     gap: 10px;
 }
 
-
-.table-name {
-    font-weight: bold;
-}
-
-
 .status-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
     display: inline-block;
+    position: relative; 
 }
 
+/
 .dot-red {
     background-color: red;
 }
@@ -197,7 +195,7 @@ h2 {
     background-color: green;
 }
 
-/* Initially hidden */
+
 .table-details {
     display: none;
     padding: 10px;
@@ -206,9 +204,10 @@ h2 {
     margin-top: 10px;
     border-radius: 5px;
     width: 100%;
+    color: var(--text); 
 }
 
-/* Toggle visibility when clicked */
+/* Toggle visibility */
 .table-details.hidden {
     display: none;
 }
