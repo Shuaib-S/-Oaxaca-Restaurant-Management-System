@@ -64,17 +64,58 @@ function formatTimeSinceOrder(durationString) {
     return `${hours}${minutes}${seconds}`.trim();
 }
 
-function generateTablesOverview() {
+async function generateTablesOverview() {
     const tablesContainer = document.getElementById('tables-container');
     tablesContainer.innerHTML = '';
 
-    for (let i = 1; i <= 12; i++) {
-        const tableDiv = document.createElement('div');
-        tableDiv.className = 'table';
-        tableDiv.textContent = `Table ${i}`;
-        tablesContainer.appendChild(tableDiv);
+    try {
+        const response = await fetch('/api/CurrentOrders/all');
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const orders = await response.json();
+        console.log("Fetched orders:", orders); // Debugging
+
+        // Create a Set of tables that have active orders
+        const activeTables = new Set(orders.map(order => order.tableNumber));
+
+        for (let i = 1; i <= 12; i++) {
+            const tableDiv = document.createElement('div');
+            tableDiv.className = 'table';
+            tableDiv.dataset.tableId = i;
+
+            // Check if the table is active
+            const isInUse = activeTables.has(i);
+
+            tableDiv.innerHTML = `
+                <div class="table-header">
+                    <span class="table-name">Table ${i}</span>
+                    <span class="status-dot ${isInUse ? 'dot-red' : 'dot-green'}"></span>
+                </div>
+                <div class="table-details hidden">
+                    <p>Status: <span class="${isInUse ? 'occupied' : 'available'}">
+                        ${isInUse ? 'In Use' : 'Available'}
+                    </span></p>
+                </div>
+            `;
+
+            //  event listener for toggling visibility
+            tableDiv.addEventListener('click', function () {
+                this.querySelector('.table-details').classList.toggle('hidden');
+            });
+
+            tablesContainer.appendChild(tableDiv);
+        }
+
+    } catch (error) {
+        console.error('Error fetching table status:', error);
+        tablesContainer.innerHTML = `<p>Error loading tables. ${error.message}</p>`;
     }
 }
+
+
 
 async function deleteOrder(orderId) {
     if (!confirm(`Are you sure you want to delete Order #${orderId}?`)) {
