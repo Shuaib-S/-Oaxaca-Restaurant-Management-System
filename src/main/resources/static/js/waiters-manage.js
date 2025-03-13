@@ -64,6 +64,27 @@ function formatTimeSinceOrder(durationString) {
     return `${hours}${minutes}${seconds}`.trim();
 }
 
+// Spectacular code that looks if to see if a table has a waiter
+async function hasWaiter(tableNumber) {
+    try {
+        const response = await fetch('/api/tableAssignments/assignedTables');
+        if (!response.ok) {
+            throw new Error('Failed to fetch waiter assignments');
+        }
+
+        const assignments = await response.json();
+        const assignment = assignments.find(assignment => assignment.tableNumber === tableNumber);
+
+        // This should return the waiter's name or none 
+        return assignment && assignment.waiterUsername ? assignment.waiterUsername : 'None';
+
+    } catch (error) {
+        console.error('Error checking waiter assignment:', error);
+        return 'None';
+    }
+}
+
+
 async function generateTablesOverview() {
     const tablesContainer = document.getElementById('tables-container');
     tablesContainer.innerHTML = '';
@@ -76,17 +97,18 @@ async function generateTablesOverview() {
 
         const orders = await response.json();
         console.log("Fetched orders:", orders); // Debugging
-       
+
         // Create a Set of tables that have active orders
         const activeTables = new Set(orders.map(order => order.tableNumber));
-        
+
         for (let i = 1; i <= 12; i++) {
             const tableDiv = document.createElement('div');
             tableDiv.className = 'table';
             tableDiv.dataset.tableId = i;
 
-            // Check if the table is active
+            // Check if the table is active and has a waiter asigned
             const isInUse = activeTables.has(i);
+            const assignedWaiter = await hasWaiter(i);
 
             tableDiv.innerHTML = `
                 <div class="table-header">
@@ -95,9 +117,10 @@ async function generateTablesOverview() {
                 </div>
                 <div class="table-details hidden">
                     <p>Status: <span class="${isInUse ? 'occupied' : 'available'}">
-                        ${isInUse ? 'In Use' : 'Available'}
+                        ${isInUse ? 'Occupied' : 'Available'}
                     </span></p>
-                    <button onclick="openWaiterAssignment(${i})">Assign Waiter</button>
+                    <p>Assigned Waiter: <span class="waiter-name">${assignedWaiter}</span></p>
+                        ${assignedWaiter === 'None' && isInUse === true ? `<button onclick="openWaiterAssignment(${i})">Assign Waiter</button>` : ''}
                 </div>
             `;
 
