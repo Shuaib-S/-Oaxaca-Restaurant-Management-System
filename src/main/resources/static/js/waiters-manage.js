@@ -64,17 +64,140 @@ function formatTimeSinceOrder(durationString) {
     return `${hours}${minutes}${seconds}`.trim();
 }
 
-function generateTablesOverview() {
+// Spectacular code that looks if to see if a table has a waiter
+async function hasWaiter(tableNumber) {
+    try {
+        const response = await fetch('/api/tableAssignments/assignedTables');
+        if (!response.ok) {
+            throw new Error('Failed to fetch waiter assignments');
+        }
+
+        const assignments = await response.json();
+        const assignment = assignments.find(assignment => assignment.tableNumber === tableNumber);
+
+        // This should return the waiter's name or none 
+        return assignment && assignment.waiterUsername ? assignment.waiterUsername : 'None';
+
+    } catch (error) {
+        console.error('Error checking waiter assignment:', error);
+        return 'None';
+    }
+}
+
+
+async function generateTablesOverview() {
     const tablesContainer = document.getElementById('tables-container');
     tablesContainer.innerHTML = '';
 
-    for (let i = 1; i <= 12; i++) {
-        const tableDiv = document.createElement('div');
-        tableDiv.className = 'table';
-        tableDiv.textContent = `Table ${i}`;
-        tablesContainer.appendChild(tableDiv);
+    try {
+        const response = await fetch('/api/CurrentOrders/all');
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const orders = await response.json();
+        console.log("Fetched orders:", orders); // Debugging
+
+        // Create a Set of tables that have active orders
+        const activeTables = new Set(orders.map(order => order.tableNumber));
+
+        for (let i = 1; i <= 12; i++) {
+            const tableDiv = document.createElement('div');
+            tableDiv.className = 'table';
+            tableDiv.dataset.tableId = i;
+
+            // Check if the table is active and has a waiter asigned
+            const isInUse = activeTables.has(i);
+            const assignedWaiter = await hasWaiter(i);
+
+            tableDiv.innerHTML = `
+                <div class="table-header">
+                    <span class="table-name">Table ${i}</span>
+                    <span class="status-dot ${isInUse ? 'dot-red' : 'dot-green'}"></span>
+                </div>
+                <div class="table-details hidden">
+                    <p>Status: <span class="${isInUse ? 'occupied' : 'available'}">
+                        ${isInUse ? 'Occupied' : 'Available'}
+                    </span></p>
+                    <p>Assigned Waiter: <span class="waiter-name">${assignedWaiter}</span></p>
+                        ${assignedWaiter === 'None' && isInUse === true ? `<button onclick="openWaiterAssignment(${i})">Assign Waiter</button>` : ''}
+                </div>
+            `;
+
+            //  event listener for toggling visibility
+            tableDiv.addEventListener('click', function () {
+                this.querySelector('.table-details').classList.toggle('hidden');
+            });
+
+            tablesContainer.appendChild(tableDiv);
+        }
+
+    } catch (error) {
+        console.error('Error fetching table status:', error);
+        tablesContainer.innerHTML = `<p>Error loading tables. ${error.message}</p>`;
     }
 }
+
+
+async function openWaiterAssignment(tableNumber) {
+    document.getElementById('selected-table').innerText = tableNumber;
+
+    try {
+        const response = await fetch('/api/login/all');
+        if (!response.ok) throw new Error("Failed to fetch waiters");
+
+        const waiters = await response.json();
+        const waiterSelect = document.getElementById('waiter-select');
+        waiterSelect.innerHTML = '';
+
+        if (waiters.length === 0) {
+            waiterSelect.innerHTML = '<option disabled>No waiters available</option>';
+        } else {
+            waiters.forEach(waiter => {
+                const option = document.createElement('option');
+                option.value = waiter;
+                option.textContent = waiter;
+                waiterSelect.appendChild(option);
+            });
+        }
+
+        document.getElementById('assignWaiterModal').classList.remove('hidden');
+
+    } catch (error) {
+        console.error("Error fetching waiters:", error);
+        alert("Failed to load waiters.");
+    }
+}
+
+function closeModal() {
+    document.getElementById('assignWaiterModal').classList.add('hidden');
+}
+
+
+async function assignWaiter() {
+    const tableNumber = document.getElementById('selected-table').innerText;
+    const waiterUsername = document.getElementById('waiter-select').value;
+
+    try {
+        const response = await fetch('/api/tableAssignments/assign', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ tableNumber, waiterUsername })
+        });
+
+        if (!response.ok) throw new Error(await response.text());
+
+        alert(`Waiter ${waiterUsername} assigned to Table ${tableNumber}`);
+        closeModal();
+
+    } catch (error) {
+        console.error("Error assigning waiter:", error);
+        alert("Failed to assign waiter.");
+    }
+}
+
+
+
 
 async function deleteOrder(orderId) {
     if (!confirm(`Are you sure you want to delete Order #${orderId}?`)) {

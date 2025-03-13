@@ -150,6 +150,109 @@ h2 {
 }
 
 
+.table {
+    cursor: pointer;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 8px;
+    background-color: #f4f4f4;
+    transition: transform 0.2s ease-in-out;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.table:hover {
+    transform: scale(1.05);
+    background-color: var(--primary);
+    color: var(--light); /
+}
+
+/* Header to keep dot next to table name */
+.table-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative; 
+}
+
+
+.dot-red {
+    background-color: red;
+}
+
+.dot-green {
+    background-color: green;
+}
+
+
+.table-details {
+    display: none;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 100%;
+    color: var(--text); 
+}
+
+/* Toggle visibility */
+.table-details.hidden {
+    display: none;
+}
+
+.table-details:not(.hidden) {
+    display: block;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+    display: none;
+}
+
+.modal h3 {
+    margin-bottom: 10px;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal:not(.hidden) {
+    display: block;
+}
+
 
 /* Footer */
 footer {
