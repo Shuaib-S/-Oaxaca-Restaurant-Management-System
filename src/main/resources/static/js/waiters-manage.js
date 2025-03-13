@@ -34,7 +34,7 @@ async function fetchOrders() {
                 </div>
                 <div class="order-card-footer">
                     <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Delete Order</button>
-                    <button id="order-status-btn" onclick="orderStatus()">Order Status</button>
+                    <button class="order-status-btn" onclick="orderStatus(${order.id})">Order Status</button>
                 </div>
             `;
 
@@ -47,17 +47,33 @@ async function fetchOrders() {
     }
 }
 
-function orderStatus() {
-    const select = document.createElement("select");
-    select.id = "order-status-btn";
-    const statuses = ["Pending","Completed"];
+// For Antonio: Connect to backend, have an enum class for statuses rather than manual statuses, can do CSS if you want.
+async function orderStatus(orderId) {
+    const orderStatusContent = document.getElementById('order-status-content');
+    const statuses = ['Pending', 'In Progress', 'Completed'];
+    const selectElement = document.createElement('select');
     statuses.forEach(status => {
-        const statusElement = document.createElement("option");
+        const statusElement = document.createElement('option');
+        statusElement.value = status;
         statusElement.textContent = status;
-        select.appendChild(statusElement);
+        selectElement.appendChild(statusElement);
     });
-    const button = document.getElementById("order-status-btn");
-    button.replaceWith(select);
+    orderStatusContent.innerHTML = `
+        <p>Order ID: ${orderId}</p>
+        <p>Status:</p>
+    `;
+    orderStatusContent.appendChild(selectElement);
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.onclick = function() {
+        closeModal();
+    };
+    orderStatusContent.appendChild(closeButton);
+    document.getElementById('order-status-modal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('order-status-modal').style.display = 'none';
 }
 
 function formatOrderItems(items) {
