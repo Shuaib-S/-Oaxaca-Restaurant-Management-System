@@ -3,18 +3,20 @@ package uk.ac.rhul.cs2810.RestaurantManager.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import uk.ac.rhul.cs2810.RestaurantManager.repository.LoginRepository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Login;
+import uk.ac.rhul.cs2810.RestaurantManager.repository.LoginRepository;
 import uk.ac.rhul.cs2810.RestaurantManager.service.SessionService;
 
 /**
@@ -104,6 +106,14 @@ public class LoginController {
     responseBody.put("authenticated", false);
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
   }
+
+  @GetMapping("/all")
+  public ResponseEntity<List<String>> getAllWaiters() {
+    List<Login> logins = (List<Login>) loginRepository.findAll();
+    List<String> waiters = logins.stream().map(Login::getUsername).toList();
+    return ResponseEntity.ok(waiters);
+  }
+
 
   @PostMapping("/logout")
   public ResponseEntity<Map<String, Object>> logout(HttpServletRequest request,
