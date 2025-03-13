@@ -37,4 +37,10 @@ public class TableAssignmentController {
       @PathVariable String waiterUsername) {
     return ResponseEntity.ok(tableAssignmentRepository.findByWaiterUsername(waiterUsername));
   }
+
+  @GetMapping("/assignedTables")
+  public ResponseEntity<List<TableAssignment>> getAllAssignedTables() {
+    return ResponseEntity.ok(tableAssignmentRepository.findAll());
+  }
+
 }
