@@ -436,3 +436,11 @@ body {
         transform: translateY(0);
     }
 }
+
+#logoutButton {
+    display: none;
+}
+
+#loginButton {
+    display: none;
+}
