@@ -1,0 +1,196 @@
+/* Premium Restaurant Theme */
+:root {
+    --primary: #C19A6B;     /* Warm gold */
+    --secondary: #4A4A4A;   /* Charcoal */
+    --accent: #9B2335;      /* Deep Mexican red */
+    --background: #FAFAFA;  /* Off-white */
+    --text: #2C2C2C;        /* Near-black */
+    --light: #FFFFFF;       /* Pure white */
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* Header Section */
+header {
+    padding: 20px;
+    background: var(--primary);
+    color: var(--light);
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Navigation Bar  */
+.nav {
+    background-color: var(--primary);
+    color: var(--light);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-weight: bold;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+}
+
+.nav-links a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: var(--light);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+}
+
+/* Sections for Orders */
+.orders-section {
+    background: var(--light);
+    padding: 1.5rem;
+    margin: 2rem auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    max-width: 1100px;
+}
+
+h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/*Order Card stuff */
+.order-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+    padding: 15px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+}
+
+.order-card-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.order-card-body p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+
+/*  Placeholder text for errors because cool */
+.error-message {
+    color: var(--accent);
+    font-weight: bold;
+    text-align: center;
+}
+
+.delete-order-btn {
+    background-color: var(--accent);
+    color: var(--light);
+    border: none;
+    padding: 5px 10px;
+    margin-left: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.delete-order-btn:effect {
+    background-color: #7A1925;
+}
+
+
+.table {
+    cursor: pointer;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 8px;
+    background-color: #f4f4f4;
+    transition: transform 0.2s ease-in-out;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.table:hover {
+    transform: scale(1.05);
+    background-color: var(--primary);
+    color: var(--light); /
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+    display: none;
+}
+
+.modal h3 {
+    margin-bottom: 10px;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal:not(.hidden) {
+    display: block;
+}
+
+
+/* Footer */
+footer {
+    background-color: var(--primary);
+    color: var(--light);
+    text-align: center;
+    padding: 15px 0;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+    font-family: 'Montserrat', sans-serif;
+}
