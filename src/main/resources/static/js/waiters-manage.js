@@ -33,9 +33,10 @@ async function fetchOrders() {
                     (${formatTimeSinceOrder(order.timeSinceOrder)})</p>
                 </div>
                 <div class="order-card-footer">
+                    <button class="edit-order-btn" onclick="deleteOrder(${order.id})">Edit Order</button> 
                     <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Delete Order</button>
                 </div>
-            `;
+            `; // change deleteOrder in edit-order-btn
 
             ordersContainer.appendChild(orderElement);
         });

@@ -133,6 +133,23 @@ h2 {
     text-align: center;
 }
 
+.edit-order-btn {
+    background-color: #C19A6B;
+    color: var(--light);
+    border: none;
+    padding: 5px 10px;
+    margin-left: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.edit-order-btn:hover {
+    background-color: #a88353;
+}
+
+
 .delete-order-btn {
     background-color: var(--accent);
     color: var(--light);
@@ -145,7 +162,7 @@ h2 {
     border-radius: 5px;
 }
 
-.delete-order-btn:effect {
+.delete-order-btn:hover {
     background-color: #7A1925;
 }
 
