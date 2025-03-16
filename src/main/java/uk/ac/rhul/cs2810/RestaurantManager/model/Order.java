@@ -1,16 +1,15 @@
 package uk.ac.rhul.cs2810.RestaurantManager.model;
 
-import uk.ac.rhul.cs2810.RestaurantManager.model.Item;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders") // Change this to the table name if not orders
@@ -26,6 +25,8 @@ public class Order {
   private int tableNumber;
 
   private LocalDateTime orderTime;
+
+  private String status = "pending";
 
   /**
    * Order Contrstructor
@@ -81,5 +82,13 @@ public class Order {
 
   public void setTableNumber(int tableNumber) {
     this.tableNumber = tableNumber;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
   }
 }

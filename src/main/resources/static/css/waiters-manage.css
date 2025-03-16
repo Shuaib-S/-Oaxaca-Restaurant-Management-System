@@ -100,6 +100,7 @@ h2 {
 
 /*Order Card stuff */
 .order-card {
+    position: relative;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -123,7 +124,35 @@ h2 {
     font-size: 14px;
 }
 
-
+/* Indicators on each card for statuses (stati?) */
+/* please spare us angelo we have wives and kids */
+.order-ready-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    background-color: green;
+    border-radius: 50%;
+}
+.order-cooking-indicator{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    background-color: orange;
+    border-radius: 50%;
+}
+.order-pending-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+}
 
 
 /*  Placeholder text for errors because cool */
