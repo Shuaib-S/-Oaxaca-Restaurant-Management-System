@@ -37,10 +37,21 @@
     </div>
 </section>
 
+<div id="edit-order-modal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeEditModal()">&times;</span>
+        <h3>Edit Order</h3>
+        <div id="edit-order-select"></div>
+        <!-- <select id="edit-order-select">
+
+        </select> -->
+    </div>
+</div>
+
 <div id="assignWaiterModal" class="modal hidden">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
-        <h3>Assign Waiter</h3>
+        <h4>Assign Waiter</h4>
         <p>Select a waiter for Table <span id="selected-table"></span>:</p>
         <select id="waiter-select">
             

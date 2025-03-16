@@ -33,7 +33,7 @@ async function fetchOrders() {
                     (${formatTimeSinceOrder(order.timeSinceOrder)})</p>
                 </div>
                 <div class="order-card-footer">
-                    <button class="edit-order-btn" onclick="deleteOrder(${order.id})">Edit Order</button>
+                    <button class="edit-order-btn" onclick="editOrder(${order.id})">Edit Order</button>
                     <button class="confirm-order-btn" onclick="deleteOrder(${order.id})">Confirm Order</button>
                     <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Delete Order</button>
                 </div>
@@ -47,6 +47,35 @@ async function fetchOrders() {
         document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
     }
 }
+
+async function editOrder(orderId) {
+    const editOrderModal = document.getElementById('edit-order-select');
+    const select = document.createElement('select');
+    const itemsToAdd = ['Test1','Test2'];
+    itemsToAdd.forEach(item =>{
+        const itemElement = document.createElement('option');
+        itemElement.value = item;
+        itemElement.textContent = item;
+        select.appendChild(itemElement);
+    });
+    editOrderModal.innerHTML = `
+    <p>Order ID: ${orderId}</p>
+    <p>Items Currently In Cart:</p>
+    `;
+    editOrderModal.appendChild(select);
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.onclick = function() {
+        closeEditModal();
+    };
+    editOrderModal.appendChild(closeButton);
+    document.getElementById('edit-order-modal').style.display = 'block';
+}
+
+function closeEditModal() {
+    document.getElementById('edit-order-modal').style.display = 'none';
+}
+
 
 function formatOrderItems(items) {
     return Object.entries(items).map(([name, quantity]) => `${name} x${quantity}`).join(', ');
