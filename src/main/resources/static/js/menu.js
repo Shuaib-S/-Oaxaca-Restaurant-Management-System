@@ -126,24 +126,54 @@ function filterItems(items) {
 
     return filtered;
 }
-
-// gets popup, button, and closing element
 var popup = document.getElementById("help-popup");
 var helpbtn = document.getElementById("help-btn");
 var closespan = document.getElementsByClassName("close")[0];
-// opens popup
+var helpMeButton = document.getElementById("HelpMeButton");
+var selectTableAssi = document.getElementById("tableAssist-select");
+
+
+window.onload = function () {
+    for (let i = 1; i <= 12; i++) {
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = `Table ${i}`;
+        selectTableAssi.appendChild(option);
+    }
+};
+
+// Opens popup
 helpbtn.onclick = function () {
     popup.style.display = "block";
-}
-// closes popup
+};
+
+
+helpMeButton.onclick = function () {
+    const selectedTable = selectTableAssi.value;
+    fetch('/api/tableAssignments/assistanceSet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ tableNumber: selectedTable, assistance: true })
+    }).then(response => {
+        if (response.ok) {
+            alert(`Help request sent for Table ${selectedTable}`);
+        } else {
+            alert('Error sending help request. Please try again.');
+        }
+    });
+};
+
+// Closes popup
 closespan.onclick = function () {
     popup.style.display = "none";
-}
+};
+
 window.onclick = function (event) {
     if (event.target == popup) {
         popup.style.display = "none";
     }
-}
+};
+
 //^^doesn't actually have a function yet so feel free to add the actual code to make it call a waiter
 
 // Format price to GBP
