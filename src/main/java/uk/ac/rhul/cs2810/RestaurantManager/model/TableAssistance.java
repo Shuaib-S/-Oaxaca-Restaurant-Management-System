@@ -9,40 +9,41 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "table_assistance")
 public class TableAssistance {
-    
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private int table;
+  private int tableNo;
 
   /**
-  True is they need help
-  False is they no need help
-  */
+   * True is they need help
+   * False is they no need help
+   */
   private boolean help;
 
-  public TableAssistance(){
+  public TableAssistance() {
 
   }
 
-  public TableAssistance(int table, boolean help){
-    this.table = table;
+  public TableAssistance(int table, boolean help) {
+    this.tableNo = table;
     this.help = help;
   }
 
-  public void setTable(int table){
-    this.table = table;
-  }
-  public int getTable(){
-    return this.table;
+  public void setTable(int table) {
+    this.tableNo = table;
   }
 
-  public void setAssistance(boolean help){
+  public int getTable() {
+    return this.tableNo;
+  }
+
+  public void setAssistance(boolean help) {
     this.help = help;
   }
 
-  public boolean getAssistance(){
+  public boolean getAssistance() {
     return this.help;
   }
 
