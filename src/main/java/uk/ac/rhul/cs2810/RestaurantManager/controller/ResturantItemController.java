@@ -59,4 +59,26 @@ public class ResturantItemController {
     }
     return ResponseEntity.badRequest().build();
   }
+
+  /**
+   * Updates an item's details.
+   */
+  @PatchMapping("/{id}")
+  public ResponseEntity<Item> updateItem(@PathVariable("id") Integer id, @RequestBody Item updatedItem) {
+      Optional<Item> optionalItem = itemRepository.findById(id);
+      if (!optionalItem.isPresent()) {
+          return ResponseEntity.notFound().build();
+      }
+      
+      Item item = optionalItem.get();
+      if (updatedItem.getTitle() != null) item.setTitle(updatedItem.getTitle());
+      if (updatedItem.getDescription() != null) item.setDescription(updatedItem.getDescription());
+      if (updatedItem.getPrice() > 0) item.setPrice(updatedItem.getPrice());
+      if (updatedItem.getCategory() != null) item.setCategory(updatedItem.getCategory());
+      if (updatedItem.getCalories() > 0) item.setCalories(updatedItem.getCalories());
+      if (updatedItem.getAllergens() != null) item.setAllergens(updatedItem.getAllergens());
+      
+      Item savedItem = itemRepository.save(item);
+      return ResponseEntity.ok(savedItem);
+  }
 }
