@@ -214,6 +214,32 @@ async function assignWaiter() {
     }
 }
 
+async function unassignWaiter(tableNumber) {
+    if (!confirm(`Are you sure you want to unassign the waiter from Table ${tableNumber}?`)) {
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/tableAssignments/unassign', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tableNumber })
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to unassign waiter.');
+        }
+
+        alert(`Waiter unassigned from Table ${tableNumber}`);
+        generateTablesOverview();  // Refresh table view
+
+    } catch (error) {
+        console.error('Error unassigning waiter:', error);
+        alert("Failed to unassign waiter.");
+    }
+}
 
 
 
