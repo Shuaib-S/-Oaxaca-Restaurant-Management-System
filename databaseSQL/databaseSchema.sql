@@ -4,9 +4,13 @@ This is the sql queries fed to create the tables on the server
 
 */ -- The orders table
 
-CREATE TABLE orders (id SERIAL PRIMARY KEY,
-                                       table_number INT NOT NULL,
-                                                        order_time TIMESTAMP NOT NULL);
+CREATE TABLE orders (
+  id SERIAL PRIMARY KEY,
+  table_number INT NOT NULL,
+  order_time TIMESTAMP NOT NULL);
+  
+ALTER TABLE orders
+ADD COLUMN status VARCHAR(255) NOT NULL DEFAULT 'pending';
 
 -- Orders Item table to have multiple items to one order
 

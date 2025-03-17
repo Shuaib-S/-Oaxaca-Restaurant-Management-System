@@ -38,9 +38,25 @@ async function fetchOrders() {
                     <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Delete Order</button>
                 </div>
             `; // change deleteOrder in edit-order-btn
-
-            ordersContainer.appendChild(orderElement);
-        });
+            //below are the poor victims of angelo. GG indicators see you later
+            const indicator = document.createElement('span');
+            switch(order.status) {
+                case 'ready':
+                    indicator.className = 'order-ready-indicator';
+                    indicator.title = 'Ready for pickup';
+                    break;
+                case 'cooking':
+                    indicator.className = 'order-cooking-indicator';
+                    indicator.title = 'Order is being cooked';
+                    break;
+                case 'pending':
+                default:
+                    indicator.className = 'order-pending-indicator';
+                    indicator.title = 'Order is pending';
+             }
+             orderElement.appendChild(indicator);
+             ordersContainer.appendChild(orderElement);
+         });
 
     } catch (error) {
         console.error('Error fetching orders:', error);
