@@ -48,9 +48,26 @@ public class TableAssignmentController {
     return ResponseEntity.ok(tableAssignmentRepository.findAll());
   }
 
+  @PostMapping("/unassign")
+  public ResponseEntity<?> unassignWaiter(@RequestParam int tableNumber) {
+    List<TableAssignment> assignments = tableAssignmentRepository.findAll();
+
+    TableAssignment assignmentToRemove = assignments.stream()
+        .filter(a -> a.getTableNumber() == tableNumber).findFirst().orElse(null);
+
+    if (assignmentToRemove == null) {
+      return ResponseEntity.badRequest().body("No waiter assigned to this table.");
+    }
+
+    tableAssignmentRepository.delete(assignmentToRemove);
+    return ResponseEntity.ok("Waiter unassigned successfully!");
+  }
+
+
   // The Assistance Button assigning to tables stuff
   @PostMapping("/assistanceSet")
-  public ResponseEntity<?> setAssistance(@RequestParam int tableNumber, @RequestParam boolean assistance) {
+  public ResponseEntity<?> setAssistance(@RequestParam int tableNumber,
+      @RequestParam boolean assistance) {
     TableAssistance tableAssist = new TableAssistance();
     tableAssist.setTable(tableNumber);
     tableAssist.setAssistance(assistance);
