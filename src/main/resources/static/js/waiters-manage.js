@@ -49,27 +49,51 @@ async function fetchOrders() {
 }
 
 async function editOrder(orderId) {
-    const editOrderModal = document.getElementById('edit-order-select');
-    const select = document.createElement('select');
-    const itemsToAdd = ['Test1','Test2'];
-    itemsToAdd.forEach(item =>{
-        const itemElement = document.createElement('option');
-        itemElement.value = item;
-        itemElement.textContent = item;
-        select.appendChild(itemElement);
-    });
-    editOrderModal.innerHTML = `
-    <p>Order ID: ${orderId}</p>
-    <p>Items Currently In Cart:</p>
-    `;
-    editOrderModal.appendChild(select);
-    const closeButton = document.createElement('button');
-    closeButton.textContent = 'Close';
-    closeButton.onclick = function() {
-        closeEditModal();
-    };
-    editOrderModal.appendChild(closeButton);
-    document.getElementById('edit-order-modal').style.display = 'block';
+    try {
+        const response = await fetch('/api/CurrentOrders/orderItems');
+        if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+        }
+        let orderItems = null;
+        let i = 0;
+        let orderIdIndex = 0;
+        const orders = await response.json();
+        orders.forEach(order => {
+            if (order.id == orderId) {
+                orderIdIndex = i;
+            }
+            i++;
+        });
+
+        const editOrderModal = document.getElementById('edit-order-select');
+        const select = document.createElement('select');
+
+        let itemsToAdd = Object.keys(orders[orderIdIndex].items);
+        console.log(itemsToAdd);
+        itemsToAdd.forEach(item =>{
+            const itemElement = document.createElement('option');
+            itemElement.value = item;
+            itemElement.textContent = item;
+            select.appendChild(itemElement);
+        });
+        editOrderModal.innerHTML = `
+        <p>Order ID: ${orderId}</p>
+        <p>Items Currently In Cart:</p>
+        `;
+        editOrderModal.appendChild(select);
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'Close';
+        closeButton.onclick = function() {
+            closeEditModal();
+        };
+        editOrderModal.appendChild(closeButton);
+        document.getElementById('edit-order-modal').style.display = 'block';
+
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
+    }
+
 }
 
 function closeEditModal() {
