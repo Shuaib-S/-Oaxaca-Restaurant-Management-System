@@ -32,6 +32,7 @@ async function fetchOrders() {
                     <p><strong>Ordered:</strong> ${formatOrderTime(order.orderTime)} 
                     (${formatTimeSinceOrder(order.timeSinceOrder)})</p>
                 </div>
+                <div class="order-card-footer">
                     <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Delete Order</button>
                     <button class="btn pending" onclick="updateOrderStatus(${order.id}, 'pending')">Pending</button>
                     <button class="btn cooking" onclick="updateOrderStatus(${order.id}, 'cooking')">Cooking</button>
