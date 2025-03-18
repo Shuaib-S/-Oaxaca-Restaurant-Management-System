@@ -138,7 +138,7 @@ async function generateTablesOverview() {
                         ${isInUse ? 'Occupied' : 'Available'}
                     </span></p>
                     <p>Assigned Waiter: <span class="waiter-name">${assignedWaiter}</span></p>
-                    ${assignedWaiter === 'None' && isInUse ? `<button onclick="openWaiterAssignment(${i})">Assign Waiter</button>` : ''}
+                    ${assignedWaiter === 'None' && isInUse ? `<button class="assign-btn" onclick="openWaiterAssignment(${i})">Assign Waiter</button>` : ''}
                     ${assignedWaiter !== 'None' ? `<button class="unassign-btn" onclick="unassignWaiter(${i})">Unassign Waiter</button>` : ''}
                 </div>
             `;
