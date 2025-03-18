@@ -32,8 +32,10 @@ async function fetchOrders() {
                     <p><strong>Ordered:</strong> ${formatOrderTime(order.orderTime)} 
                     (${formatTimeSinceOrder(order.timeSinceOrder)})</p>
                 </div>
-                <div class="order-card-footer">
                     <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Delete Order</button>
+                    <button class="btn pending" onclick="updateOrderStatus(${order.id}, 'pending')">Pending</button>
+                    <button class="btn cooking" onclick="updateOrderStatus(${order.id}, 'cooking')">Cooking</button>
+                    <button class="btn ready" onclick="updateOrderStatus(${order.id}, 'ready')">Ready</button>
                 </div>
             `;
 
@@ -64,6 +66,17 @@ function formatTimeSinceOrder(durationString) {
     return `${hours}${minutes}${seconds}`.trim();
 }
 
+async function updateOrderStatus(orderId, newStatus) {
+    const response = await fetch(`/api/orders/${orderId}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: newStatus })
+    });
+    if (!response.ok) {
+      throw new Error('Failed to update order status');
+    }
+    fetchOrders();
+}
 
 async function deleteOrder(orderId) {
     if (!confirm(`Are you sure you want to delete Order #${orderId}?`)) {

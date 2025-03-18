@@ -3,8 +3,11 @@ package uk.ac.rhul.cs2810.RestaurantManager.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,4 +65,21 @@ public class OrderController {
     return ResponseEntity.ok(order);
   }
 
+  /**
+   * someone add a proper javadoc comment here please lol it updates the status of an order
+   */
+  @PatchMapping("/{id}/status")
+  public ResponseEntity<?> updateOrderStatus(@PathVariable("id") Integer id,
+      @RequestBody Map<String, String> update) {
+
+    Optional<Order> optionalOrder = orderRepository.findById(id);
+    if (!optionalOrder.isPresent()) {
+      return ResponseEntity.notFound().build();
+    }
+    String status = update.get("status");
+    Order order = optionalOrder.get();
+    order.setStatus(status);
+    Order updatedOrder = orderRepository.save(order);
+    return ResponseEntity.ok(updatedOrder);
+  }
 }

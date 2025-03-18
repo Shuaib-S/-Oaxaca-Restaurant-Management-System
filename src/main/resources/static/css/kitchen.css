@@ -110,6 +110,28 @@ h2 {
     text-align: center;
 }
 
+/*Button styling for the cards*/
+.btn {
+  color: var(--light);
+  border: none;
+  padding: 5px 10px;
+  margin-left: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+
+.btn.pending {
+  background-color:var(--secondary);
+}
+.btn.cooking {
+  background-color: var(--primary);
+}
+.btn.ready {
+  background-color: darkgreen; 
+}
+
 .delete-order-btn {
     background-color: var(--accent);
     color: var(--light);
