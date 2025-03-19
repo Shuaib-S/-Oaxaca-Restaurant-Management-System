@@ -68,18 +68,12 @@ public class TableAssignmentController {
     return ResponseEntity.ok("Waiter unassigned successfully!");
   }
 
-
   // The Assistance Button assigning to tables stuff
   @PostMapping("/assistanceSet")
-<<<<<<< HEAD
-  public ResponseEntity<?> setAssistance(@RequestParam int tableNumber,
-      @RequestParam boolean assistance) {
-=======
-  public ResponseEntity<?> setAssistance(@RequestParam Integer tableNumber, @RequestParam boolean assistance) {
->>>>>>> fe5375f (#127 added table assistance showing logic)
+  public ResponseEntity<?> setAssistance(@RequestParam Integer tableNumber) {
     TableAssistance tableAssist = new TableAssistance();
     tableAssist.setTable(tableNumber);
-    tableAssist.setAssistance(assistance);
+    tableAssist.setAssistance(true);
     tableAssistanceRepositry.save(tableAssist);
     return ResponseEntity.ok("Successuflly assisited someone");
   }

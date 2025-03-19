@@ -191,7 +191,7 @@ async function generateTablesOverview() {
                 <div class="table-header">
                     <span class="table-name">Table ${i}</span>
                     <span class="status-dot ${isInUse ? 'dot-red' : 'dot-green'}"></span>
-                    <span class ="help-symbol">${needAssistance ? `Table Requires Assistance! <button onclick="assignWaiter(${i})">Assign Waiter</button> <button onclick="removeHelp(${i})">Remove assistance</button>` : ''}</span>
+                    <span class ="help-symbol">${needAssistance ? `Table Requires Assistance! <button onclick="removeHelp(${i})">Remove assistance</button>` : ''}</span>
                 </div>
                 <div class="table-details hidden">
                     <p>Status: <span class="${isInUse ? 'occupied' : 'available'}">
