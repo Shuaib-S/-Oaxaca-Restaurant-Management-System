@@ -37,9 +37,32 @@ async function fetchOrders() {
                     <button class="btn pending" onclick="updateOrderStatus(${order.id}, 'pending')">Pending</button>
                     <button class="btn cooking" onclick="updateOrderStatus(${order.id}, 'cooking')">Cooking</button>
                     <button class="btn ready" onclick="updateOrderStatus(${order.id}, 'ready')">Ready</button>
-                </div>
+                </div>                
             `;
 
+            const indicator = document.createElement('span');
+            switch(order.status) {
+                case 'ready':
+                    orderElement.style.borderColor = 'green';
+                    orderElement.style.boxShadow = '0 3px 8px green';
+                    indicator.className = 'order-ready-indicator';
+                    indicator.title = 'Ready for pickup';
+                    break;
+                case 'cooking':
+                    orderElement.style.borderColor = 'orange';
+                    orderElement.style.boxShadow = '0 3px 8px orange';
+                    indicator.className = 'order-cooking-indicator';
+                    indicator.title = 'Order is being cooked';
+                    break;
+                case 'pending':
+                default:
+                    orderElement.style.borderColor = 'red';
+                    orderElement.style.boxShadow = '0 3px 8px red';
+                    indicator.className = 'order-pending-indicator';
+                    indicator.title = 'Order is pending';
+            }
+
+            orderElement.appendChild(indicator);
             ordersContainer.appendChild(orderElement);
         });
 

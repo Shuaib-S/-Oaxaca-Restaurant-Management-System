@@ -135,6 +135,7 @@ h2 {
     background-color: green;
     border-radius: 50%;
 }
+
 .order-cooking-indicator{
     position: absolute;
     top: 10px;
@@ -144,6 +145,7 @@ h2 {
     background-color: orange;
     border-radius: 50%;
 }
+
 .order-pending-indicator {
     position: absolute;
     top: 10px;
