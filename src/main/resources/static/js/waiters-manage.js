@@ -198,9 +198,11 @@ async function generateTablesOverview() {
                         ${isInUse ? 'Occupied' : 'Available'}
                     </span></p>
                     <p>Assigned Waiter: <span class="waiter-name">${assignedWaiter}</span></p>
-                        ${assignedWaiter === 'None' && isInUse === true ? `<button onclick="openWaiterAssignment(${i})">Assign Waiter</button>` : ''}
+                    ${assignedWaiter === 'None' && isInUse ? `<button class="assign-btn" onclick="openWaiterAssignment(${i})">Assign Waiter</button>` : ''}
+                    ${assignedWaiter !== 'None' ? `<button class="unassign-btn" onclick="unassignWaiter(${i})">Unassign Waiter</button>` : ''}
                 </div>
             `;
+
 
             //  event listener for toggling visibility
             tableDiv.addEventListener('click', function () {
@@ -271,6 +273,33 @@ async function assignWaiter() {
     } catch (error) {
         console.error("Error assigning waiter:", error);
         alert("Failed to assign waiter.");
+    }
+}
+
+async function unassignWaiter(tableNumber) {
+    if (!confirm(`Are you sure you want to unassign the waiter from Table ${tableNumber}?`)) {
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/tableAssignments/unassign', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({ tableNumber })
+        });
+
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
+
+        alert(`Waiter unassigned from Table ${tableNumber}`);
+        generateTablesOverview();  // Refresh tables
+
+    } catch (error) {
+        console.error('Error unassigning waiter:', error);
+        alert('Failed to unassign waiter.');
     }
 }
 
