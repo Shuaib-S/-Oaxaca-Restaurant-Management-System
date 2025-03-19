@@ -94,7 +94,10 @@ async function editOrder(orderId) {
         });
         editOrderModal.innerHTML = `
         <p>Order ID: ${orderId}</p>
-        <p>Items Currently In Cart:</p>
+        <p>Items Currently In Cart:<p>
+        <p>${formatOrderItems(orders[orderIdIndex].items)}</p>
+        <button class="add-item-btn">Add To Order</button>
+        <button class="delete-item-btn">Remove From Order</button>
         `;
         editOrderModal.appendChild(select);
         const closeButton = document.createElement('button');
