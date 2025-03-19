@@ -40,7 +40,7 @@ async function fetchOrders() {
             `; // change deleteOrder in edit-order-btn
             //below are the poor victims of angelo. GG indicators see you later
             const indicator = document.createElement('span');
-            switch(order.status) {
+            switch (order.status) {
                 case 'ready':
                     orderElement.style.borderColor = 'green';
                     orderElement.style.boxShadow = '0 3px 8px green';
@@ -60,10 +60,9 @@ async function fetchOrders() {
                     indicator.className = 'order-pending-indicator';
                     indicator.title = 'Order is pending';
             }
-
             orderElement.appendChild(indicator);
             ordersContainer.appendChild(orderElement);
-         });
+        });
 
     } catch (error) {
         console.error('Error fetching orders:', error);
@@ -93,7 +92,7 @@ async function editOrder(orderId) {
 
         let itemsToAdd = Object.keys(orders[orderIdIndex].items);
         console.log(itemsToAdd);
-        itemsToAdd.forEach(item =>{
+        itemsToAdd.forEach(item => {
             const itemElement = document.createElement('option');
             itemElement.value = item;
             itemElement.textContent = item;
@@ -106,7 +105,7 @@ async function editOrder(orderId) {
         editOrderModal.appendChild(select);
         const closeButton = document.createElement('button');
         closeButton.textContent = 'Close';
-        closeButton.onclick = function() {
+        closeButton.onclick = function () {
             closeEditModal();
         };
         editOrderModal.appendChild(closeButton);
@@ -187,20 +186,23 @@ async function generateTablesOverview() {
             // Check if the table is active and has a waiter asigned
             const isInUse = activeTables.has(i);
             const assignedWaiter = await hasWaiter(i);
-
+            const needAssistance = await fetchAssistance(i);
             tableDiv.innerHTML = `
                 <div class="table-header">
                     <span class="table-name">Table ${i}</span>
                     <span class="status-dot ${isInUse ? 'dot-red' : 'dot-green'}"></span>
+                    <span class ="help-symbol">${needAssistance ? `Table Requires Assistance! <button onclick="assignWaiter(${i})">Assign Waiter</button> <button onclick="removeHelp(${i})">Remove assistance</button>` : ''}</span>
                 </div>
                 <div class="table-details hidden">
                     <p>Status: <span class="${isInUse ? 'occupied' : 'available'}">
                         ${isInUse ? 'Occupied' : 'Available'}
                     </span></p>
                     <p>Assigned Waiter: <span class="waiter-name">${assignedWaiter}</span></p>
-                        ${assignedWaiter === 'None' && isInUse === true ? `<button onclick="openWaiterAssignment(${i})">Assign Waiter</button>` : ''}
+                    ${assignedWaiter === 'None' && isInUse ? `<button class="assign-btn" onclick="openWaiterAssignment(${i})">Assign Waiter</button>` : ''}
+                    ${assignedWaiter !== 'None' ? `<button class="unassign-btn" onclick="unassignWaiter(${i})">Unassign Waiter</button>` : ''}
                 </div>
             `;
+
 
             //  event listener for toggling visibility
             tableDiv.addEventListener('click', function () {
@@ -274,6 +276,33 @@ async function assignWaiter() {
     }
 }
 
+async function unassignWaiter(tableNumber) {
+    if (!confirm(`Are you sure you want to unassign the waiter from Table ${tableNumber}?`)) {
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/tableAssignments/unassign', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({ tableNumber })
+        });
+
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
+
+        alert(`Waiter unassigned from Table ${tableNumber}`);
+        generateTablesOverview();  // Refresh tables
+
+    } catch (error) {
+        console.error('Error unassigning waiter:', error);
+        alert('Failed to unassign waiter.');
+    }
+}
+
 
 
 
@@ -302,3 +331,44 @@ async function deleteOrder(orderId) {
         alert('Failed to delete order.');
     }
 }
+
+// MARCUS ASSISTANCE BUTTON STUFF // 
+async function fetchAssistance(tableNo) {
+    try {
+        const response = await fetch(`/api/tableAssignments/assistance`);
+        if (!response.ok) throw new Error('Failed to fetch assistance');
+
+        const assist = await response.json();
+
+        return assist.some(entry => entry.table === tableNo && entry.assistance === true);
+
+    } catch (error) {
+        console.error('Error fetching assistance:', error);
+        return false;
+    }
+}
+
+async function removeHelp(tableN) {
+
+    try {
+        const response = await fetch('/api/tableAssignments/removeAssistance', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tableN })
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to remove assistance');
+        }
+
+        alert(`assistance  deleted successfully!`);
+
+    } catch (error) {
+        console.error('Failed to remove assistance:', error);
+        alert('Failed to remove assistance');
+    }
+}
+
+//end of marcus assistance button stuff//

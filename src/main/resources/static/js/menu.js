@@ -175,6 +175,7 @@ window.onclick = function (event) {
 };
 
 //^^doesn't actually have a function yet so feel free to add the actual code to make it call a waiter
+// This now has function <3 
 
 // Format price to GBP
 function formatPrice(price) {

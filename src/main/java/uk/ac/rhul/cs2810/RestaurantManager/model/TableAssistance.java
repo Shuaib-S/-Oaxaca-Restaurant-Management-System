@@ -1,5 +1,6 @@
 package uk.ac.rhul.cs2810.RestaurantManager.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +15,8 @@ public class TableAssistance {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private int tableNo;
+  @Column(name = "table_no")
+  private Integer tableNo;
 
   /**
    * True is they need help
@@ -26,12 +28,12 @@ public class TableAssistance {
 
   }
 
-  public TableAssistance(int table, boolean help) {
+  public TableAssistance(Integer table, boolean help) {
     this.tableNo = table;
     this.help = help;
   }
 
-  public void setTable(int table) {
+  public void setTable(Integer table) {
     this.tableNo = table;
   }
 
