@@ -62,6 +62,19 @@ public class OrderGetController {
     return orderItems;
   }
 
+  @GetMapping("/orderAddItems")
+  public List<Map<String, Object>> addItemFromOrder() {
+    Integer itemToAdd = assistanceN.get("orderId");
+    List<Order> orders = (List<Order>) orderRepository.findAll();
+    for (TableAssistance entry : wooo) {
+      if (entry. == tableNumberToRemove) {
+        this.tableAssistanceRepositry.delete(entry);
+      }
+    }
+
+    return null;
+  }
+
   @GetMapping("/table/{tableId}")
   public List<Order> getOrderByTable(@PathVariable int tableId) {
     return orderRepository.findByTableNumber(tableId);

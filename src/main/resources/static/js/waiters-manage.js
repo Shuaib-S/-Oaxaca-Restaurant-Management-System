@@ -96,8 +96,8 @@ async function editOrder(orderId) {
         <p>Order ID: ${orderId}</p>
         <p>Items Currently In Cart:<p>
         <p>${formatOrderItems(orders[orderIdIndex].items)}</p>
-        <button class="add-item-btn">Add To Order</button>
-        <button class="delete-item-btn">Remove From Order</button>
+        <button class="add-item-btn" onclick="addToActiveOrder()">Add To Order</button>
+        <button class="delete-item-btn" onclick="removeFromActiveOrder(${orders[orderIdIndex].items})">Remove From Order</button>
         `;
         editOrderModal.appendChild(select);
         const closeButton = document.createElement('button');
@@ -113,6 +113,43 @@ async function editOrder(orderId) {
         document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
     }
 
+}
+
+async function addToActiveOrder() {
+    try {
+        selectedItem =
+        document.querySelector('select');
+        itemName =
+        selectedItem.options
+        [selectedItem.selectedIndex].value;
+        console.log(itemName);
+
+        const response = await fetch('/api/CurrentOrders/orderAddItems', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ itemName })
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+        }
+
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
+    }
+    console.log("HELLO!!!");
+}
+
+async function removeFromActiveOrder() {
+    try {
+
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
+    }
+    console.log("HI!!!");
 }
 
 function closeEditModal() {
