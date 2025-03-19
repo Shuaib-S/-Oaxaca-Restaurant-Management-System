@@ -40,7 +40,7 @@ async function fetchOrders() {
             `; // change deleteOrder in edit-order-btn
             //below are the poor victims of angelo. GG indicators see you later
             const indicator = document.createElement('span');
-            switch(order.status) {
+            switch (order.status) {
                 case 'ready':
                     indicator.className = 'order-ready-indicator';
                     indicator.title = 'Ready for pickup';
@@ -53,10 +53,10 @@ async function fetchOrders() {
                 default:
                     indicator.className = 'order-pending-indicator';
                     indicator.title = 'Order is pending';
-             }
-             orderElement.appendChild(indicator);
-             ordersContainer.appendChild(orderElement);
-         });
+            }
+            orderElement.appendChild(indicator);
+            ordersContainer.appendChild(orderElement);
+        });
 
     } catch (error) {
         console.error('Error fetching orders:', error);
@@ -86,7 +86,7 @@ async function editOrder(orderId) {
 
         let itemsToAdd = Object.keys(orders[orderIdIndex].items);
         console.log(itemsToAdd);
-        itemsToAdd.forEach(item =>{
+        itemsToAdd.forEach(item => {
             const itemElement = document.createElement('option');
             itemElement.value = item;
             itemElement.textContent = item;
@@ -96,13 +96,13 @@ async function editOrder(orderId) {
         <p>Order ID: ${orderId}</p>
         <p>Items Currently In Cart:<p>
         <p>${formatOrderItems(orders[orderIdIndex].items)}</p>
-        <button class="add-item-btn" onclick="addToActiveOrder()">Add To Order</button>
+        <button class="add-item-btn" onclick="addToActiveOrder(${orders[orderIdIndex].id})">Add To Order</button>
         <button class="delete-item-btn" onclick="removeFromActiveOrder(${orders[orderIdIndex].items})">Remove From Order</button>
         `;
         editOrderModal.appendChild(select);
         const closeButton = document.createElement('button');
         closeButton.textContent = 'Close';
-        closeButton.onclick = function() {
+        closeButton.onclick = function () {
             closeEditModal();
         };
         editOrderModal.appendChild(closeButton);
@@ -115,21 +115,20 @@ async function editOrder(orderId) {
 
 }
 
-async function addToActiveOrder() {
+async function addToActiveOrder(orderId) {
     try {
         selectedItem =
-        document.querySelector('select');
-        itemName =
-        selectedItem.options
-        [selectedItem.selectedIndex].value;
+            document.querySelector('select');
+        const orderID = orderId;
+        const itemName = selectedItem.options[selectedItem.selectedIndex].value;
+        console.log(orderID);
         console.log(itemName);
-
-        const response = await fetch('/api/CurrentOrders/orderAddItems', {
+        const response = await fetch('/api/CurrentOrders/addItem', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ itemName })
+            body: JSON.stringify({ orderID, itemName })
         });
         if (!response.ok) {
             throw new Error('Failed to fetch orders');
