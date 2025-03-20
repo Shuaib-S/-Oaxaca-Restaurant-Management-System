@@ -42,7 +42,13 @@ async function fetchOrders() {
             `;
 
             const indicator = document.createElement('span');
-            switch(order.status) {
+            switch (order.status) {
+                case 'delivered':
+                    orderElement.style.borderColor = 'blue';
+                    orderElement.style.boxShadow = '0 3px 8px blue';
+                    indicator.className = 'order-delivered-indicator';
+                    indicator.title = 'Order delivered';
+                    break;
                 case 'ready':
                     orderElement.style.borderColor = 'green';
                     orderElement.style.boxShadow = '0 3px 8px green';

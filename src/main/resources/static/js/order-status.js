@@ -25,23 +25,22 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             // Changes page based on your order status
             switch (status) {
-                case "pending":
+                case 'delivered':
+                    statusText.textContent = "Your food has been delivered. Enjoy!";
+                    statusImage.src = "images/food_delivered.gif"; // Needs to be updated
+                    break;
+                case 'pending':
                     statusText.textContent = "We will get to your food shortly!";
                     statusImage.src = "images/food_loading.gif";
                     break;
-                case "cooking":
+                case 'cooking':
                     statusText.textContent = "We are making your delicious food!!";
                     statusImage.src = "images/food_cooking.gif";
                     break;
-                case "ready":
+                case 'ready':
                     statusText.textContent = "Your food is on the way!";
                     statusImage.src = "images/food_ready.gif";
                     break;
-                   
-                //case "delivered":
-                 //   statusImage.src = "images/food_ready.gif";
-                //    break;
-                     
                 default:
                     statusImage.src = "images/default-status.png";
             }

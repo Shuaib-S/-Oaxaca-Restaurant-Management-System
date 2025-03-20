@@ -247,3 +247,14 @@ footer {
     margin-top: 2rem;
     font-family: 'Montserrat', sans-serif;
 }
+
+/* Delivery */
+.order-delivered-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    background-color: blue;
+    border-radius: 50%;
+}
