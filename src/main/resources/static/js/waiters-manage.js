@@ -104,7 +104,7 @@ async function editOrder(orderId) {
         const editOrderModal = document.getElementById('edit-order-select');
         const select = document.createElement('select');
 
-        let itemsToAdd = Object.keys(orders[orderIdIndex].items);
+
         console.log(itemsToAdd);
         itemsToAdd.forEach(item => {
             const itemElement = document.createElement('option');
