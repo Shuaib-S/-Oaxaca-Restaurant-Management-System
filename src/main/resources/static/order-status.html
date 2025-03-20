@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Status - OAXACA</title>
+    <link rel="stylesheet" href="css/order-status.css">
+    <link rel="stylesheet" href="css/globals.css">
+    <script src="js/order-status.js" defer></script>
+</head>
+<body>
+    <nav class="nav">
+        <a href="/" class="nav-logo">OAXACA</a>
+        <div class="nav-links">
+            <a href="/menu.html" class="nav-link">Back to Menu</a>
+        </div>
+    </nav>
+
+    <main class="status-container">
+        <h1>Order #<span id="order-id"></span> Status</h1>
+        <div class="status-box">
+            <img id="status-image" src="images/default-status.png" alt="Order Status">
+            <h2 id="status-text">Loading...</h2>
+        </div>
+        <button id="refresh-status">Refresh</button>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 OAXACA. All rights reserved.</p>
+    </footer>
+</body>
+</html>

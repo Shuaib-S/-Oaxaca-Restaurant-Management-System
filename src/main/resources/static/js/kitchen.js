@@ -128,3 +128,17 @@ async function deleteOrder(orderId) {
         alert('Failed to delete order.');
     }
 }
+
+async function updateOrderStatus(orderId, newStatus) {
+    const response = await fetch(`/api/orders/${orderId}/status`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus })
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to update order status');
+    }
+
+    fetchOrders();
+}
