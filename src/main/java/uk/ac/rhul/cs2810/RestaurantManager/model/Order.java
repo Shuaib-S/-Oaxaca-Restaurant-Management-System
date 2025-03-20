@@ -33,9 +33,9 @@ public class Order {
   /**
    * Order Contrstructor
    * 
-   * @param id       The Id for the order.
+   * @param id The Id for the order.
    * @param itemList The list of items that the order has.
-   * @param tableNo  The table number for the order (Required for UserStory)
+   * @param tableNo The table number for the order (Required for UserStory)
    */
   public Order(int id, List<Item> itemList, int tableNo) {
     this.id = id;
@@ -76,6 +76,10 @@ public class Order {
 
   public void addItemToList(Item item) {
     this.itemList.add(item);
+  }
+
+  public void removeItemFromList(Item item) {
+    this.itemList.remove(item);
   }
 
   public int getTableNumber() {

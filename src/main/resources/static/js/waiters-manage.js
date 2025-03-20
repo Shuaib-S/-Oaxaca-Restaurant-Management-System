@@ -86,10 +86,25 @@ async function editOrder(orderId) {
             i++;
         });
 
+        const response2 = await fetch('/api/items');
+        if (!response2.ok) {
+            throw new Error('Failed to fetch items');
+        }
+
+        const data = await response2.json();
+        let allItems = [];
+        allItems = data;
+        let j = 0;
+        let itemsToAdd = [];
+        allItems.forEach(item => {
+            itemsToAdd[j] = allItems[j].title;
+            j++;
+        });
+
         const editOrderModal = document.getElementById('edit-order-select');
         const select = document.createElement('select');
 
-        let itemsToAdd = Object.keys(orders[orderIdIndex].items);
+
         console.log(itemsToAdd);
         itemsToAdd.forEach(item => {
             const itemElement = document.createElement('option');
@@ -99,7 +114,10 @@ async function editOrder(orderId) {
         });
         editOrderModal.innerHTML = `
         <p>Order ID: ${orderId}</p>
-        <p>Items Currently In Cart:</p>
+        <p>Items Currently In Cart:<p>
+        <p>${formatOrderItems(orders[orderIdIndex].items)}</p>
+        <button class="add-item-btn" onclick="addToActiveOrder(${orders[orderIdIndex].id})">Add To Order</button>
+        <button class="delete-item-btn" onclick="removeFromActiveOrder(${orders[orderIdIndex].id})">Remove From Order</button>
         `;
         editOrderModal.appendChild(select);
         const closeButton = document.createElement('button');
@@ -115,6 +133,56 @@ async function editOrder(orderId) {
         document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
     }
 
+}
+
+async function addToActiveOrder(orderId) {
+    try {
+        selectedItem = document.querySelector('select');
+        const orderID = orderId;
+        const itemName = selectedItem.options[selectedItem.selectedIndex].value;
+        console.log(orderID);
+        console.log(itemName);
+        const response = await fetch('/api/CurrentOrders/addItem', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ orderID, itemName })
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+        }
+
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
+    }
+    console.log("HELLO!!!");
+}
+
+async function removeFromActiveOrder(orderId) {
+    try {
+        selectedItem = document.querySelector('select');
+        const orderID = orderId;
+        const itemName = selectedItem.options[selectedItem.selectedIndex].value;
+        console.log(orderID);
+        console.log(itemName);
+        const response = await fetch('/api/CurrentOrders/removeItem', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ orderID, itemName })
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+        }
+
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
+    }
+    console.log("HI!!!");
 }
 
 function closeEditModal() {
