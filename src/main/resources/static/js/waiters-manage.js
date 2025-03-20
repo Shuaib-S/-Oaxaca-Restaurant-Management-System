@@ -109,7 +109,7 @@ async function editOrder(orderId) {
         <p>Items Currently In Cart:<p>
         <p>${formatOrderItems(orders[orderIdIndex].items)}</p>
         <button class="add-item-btn" onclick="addToActiveOrder(${orders[orderIdIndex].id})">Add To Order</button>
-        <button class="delete-item-btn" onclick="removeFromActiveOrder(${orders[orderIdIndex].items})">Remove From Order</button>
+        <button class="delete-item-btn" onclick="removeFromActiveOrder(${orders[orderIdIndex].id})">Remove From Order</button>
         `;
         editOrderModal.appendChild(select);
         const closeButton = document.createElement('button');
@@ -152,8 +152,23 @@ async function addToActiveOrder(orderId) {
     console.log("HELLO!!!");
 }
 
-async function removeFromActiveOrder() {
+async function removeFromActiveOrder(orderId) {
     try {
+        selectedItem = document.querySelector('select');
+        const orderID = orderId;
+        const itemName = selectedItem.options[selectedItem.selectedIndex].value;
+        console.log(orderID);
+        console.log(itemName);
+        const response = await fetch('/api/CurrentOrders/removeItem', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ orderID, itemName })
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+        }
 
     } catch (error) {
         console.error('Error fetching orders:', error);

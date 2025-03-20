@@ -109,4 +109,32 @@ public class OrderGetController {
     return ResponseEntity.ok("works good my dude");
   }
 
+  @PostMapping("/removeItem")
+  public ResponseEntity<?> removeItem(@RequestBody addItems request) {
+    int orderID = request.getOrderID();
+    String itemName = request.getItemName();
+    Iterable<Item> itemsIterable = this.itemRepository.findAll();
+    Item item2 = new Item();
+    for (Item entry : itemsIterable) {
+      if (entry.getTitle().equals(itemName)) {
+        item2 = entry;
+        break;
+      }
+    }
+    Optional<Order> order = this.orderRepository.findById(orderID);
+    if (order.isPresent()) {
+      Order order2 = order.get();
+      List<Item> itemList = order2.getItemList();
+      for (int i = 0; i < itemList.size(); i++) {
+        if (itemList.contains(item2)) {
+          order2.removeItemFromList(item2);
+          this.orderRepository.save(order2);
+          return ResponseEntity.ok("works good my dude");
+        }
+
+      }
+    }
+    return ResponseEntity.ok("no item in list, but ok");
+  }
+
 }
