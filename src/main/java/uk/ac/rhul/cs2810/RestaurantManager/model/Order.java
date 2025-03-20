@@ -98,7 +98,7 @@ public class Order {
     return confirmed;
   }
 
-  public void setConfirmed() {
+  public void setConfirmed(Boolean confirmed) {
     this.confirmed = confirmed;
   }
 }
