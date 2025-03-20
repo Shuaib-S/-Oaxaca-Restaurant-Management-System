@@ -81,11 +81,23 @@ async function editOrder(orderId) {
             i++;
         });
 
+        const response2 = await fetch('/api/items');
+        if (!response2.ok) {
+            throw new Error('Failed to fetch items');
+        }
+
+        const data = await response2.json();
+        let allItems = [];
+        allItems = data;
+        let j = 0;
+        let itemsToAdd = [];
+        allItems.forEach(item => {
+            itemsToAdd[j] = allItems[j].title;
+            j++;
+        });
+
         const editOrderModal = document.getElementById('edit-order-select');
         const select = document.createElement('select');
-
-        let itemsToAdd = Object.keys(orders[orderIdIndex].items);
-        console.log(itemsToAdd);
         itemsToAdd.forEach(item => {
             const itemElement = document.createElement('option');
             itemElement.value = item;
@@ -117,8 +129,7 @@ async function editOrder(orderId) {
 
 async function addToActiveOrder(orderId) {
     try {
-        selectedItem =
-            document.querySelector('select');
+        selectedItem = document.querySelector('select');
         const orderID = orderId;
         const itemName = selectedItem.options[selectedItem.selectedIndex].value;
         console.log(orderID);
