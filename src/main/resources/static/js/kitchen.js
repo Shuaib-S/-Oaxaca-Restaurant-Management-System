@@ -13,13 +13,14 @@ async function fetchOrders() {
         const orders = await response.json();
         const ordersContainer = document.getElementById('orders-container');
         ordersContainer.innerHTML = '';
-
-        if (orders.length === 0) {
+        const confirmedOrders = orders.filter(order => order.confirmed === true);
+        
+        if (confirmedOrders.length === 0) {
             ordersContainer.innerHTML = '<p>No orders found.</p>';
             return;
-        }
+       }
 
-        orders.forEach(order => {
+        confirmedOrders.forEach(order => {
             const orderElement = document.createElement('div');
             orderElement.className = 'order-card';
 
@@ -37,9 +38,32 @@ async function fetchOrders() {
                     <button class="btn pending" onclick="updateOrderStatus(${order.id}, 'pending')">Pending</button>
                     <button class="btn cooking" onclick="updateOrderStatus(${order.id}, 'cooking')">Cooking</button>
                     <button class="btn ready" onclick="updateOrderStatus(${order.id}, 'ready')">Ready</button>
-                </div>
+                </div>                
             `;
 
+            const indicator = document.createElement('span');
+            switch(order.status) {
+                case 'ready':
+                    orderElement.style.borderColor = 'green';
+                    orderElement.style.boxShadow = '0 3px 8px green';
+                    indicator.className = 'order-ready-indicator';
+                    indicator.title = 'Ready for pickup';
+                    break;
+                case 'cooking':
+                    orderElement.style.borderColor = 'orange';
+                    orderElement.style.boxShadow = '0 3px 8px orange';
+                    indicator.className = 'order-cooking-indicator';
+                    indicator.title = 'Order is being cooked';
+                    break;
+                case 'pending':
+                default:
+                    orderElement.style.borderColor = 'red';
+                    orderElement.style.boxShadow = '0 3px 8px red';
+                    indicator.className = 'order-pending-indicator';
+                    indicator.title = 'Order is pending';
+            }
+
+            orderElement.appendChild(indicator);
             ordersContainer.appendChild(orderElement);
         });
 
@@ -103,4 +127,18 @@ async function deleteOrder(orderId) {
         console.error('Error deleting order:', error);
         alert('Failed to delete order.');
     }
+}
+
+async function updateOrderStatus(orderId, newStatus) {
+    const response = await fetch(`/api/orders/${orderId}/status`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus })
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to update order status');
+    }
+
+    fetchOrders();
 }

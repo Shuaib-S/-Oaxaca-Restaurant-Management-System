@@ -1,11 +1,13 @@
 package uk.ac.rhul.cs2810.RestaurantManager.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,8 +63,16 @@ public class OrderController {
     }
     orderItem.setTableNumber(tableNum);
     orderItem.setStatus("pending");
-    this.orderRepository.save(orderItem);
-    return ResponseEntity.ok(order);
+    Order savedOrder = orderRepository.save(orderItem);
+
+
+    Map<String, Object> response = new HashMap<>();
+    response.put("id", savedOrder.getId()); //
+    response.put("tableNumber", savedOrder.getTableNumber());
+    response.put("status", savedOrder.getStatus());
+
+    return ResponseEntity.ok(response);
+
   }
 
   /**
@@ -82,4 +92,12 @@ public class OrderController {
     Order updatedOrder = orderRepository.save(order);
     return ResponseEntity.ok(updatedOrder);
   }
+
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Order> getOrderById(@PathVariable("id") Integer id) {
+    Optional<Order> order = orderRepository.findById(id);
+    return order.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+  }
+
 }

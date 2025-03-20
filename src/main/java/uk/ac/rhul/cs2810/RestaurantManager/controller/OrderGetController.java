@@ -55,6 +55,7 @@ public class OrderGetController {
       order2.put("timeSinceOrder", order.getTimeSinceOrder());
       order2.put("items", itemsToMap(order));
       order2.put("status", order.getStatus());
+      order2.put("confirmed", order.getConfirmed());
       orderMAIN.add(order2);
     }
 

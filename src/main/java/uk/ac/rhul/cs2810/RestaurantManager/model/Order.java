@@ -28,6 +28,8 @@ public class Order {
 
   private String status = "pending";
 
+  private Boolean confirmed = false;
+
   /**
    * Order Contrstructor
    * 
@@ -94,5 +96,13 @@ public class Order {
 
   public void setStatus(String status) {
     this.status = status;
+  }
+
+  public Boolean getConfirmed() {
+    return confirmed;
+  }
+
+  public void setConfirmed(Boolean confirmed) {
+    this.confirmed = confirmed;
   }
 }
