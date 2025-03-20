@@ -38,7 +38,6 @@ async function fetchOrders() {
                     <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Delete Order</button>
                 </div>
             `; // change deleteOrder in edit-order-btn
-            //below are the poor victims of angelo. GG indicators see you later
             const indicator = document.createElement('span');
             switch (order.status) {
                 case 'ready':

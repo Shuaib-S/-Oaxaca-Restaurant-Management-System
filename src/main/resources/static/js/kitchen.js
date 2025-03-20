@@ -13,13 +13,14 @@ async function fetchOrders() {
         const orders = await response.json();
         const ordersContainer = document.getElementById('orders-container');
         ordersContainer.innerHTML = '';
-
-        if (orders.length === 0) {
+        const confirmedOrders = orders.filter(order => order.confirmed === true);
+        
+        if (confirmedOrders.length === 0) {
             ordersContainer.innerHTML = '<p>No orders found.</p>';
             return;
-        }
+       }
 
-        orders.forEach(order => {
+        confirmedOrders.forEach(order => {
             const orderElement = document.createElement('div');
             orderElement.className = 'order-card';
 
