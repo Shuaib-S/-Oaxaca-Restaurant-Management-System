@@ -138,4 +138,19 @@ public class OrderGetController {
     return ResponseEntity.ok("no item in list, but ok");
   }
 
+  @PostMapping("/confirmOrder")
+  public ResponseEntity<?> confirmOrder(@RequestBody addItems request) {
+    int orderID = request.getOrderID();
+    boolean confirm = true;
+    Optional<Order> order = this.orderRepository.findById(orderID);
+    if (order.isPresent()) {
+      Order order2 = order.get();
+      order2.setConfirmed(confirm);
+      this.orderRepository.save(order2);
+      return ResponseEntity.ok("hi");
+    }
+
+    return ResponseEntity.ok("hi");
+  }
+
 }

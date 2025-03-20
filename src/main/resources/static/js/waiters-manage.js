@@ -34,7 +34,7 @@ async function fetchOrders() {
                 </div>
                 <div class="order-card-footer">
                     <button class="edit-order-btn" onclick="editOrder(${order.id})">Edit Order</button>
-                    <button class="confirm-order-btn" onclick="deleteOrder(${order.id})">Confirm Order</button>
+                    <button class="confirm-order-btn" onclick="confirmOrder(${order.id})">Confirm Order</button>
                     <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Delete Order</button>
                 </div>
             `; // change deleteOrder in edit-order-btn
@@ -67,6 +67,28 @@ async function fetchOrders() {
         console.error('Error fetching orders:', error);
         document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
     }
+}
+
+async function confirmOrder(orderId) {
+    try {
+        const orderID = orderId;
+        const response = await fetch('/api/CurrentOrders/confirmOrder', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ orderID })
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+        }
+
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
+    }
+    console.log("WOO");
+
 }
 
 async function editOrder(orderId) {
