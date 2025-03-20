@@ -38,6 +38,7 @@ async function fetchOrders() {
                     <button class="btn pending" onclick="updateOrderStatus(${order.id}, 'pending')">Pending</button>
                     <button class="btn cooking" onclick="updateOrderStatus(${order.id}, 'cooking')">Cooking</button>
                     <button class="btn ready" onclick="updateOrderStatus(${order.id}, 'ready')">Ready</button>
+                    <button class="btn delivered" onclick="updateOrderStatus(${order.id}, 'delivered')">Delivered</button>
                 </div>                
             `;
 

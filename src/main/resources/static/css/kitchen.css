@@ -258,3 +258,7 @@ footer {
     background-color: blue;
     border-radius: 50%;
 }
+
+.btn.delivered {
+    background-color: darkblue;
+  }

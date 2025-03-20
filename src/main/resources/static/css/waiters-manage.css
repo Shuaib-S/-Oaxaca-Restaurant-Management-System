@@ -345,3 +345,19 @@ footer {
     background-color: blue;
     border-radius: 50%;
 }
+
+.deliver-order-btn {
+    background-color: #4169E1;
+    color: var(--light);
+    border: none;
+    padding: 5px 10px;
+    margin-left: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.deliver-order-btn:hover {
+    background-color: #2a4caf;
+}
