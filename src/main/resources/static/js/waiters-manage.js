@@ -38,6 +38,7 @@ async function fetchOrders() {
                     <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Delete Order</button>
                 </div>
             `; // change deleteOrder in edit-order-btn
+            //below are the poor victims of angelo. GG indicators see you later
             const indicator = document.createElement('span');
             switch (order.status) {
                 case 'ready':
@@ -99,7 +100,10 @@ async function editOrder(orderId) {
         });
         editOrderModal.innerHTML = `
         <p>Order ID: ${orderId}</p>
-        <p>Items Currently In Cart:</p>
+        <p>Items Currently In Cart:<p>
+        <p>${formatOrderItems(orders[orderIdIndex].items)}</p>
+        <button class="add-item-btn" onclick="addToActiveOrder(${orders[orderIdIndex].id})">Add To Order</button>
+        <button class="delete-item-btn" onclick="removeFromActiveOrder(${orders[orderIdIndex].items})">Remove From Order</button>
         `;
         editOrderModal.appendChild(select);
         const closeButton = document.createElement('button');
@@ -115,6 +119,42 @@ async function editOrder(orderId) {
         document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
     }
 
+}
+
+async function addToActiveOrder(orderId) {
+    try {
+        selectedItem =
+            document.querySelector('select');
+        const orderID = orderId;
+        const itemName = selectedItem.options[selectedItem.selectedIndex].value;
+        console.log(orderID);
+        console.log(itemName);
+        const response = await fetch('/api/CurrentOrders/addItem', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "OrderID": orderID, "ItemName": itemName })
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+        }
+
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
+    }
+    console.log("HELLO!!!");
+}
+
+async function removeFromActiveOrder() {
+    try {
+
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
+    }
+    console.log("HI!!!");
 }
 
 function closeEditModal() {
@@ -186,11 +226,15 @@ async function generateTablesOverview() {
             const isInUse = activeTables.has(i);
             const assignedWaiter = await hasWaiter(i);
             const needAssistance = await fetchAssistance(i);
+            const waiterAssistance = await returnWaiterForAssistance(i);
+            const needsAssistance = waiterAssistance === null;
+
             tableDiv.innerHTML = `
                 <div class="table-header">
                     <span class="table-name">Table ${i}</span>
                     <span class="status-dot ${isInUse ? 'dot-red' : 'dot-green'}"></span>
-                    <span class ="help-symbol">${needAssistance ? `Table Requires Assistance! <button onclick="removeHelp(${i})">Remove assistance</button>` : ''}</span>
+                    <span class ="help-symbol">${needAssistance ? `Table Requires Assistance! ${needsAssistance ? `` : `${waiterAssistance}`}<button onclick="removeHelp(${i})">Remove assistance</button>` : ''}</span>
+
                 </div>
                 <div class="table-details hidden">
                     <p>Status: <span class="${isInUse ? 'occupied' : 'available'}">
@@ -201,7 +245,6 @@ async function generateTablesOverview() {
                     ${assignedWaiter !== 'None' ? `<button class="unassign-btn" onclick="unassignWaiter(${i})">Unassign Waiter</button>` : ''}
                 </div>
             `;
-
 
             //  event listener for toggling visibility
             tableDiv.addEventListener('click', function () {
@@ -367,6 +410,22 @@ async function removeHelp(tableN) {
     } catch (error) {
         console.error('Failed to remove assistance:', error);
         alert('Failed to remove assistance');
+    }
+}
+
+async function returnWaiterForAssistance(tableNo) {
+    try {
+        const response = await fetch(`/api/tableAssignments/assistance`);
+        if (!response.ok) throw new Error('Failed to fetch assistance');
+
+        const assist = await response.json();
+
+        const entry = assist.find(entry => entry.table === tableNo && entry.assistance === true);
+        return entry ? entry.waiter : null;
+
+    } catch (error) {
+        console.error('Error fetching assistance:', error);
+        return false;
     }
 }
 

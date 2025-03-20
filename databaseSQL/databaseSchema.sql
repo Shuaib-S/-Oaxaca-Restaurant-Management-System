@@ -4,36 +4,35 @@ This is the sql queries fed to create the tables on the server
 
 */ -- The orders table
 
-CREATE TABLE orders (
-  id SERIAL PRIMARY KEY,
-  table_number INT NOT NULL,
-  order_time TIMESTAMP NOT NULL);
-  
-ALTER TABLE orders
-ADD COLUMN status VARCHAR(255) NOT NULL DEFAULT 'pending';
+CREATE TABLE orders (id SERIAL PRIMARY KEY,
+                                       table_number INT NOT NULL,
+                                                        order_time TIMESTAMP NOT NULL);
 
-ALTER TABLE orders
-ADD COLUMN confirmed BOOLEAN NOT NULL DEFAULT FALSE;
+
+ALTER TABLE orders ADD COLUMN status VARCHAR(255) NOT NULL DEFAULT 'pending';
+
+
+ALTER TABLE orders ADD COLUMN confirmed BOOLEAN NOT NULL DEFAULT FALSE;
 
 -- Orders Item table to have multiple items to one order
 
 CREATE TABLE orders_item_list
-  (id SERIAL PRIMARY KEY,
-                     order_id INT NOT NULL,
-                                  item_list_id INT NOT NULL,
-                                                   CONSTRAINT fk_order
-   FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-                                                          CONSTRAINT fk_item
-   FOREIGN KEY (item_list_id) REFERENCES items(id) ON DELETE CASCADE);
+        (id SERIAL PRIMARY KEY,
+                           order_id INT NOT NULL,
+                                        item_list_id INT NOT NULL,
+                                                         CONSTRAINT fk_order
+         FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+                                                                CONSTRAINT fk_item
+         FOREIGN KEY (item_list_id) REFERENCES items(id) ON DELETE CASCADE);
 
 --Items table
 
-CREATE TABLE items ( id INT PRIMARY KEY,
-                                    title VARCHAR(255),
-                                          description VARCHAR(1000),
-                                                      price DECIMAL(10, 2),
-                                                            category VARCHAR(255),
-                                                                     calories INT, allergens VARCHAR(255));
+CREATE TABLE items (id INT PRIMARY KEY,
+                                   title VARCHAR(255),
+                                         description VARCHAR(1000),
+                                                     price DECIMAL(10, 2),
+                                                           category VARCHAR(255),
+                                                                    calories INT, allergens VARCHAR(255));
 
 
 INSERT INTO items (id, title, description, price, category, calories, allergens)
@@ -151,7 +150,10 @@ CREATE TABLE logins (id SERIAL PRIMARY KEY,
                                                                       password VARCHAR(255) NOT NULL);
 
 
-CREATE TABLE table_assistance ( id SERIAL PRIMARY KEY,
-                                                  table_No INT NOT NULL,
-                                                               help BOOLEAN NOT NULL);
+CREATE TABLE table_assistance (id SERIAL PRIMARY KEY,
+                                                 table_No INT NOT NULL,
+                                                              help BOOLEAN NOT NULL);
 
+-- Adding waiter column
+
+ALTER TABLE table_assistance ADD COLUMN waiter VARCHAR(255);

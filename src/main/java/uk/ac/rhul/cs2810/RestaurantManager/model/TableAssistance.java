@@ -24,6 +24,8 @@ public class TableAssistance {
    */
   private boolean help;
 
+  private String waiter;
+
   public TableAssistance() {
 
   }
@@ -47,6 +49,14 @@ public class TableAssistance {
 
   public boolean getAssistance() {
     return this.help;
+  }
+
+  public void setWaiter(String waiter) {
+    this.waiter = waiter;
+  }
+
+  public String getWaiter() {
+    return this.waiter;
   }
 
 }
