@@ -1,0 +1,43 @@
+:root {
+    --primary: #C19A6B;
+    --secondary: #4A4A4A;
+    --accent: #9B2335;
+    --background: #FAFAFA;
+    --text: #2C2C2C;
+    --light: #FFFFFF;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    text-align: center;
+}
+
+.status-container {
+    padding: 50px;
+}
+
+.status-box {
+    margin-top: 20px;
+}
+
+.status-box img {
+    max-width: 200px;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: var(--primary);
+    color: var(--light);
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: var(--accent);
+}

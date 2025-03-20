@@ -447,10 +447,12 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(data => {
                 alert("Order placed successfully!");
+                const orderId = data.id; // FETCH AND OPEN ORDER STATUS PAGE HERE
+                window.open(`/order-status.html?orderId=${orderId}`, '_blank');
                 quantItems.clear();
                 totalPrice = 0;
                 document.getElementById("order-total").innerHTML = "Order Total: " + formatPrice(totalPrice);
-                document.querySelector(".cart-items").innerHTML = "";
+                document.querySelector(".cart-items").innerHTML = ""
             })
             .catch(error => {
                 console.error("Error:", error);
