@@ -30,7 +30,8 @@ public class OrderGetController {
   }
 
   @GetMapping("/all")
-  public List<Map<String, Object>> getOrders() { // Depending on how status is handled @RequestParam may be needed
+  public List<Map<String, Object>> getOrders() { // Depending on how status is handled @RequestParam
+                                                 // may be needed
     List<Order> orders = (List<Order>) orderRepository.findAll();
     List<Map<String, Object>> orderMAIN = new ArrayList<>();
     for (Order order : orders) {
@@ -41,10 +42,25 @@ public class OrderGetController {
       order2.put("timeSinceOrder", order.getTimeSinceOrder());
       order2.put("items", itemsToMap(order));
       order2.put("status", order.getStatus());
+      order2.put("confirmed", order.getConfirmed());
       orderMAIN.add(order2);
     }
 
     return orderMAIN;
+  }
+
+  @GetMapping("/orderItems")
+  public List<Map<String, Object>> getItemNames() {
+    List<Order> orders = (List<Order>) orderRepository.findAll();
+    List<Map<String, Object>> orderItems = new ArrayList<>();
+    for (Order order : orders) {
+      Map<String, Object> order2 = new HashMap<>();
+      order2.put("id", order.getId());
+      order2.put("items", itemsToMap(order));
+      orderItems.add(order2);
+    }
+
+    return orderItems;
   }
 
   @GetMapping("/table/{tableId}")

@@ -13,6 +13,7 @@
 <nav class="nav">
     <a href="/" class="nav-logo">OAXACA</a>
     <div class="nav-links">
+        <a href="/protected/kitchen.html" class="nav-link">Kitchen</a>
         <a href="/protected/waiters.html" class="nav-link">Manage Menu</a>
         <button id="logoutButton"  class="nav-link nav-button">Log Out</button>
         <a href="/waiters-login.html" id="loginButton" class="nav-link">Login</a>
@@ -37,10 +38,21 @@
     </div>
 </section>
 
+<div id="edit-order-modal" class="modal hidden">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeEditModal()">&times;</span>
+        <h3>Edit Order</h3>
+        <div id="edit-order-select"></div>
+        <!-- <select id="edit-order-select">
+
+        </select> -->
+    </div>
+</div>
+
 <div id="assignWaiterModal" class="modal hidden">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
-        <h3>Assign Waiter</h3>
+        <h4>Assign Waiter</h4>
         <p>Select a waiter for Table <span id="selected-table"></span>:</p>
         <select id="waiter-select">
             
