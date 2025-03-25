@@ -18,7 +18,7 @@ public class ItemTest {
     assertEquals("Hard shell taco", item.getDescription());
     assertEquals(5.00, item.getPrice());
     assertEquals("Main", item.getCategory());
-    assertEquals("300 cal", item.getCalories());
+    assertEquals(300, item.getCalories());
     assertEquals("Wheat, gluten, eggs", item.getAllergens());
   }
 
@@ -36,7 +36,7 @@ public class ItemTest {
     assertEquals("Soft burrito", item.getDescription());
     assertEquals(8.00, item.getPrice());
     assertEquals("Main", item.getCategory());
-    assertEquals("600 cal", item.getCalories());
+    assertEquals(600, item.getCalories());
     assertEquals("Wheat", item.getAllergens());
   }
 
