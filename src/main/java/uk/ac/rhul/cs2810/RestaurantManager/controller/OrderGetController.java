@@ -5,20 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Item;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Order;
-import uk.ac.rhul.cs2810.RestaurantManager.model.TableAssistance;
 import uk.ac.rhul.cs2810.RestaurantManager.model.addItems;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.ItemRepository;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.OrderRepository;
@@ -56,6 +52,7 @@ public class OrderGetController {
       order2.put("items", itemsToMap(order));
       order2.put("status", order.getStatus());
       order2.put("confirmed", order.getConfirmed());
+      order2.put("paid", order.getPaid());
       orderMAIN.add(order2);
     }
 
