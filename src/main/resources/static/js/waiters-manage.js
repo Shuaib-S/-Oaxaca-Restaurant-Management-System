@@ -181,7 +181,6 @@ async function addToActiveOrder(orderId) {
         console.error('Error fetching orders:', error);
         alert('An error has occurred while attempting to add:', itemName);
     }
-    console.log("HELLO!!!");
 }
 
 async function removeFromActiveOrder(orderId) {
@@ -208,7 +207,6 @@ async function removeFromActiveOrder(orderId) {
         console.error('Error fetching orders:', error);
         alert('An error has occurred while attempting to remove:', itemName);
     }
-    console.log("HI!!!");
 }
 
 function closeEditModal() {
