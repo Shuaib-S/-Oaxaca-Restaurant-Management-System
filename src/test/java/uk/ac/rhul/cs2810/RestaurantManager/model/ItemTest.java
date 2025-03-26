@@ -18,12 +18,15 @@ public class ItemTest {
     assertEquals("Hard shell taco", item.getDescription());
     assertEquals(5.00, item.getPrice());
     assertEquals("Main", item.getCategory());
-    assertEquals("300 cal", item.getCalories());
+    assertEquals(300, item.getCalories());
     assertEquals("Wheat, gluten, eggs", item.getAllergens());
   }
 
   @Test
   public void setItemTest() {
+    Item item2 = new Item();
+    item2.setId(3);
+    assertEquals(3, item2.getId());
     item.setId(2);
     item.setTitle("Burrito");
     item.setDescription("Soft burrito");
@@ -36,8 +39,17 @@ public class ItemTest {
     assertEquals("Soft burrito", item.getDescription());
     assertEquals(8.00, item.getPrice());
     assertEquals("Main", item.getCategory());
-    assertEquals("600 cal", item.getCalories());
+    assertEquals(600, item.getCalories());
     assertEquals("Wheat", item.getAllergens());
   }
 
+  // Test 3
+  @Test
+  public void ActiveTest() {
+    // Added test coverage for isActive
+    this.item.setActive(false);
+    assertEquals(false, this.item.isActive());
+    this.item.setActive(true);
+    assertEquals(true, this.item.isActive());
+  }
 }
