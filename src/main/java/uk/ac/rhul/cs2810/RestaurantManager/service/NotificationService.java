@@ -1,8 +1,6 @@
 package uk.ac.rhul.cs2810.RestaurantManager.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.apache.logging.log4j.message.ReusableSimpleMessage;
-import org.apache.logging.log4j.message.SimpleMessageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Notification;
