@@ -30,6 +30,8 @@ public class Order {
 
   private Boolean confirmed = false;
 
+  private Boolean paid = false;
+
   /**
    * Order Contrstructor
    * 
@@ -104,5 +106,13 @@ public class Order {
 
   public void setConfirmed(Boolean confirmed) {
     this.confirmed = confirmed;
+  }
+
+  public Boolean getPaid() {
+    return paid;
+  }
+
+  public void setPaid(Boolean paid) {
+    this.paid = paid;
   }
 }

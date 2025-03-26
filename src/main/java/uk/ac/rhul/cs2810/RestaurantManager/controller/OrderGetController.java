@@ -5,20 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Item;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Order;
-import uk.ac.rhul.cs2810.RestaurantManager.model.TableAssistance;
 import uk.ac.rhul.cs2810.RestaurantManager.model.addItems;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.ItemRepository;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.OrderRepository;
@@ -56,6 +52,7 @@ public class OrderGetController {
       order2.put("items", itemsToMap(order));
       order2.put("status", order.getStatus());
       order2.put("confirmed", order.getConfirmed());
+      order2.put("paid", order.getPaid());
       orderMAIN.add(order2);
     }
 
@@ -107,7 +104,7 @@ public class OrderGetController {
       order2.addItemToList(item2);
       this.orderRepository.save(order2);
     }
-    return ResponseEntity.ok("works good my dude");
+    return ResponseEntity.ok("addItem successful.");
   }
 
   @PostMapping("/removeItem")
@@ -130,12 +127,12 @@ public class OrderGetController {
         if (itemList.contains(item2)) {
           order2.removeItemFromList(item2);
           this.orderRepository.save(order2);
-          return ResponseEntity.ok("works good my dude");
+          return ResponseEntity.ok("Item removed from order.");
         }
 
       }
     }
-    return ResponseEntity.ok("no item in list, but ok");
+    return ResponseEntity.ok("Item is not in this order, it is not removed.");
   }
 
   @PostMapping("/confirmOrder")
@@ -147,10 +144,10 @@ public class OrderGetController {
       Order order2 = order.get();
       order2.setConfirmed(confirm);
       this.orderRepository.save(order2);
-      return ResponseEntity.ok("hi");
+      return ResponseEntity.ok("Order confirmed.");
     }
 
-    return ResponseEntity.ok("hi");
+    return ResponseEntity.ok("Order not confirmed.");
   }
 
 }

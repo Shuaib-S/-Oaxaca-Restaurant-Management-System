@@ -34,12 +34,24 @@ async function fetchOrders() {
                 </div>
                 <div class="order-card-footer">
                     <button class="edit-order-btn" onclick="editOrder(${order.id})">Edit Order</button>
+                    <button class="pending-order-btn" onclick="updateOrderStatus(${order.id}, 'pending')">Pending</button>
+                    <button class="cooking-order-btn" onclick="updateOrderStatus(${order.id}, 'cooking')">Cooking</button>
+                    <button class="ready-order-btn" onclick="updateOrderStatus(${order.id}, 'ready')">Ready</button>
+                    ${order.status === 'ready' ? 
+                    `<button class="deliver-order-btn" onclick="markAsDelivered(${order.id})">Mark as Delivered</button>` : ''}
                     <button class="confirm-order-btn" onclick="confirmOrder(${order.id})">Confirm Order</button>
                     <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Delete Order</button>
                 </div>
-            `; // change deleteOrder in edit-order-btn
+            `;
+            
             const indicator = document.createElement('span');
             switch (order.status) {
+                case 'delivered':
+                    orderElement.style.borderColor = 'blue';
+                    orderElement.style.boxShadow = '0 3px 8px blue';
+                    indicator.className = 'order-delivered-indicator';
+                    indicator.title = 'Order delivered';
+                    break;
                 case 'ready':
                     orderElement.style.borderColor = 'green';
                     orderElement.style.boxShadow = '0 3px 8px green';
@@ -67,6 +79,18 @@ async function fetchOrders() {
         console.error('Error fetching orders:', error);
         document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
     }
+}
+
+async function updateOrderStatus(orderId, newStatus) {
+    const response = await fetch(`/api/orders/${orderId}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: newStatus })
+    });
+    if (!response.ok) {
+      throw new Error('Failed to update order status');
+    }
+    fetchOrders();
 }
 
 async function confirmOrder(orderId) {
@@ -174,12 +198,13 @@ async function addToActiveOrder(orderId) {
         if (!response.ok) {
             throw new Error('Failed to fetch orders');
         }
+        alert("You have successfully added an item!");
+        location.reload();
 
     } catch (error) {
         console.error('Error fetching orders:', error);
-        document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
+        alert('An error has occurred while attempting to add:', itemName);
     }
-    console.log("HELLO!!!");
 }
 
 async function removeFromActiveOrder(orderId) {
@@ -199,12 +224,13 @@ async function removeFromActiveOrder(orderId) {
         if (!response.ok) {
             throw new Error('Failed to fetch orders');
         }
+        alert("You have successfully removed an item!");
+        location.reload();
 
     } catch (error) {
         console.error('Error fetching orders:', error);
-        document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
+        alert('An error has occurred while attempting to remove:', itemName);
     }
-    console.log("HI!!!");
 }
 
 function closeEditModal() {
@@ -461,3 +487,28 @@ async function removeHelp(tableN) {
 }
 
 //end of marcus assistance button stuff//
+
+// Function to mark an order as delivered
+async function markAsDelivered(orderId) {
+    try {
+        if (!confirm(`Are you sure you want to mark Order #${orderId} as delivered?`)) {
+            return;
+        }
+
+        const response = await fetch(`/api/orders/${orderId}/status`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: 'delivered' })
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update order status');
+        }
+
+        alert(`Order #${orderId} has been marked as delivered!`);
+        fetchOrders();
+    } catch (error) {
+        console.error('Error updating order status:', error);
+        alert('Failed to mark order as delivered.');
+    }
+}
