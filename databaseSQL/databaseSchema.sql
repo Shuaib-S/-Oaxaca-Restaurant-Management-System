@@ -15,6 +15,9 @@ ADD COLUMN status VARCHAR(255) NOT NULL DEFAULT 'pending';
 ALTER TABLE orders
 ADD COLUMN confirmed BOOLEAN NOT NULL DEFAULT FALSE;
 
+ALTER TABLE orders
+ADD COLUMN paid BOOLEAN NOT NULL DEFAULT FALSE;
+
 -- Orders Item table to have multiple items to one order
 
 CREATE TABLE orders_item_list
