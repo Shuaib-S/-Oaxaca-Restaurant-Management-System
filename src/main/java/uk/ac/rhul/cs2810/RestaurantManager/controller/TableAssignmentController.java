@@ -18,6 +18,7 @@ import uk.ac.rhul.cs2810.RestaurantManager.model.TableAssignment;
 import uk.ac.rhul.cs2810.RestaurantManager.model.TableAssistance;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.TableAssignmentRepository;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.TableAssistanceRepository;
+import uk.ac.rhul.cs2810.RestaurantManager.service.NotificationService;
 
 @RestController
 @RequestMapping("/api/tableAssignments")
@@ -28,6 +29,9 @@ public class TableAssignmentController {
 
   @Autowired
   private TableAssistanceRepository tableAssistanceRepositry;
+
+  @Autowired
+  private NotificationService notificationService;
 
   @PostMapping("/assign")
   public ResponseEntity<?> assignWaiter(@RequestParam int tableNumber,
@@ -75,6 +79,13 @@ public class TableAssignmentController {
     tableAssist.setTable(tableNumber);
     tableAssist.setAssistance(true);
     tableAssistanceRepositry.save(tableAssist);
+
+    notificationService.createNotification(
+        "waiter",
+        "Table " + tableNumber + " needs assistance",
+        "table_assistance"
+    );
+
     return ResponseEntity.ok("Successuflly assisited someone");
   }
 
