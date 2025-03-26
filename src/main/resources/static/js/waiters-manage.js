@@ -34,9 +34,9 @@ async function fetchOrders() {
                 </div>
                 <div class="order-card-footer">
                     <button class="edit-order-btn" onclick="editOrder(${order.id})">Edit Order</button>
-                    <button class="btn pending" onclick="updateOrderStatus(${order.id}, 'pending')">Pending</button>
-                    <button class="btn cooking" onclick="updateOrderStatus(${order.id}, 'cooking')">Cooking</button>
-                    <button class="btn ready" onclick="updateOrderStatus(${order.id}, 'ready')">Ready</button>
+                    <button class="pending-order-btn" onclick="updateOrderStatus(${order.id}, 'pending')">Pending</button>
+                    <button class="cooking-order-btn" onclick="updateOrderStatus(${order.id}, 'cooking')">Cooking</button>
+                    <button class="ready-order-btn" onclick="updateOrderStatus(${order.id}, 'ready')">Ready</button>
                     ${order.status === 'ready' ? 
                     `<button class="deliver-order-btn" onclick="markAsDelivered(${order.id})">Mark as Delivered</button>` : ''}
                     <button class="confirm-order-btn" onclick="confirmOrder(${order.id})">Confirm Order</button>

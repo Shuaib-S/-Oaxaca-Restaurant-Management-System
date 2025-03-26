@@ -358,6 +358,54 @@ footer {
     border-radius: 5px;
 }
 
+.pending-order-btn {
+    background-color: var(--secondary);
+    color: var(--light);
+    border: none;
+    padding: 5px 10px;
+    margin-left: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.pending-order-btn:hover {
+    background-color: #383838;
+}
+
+.cooking-order-btn {
+    background-color: var(--primary);
+    color: var(--light);
+    border: none;
+    padding: 5px 10px;
+    margin-left: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.cooking-order-btn:hover {
+    background-color: #a88353;
+}
+
+.ready-order-btn {
+    background-color: darkgreen;
+    color: var(--light);
+    border: none;
+    padding: 5px 10px;
+    margin-left: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.ready-order-btn:hover {
+    background-color: rgb(1, 65, 1);
+}
+
 .deliver-order-btn:hover {
     background-color: #2a4caf;
 }
