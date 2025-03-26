@@ -24,6 +24,9 @@ public class ItemTest {
 
   @Test
   public void setItemTest() {
+    Item item2 = new Item();
+    item2.setId(3);
+    assertEquals(3, item2.getId());
     item.setId(2);
     item.setTitle("Burrito");
     item.setDescription("Soft burrito");
@@ -40,4 +43,13 @@ public class ItemTest {
     assertEquals("Wheat", item.getAllergens());
   }
 
+  // Test 3
+  @Test
+  public void ActiveTest() {
+    // Added test coverage for isActive
+    this.item.setActive(false);
+    assertEquals(false, this.item.isActive());
+    this.item.setActive(true);
+    assertEquals(true, this.item.isActive());
+  }
 }
