@@ -1,8 +1,6 @@
 package uk.ac.rhul.cs2810.RestaurantManager.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.apache.logging.log4j.message.ReusableSimpleMessage;
-import org.apache.logging.log4j.message.SimpleMessageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Notification;
@@ -35,15 +33,15 @@ public class NotificationService {
   }
 
   public List<Notification> getStaffNotifications(String staffType) {
-    return notificationRepository.findByStaffTypeAndDoneIsOrderByCreatedAtDesc(staffType, false);
+    return notificationRepository.findByStaffTypeAndIsDoneOrderByCreatedAtDesc(staffType, false);
   }
 
   public long getNotifCount(String staffType) {
-    return notificationRepository.countByStaffTypeAndDoneIs(staffType, false);
+    return notificationRepository.countByStaffTypeAndIsDone(staffType, false);
   }
 
-  public void markNotificationAsRead(Integer id) {
-    Notification notification = notificationRepository.findbyId(id)
+  public void markNotificationAsDone(Long id) {
+    Notification notification = notificationRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Notification not found"));
 
     notification.setDone(true);

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Item;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Order;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.OrderRepository;
+import uk.ac.rhul.cs2810.RestaurantManager.service.NotificationService;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -28,6 +29,9 @@ public class OrderController {
   public OrderController(OrderRepository orderRepository) {
     this.orderRepository = orderRepository;
   }
+
+  @Autowired
+  private NotificationService notificationService;
 
   /**
    * Response from the front end.
@@ -70,6 +74,12 @@ public class OrderController {
     response.put("id", savedOrder.getId()); //
     response.put("tableNumber", savedOrder.getTableNumber());
     response.put("status", savedOrder.getStatus());
+
+    notificationService.createNotification(
+        "waiter",
+        "New order #" + savedOrder.getId() + " received",
+        "order"
+    );
 
     return ResponseEntity.ok(response);
 

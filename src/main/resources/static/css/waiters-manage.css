@@ -31,7 +31,7 @@ body {
 /* Header Section */
 header {
     padding: 20px;
-    background: var(--primary);
+    background: var(--text);
     color: var(--light);
     text-align: center;
     font-family: 'Playfair Display', serif;
@@ -65,6 +65,61 @@ header {
 
 .nav-links a:hover {
     color: var(--accent);
+}
+
+.notification-dropdown {
+    position: relative;
+}
+
+.notification-toggle {
+    position: relative;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.7em;
+}
+
+.notification-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 250px;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.notification-dropdown:hover .notification-menu {
+    display: block;
+}
+
+.notification-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item p {
+    color: black;
+    margin: 0;
+    font-size: 0.9em;
+}
+
+.notification-item small {
+    color: gray;
+    font-size: 0.7em;
 }
 
 /* Sections for Ordrs and Tables */
@@ -356,6 +411,7 @@ h2 {
 .unassign-btn:hover {
     background-color: #7A1925;
 }
+
 
 
 /* Footer */
