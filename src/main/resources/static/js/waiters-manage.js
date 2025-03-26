@@ -183,12 +183,13 @@ async function addToActiveOrder(orderId) {
         if (!response.ok) {
             throw new Error('Failed to fetch orders');
         }
+        alert("You have successfully added an item!");
+        location.reload();
 
     } catch (error) {
         console.error('Error fetching orders:', error);
-        document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
+        alert('An error has occurred while attempting to add:', itemName);
     }
-    console.log("HELLO!!!");
 }
 
 async function removeFromActiveOrder(orderId) {
@@ -208,12 +209,13 @@ async function removeFromActiveOrder(orderId) {
         if (!response.ok) {
             throw new Error('Failed to fetch orders');
         }
+        alert("You have successfully removed an item!");
+        location.reload();
 
     } catch (error) {
         console.error('Error fetching orders:', error);
-        document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
+        alert('An error has occurred while attempting to remove:', itemName);
     }
-    console.log("HI!!!");
 }
 
 function closeEditModal() {

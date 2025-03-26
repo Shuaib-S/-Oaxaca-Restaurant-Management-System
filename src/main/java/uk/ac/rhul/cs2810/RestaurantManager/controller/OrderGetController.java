@@ -107,7 +107,7 @@ public class OrderGetController {
       order2.addItemToList(item2);
       this.orderRepository.save(order2);
     }
-    return ResponseEntity.ok("works good my dude");
+    return ResponseEntity.ok("addItem successful.");
   }
 
   @PostMapping("/removeItem")
@@ -130,12 +130,12 @@ public class OrderGetController {
         if (itemList.contains(item2)) {
           order2.removeItemFromList(item2);
           this.orderRepository.save(order2);
-          return ResponseEntity.ok("works good my dude");
+          return ResponseEntity.ok("Item removed from order.");
         }
 
       }
     }
-    return ResponseEntity.ok("no item in list, but ok");
+    return ResponseEntity.ok("Item is not in this order, it is not removed.");
   }
 
   @PostMapping("/confirmOrder")
@@ -147,10 +147,10 @@ public class OrderGetController {
       Order order2 = order.get();
       order2.setConfirmed(confirm);
       this.orderRepository.save(order2);
-      return ResponseEntity.ok("hi");
+      return ResponseEntity.ok("Order confirmed.");
     }
 
-    return ResponseEntity.ok("hi");
+    return ResponseEntity.ok("Order not confirmed.");
   }
 
 }
