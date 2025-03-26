@@ -34,12 +34,21 @@ async function fetchOrders() {
                 </div>
                 <div class="order-card-footer">
                     <button class="edit-order-btn" onclick="editOrder(${order.id})">Edit Order</button>
+                    ${order.status === 'ready' ? 
+                    `<button class="deliver-order-btn" onclick="markAsDelivered(${order.id})">Mark as Delivered</button>` : ''}
                     <button class="confirm-order-btn" onclick="confirmOrder(${order.id})">Confirm Order</button>
                     <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Delete Order</button>
                 </div>
-            `; // change deleteOrder in edit-order-btn
+            `;
+            
             const indicator = document.createElement('span');
             switch (order.status) {
+                case 'delivered':
+                    orderElement.style.borderColor = 'blue';
+                    orderElement.style.boxShadow = '0 3px 8px blue';
+                    indicator.className = 'order-delivered-indicator';
+                    indicator.title = 'Order delivered';
+                    break;
                 case 'ready':
                     orderElement.style.borderColor = 'green';
                     orderElement.style.boxShadow = '0 3px 8px green';
@@ -461,3 +470,28 @@ async function removeHelp(tableN) {
 }
 
 //end of marcus assistance button stuff//
+
+// Function to mark an order as delivered
+async function markAsDelivered(orderId) {
+    try {
+        if (!confirm(`Are you sure you want to mark Order #${orderId} as delivered?`)) {
+            return;
+        }
+
+        const response = await fetch(`/api/orders/${orderId}/status`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: 'delivered' })
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update order status');
+        }
+
+        alert(`Order #${orderId} has been marked as delivered!`);
+        fetchOrders();
+    } catch (error) {
+        console.error('Error updating order status:', error);
+        alert('Failed to mark order as delivered.');
+    }
+}

@@ -38,11 +38,18 @@ async function fetchOrders() {
                     <button class="btn pending" onclick="updateOrderStatus(${order.id}, 'pending')">Pending</button>
                     <button class="btn cooking" onclick="updateOrderStatus(${order.id}, 'cooking')">Cooking</button>
                     <button class="btn ready" onclick="updateOrderStatus(${order.id}, 'ready')">Ready</button>
+                    <button class="btn delivered" onclick="updateOrderStatus(${order.id}, 'delivered')">Delivered</button>
                 </div>                
             `;
 
             const indicator = document.createElement('span');
-            switch(order.status) {
+            switch (order.status) {
+                case 'delivered':
+                    orderElement.style.borderColor = 'blue';
+                    orderElement.style.boxShadow = '0 3px 8px blue';
+                    indicator.className = 'order-delivered-indicator';
+                    indicator.title = 'Order delivered';
+                    break;
                 case 'ready':
                     orderElement.style.borderColor = 'green';
                     orderElement.style.boxShadow = '0 3px 8px green';
