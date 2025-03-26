@@ -325,7 +325,7 @@ h2 {
 }
 
 .assign-btn {
-    background-color: #5cb85c;
+    background-color: #41a04d;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -337,12 +337,12 @@ h2 {
 }
 
 .assign-btn:hover {
-    background-color: #4cae4c;
+    background-color: #24572b;
 }
 
 
 .unassign-btn {
-    background-color: #d9534f;
+    background-color: #9B2335;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -354,7 +354,7 @@ h2 {
 }
 
 .unassign-btn:hover {
-    background-color: #c9302c;
+    background-color: #7A1925;
 }
 
 
