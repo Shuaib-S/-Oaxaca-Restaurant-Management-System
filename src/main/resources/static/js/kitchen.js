@@ -81,7 +81,7 @@ async function fetchOrders() {
     }
 }
 
-let ingredientStock = null; // Temporary until a stock system is implemented.
+let ingredientStock = true; // Temporary until a stock system is implemented.
 function confirmOrder(orderId) {
     if (ingredientStock) {
         alert("Sufficient amount of ingredients to create the order.");
