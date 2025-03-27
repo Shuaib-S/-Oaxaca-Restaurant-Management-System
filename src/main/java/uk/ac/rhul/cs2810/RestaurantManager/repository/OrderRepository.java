@@ -14,4 +14,6 @@ public interface OrderRepository extends CrudRepository<Order, Integer> {
    * @return The order by table number
    */
   List<Order> findByTableNumber(int tableNumber);
+
+  List<Order> findAllByOrderByOrderTimeDesc();
 }
