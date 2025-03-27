@@ -6,7 +6,7 @@ class NotificationManager {
 
         this.notificationCount = 0;
         this.lastChecked = null;
-        this.pollInterval = 5000;
+        this.pollInterval = 1000;
         this.startPolling();
         this.staffType = this.determineStaffType();
     }
@@ -62,7 +62,6 @@ class NotificationManager {
     createNotificationElement(notification) {
         const div = document.createElement('div');
         div.classList.add('notification-item');
-        console.log(notification.createdAt);
         div.innerHTML = `
         <p>${notification.message}</p>
         <small>${this.formatTimeAgo(notification.createdAt)}</small>
