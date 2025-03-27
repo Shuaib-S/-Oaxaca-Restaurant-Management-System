@@ -33,6 +33,10 @@ public class Notification {
     this.createdAt = LocalDateTime.now();
   }
 
+  public long getId() {
+    return id;
+  }
+
   public String getStaffType() {
     return staffType;
   }
