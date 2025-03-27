@@ -34,7 +34,8 @@ async function fetchOrders() {
                     (${formatTimeSinceOrder(order.timeSinceOrder)})</p>
                 </div>
                 <div class="order-card-footer">
-                    <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Delete Order</button>
+                    <button class="delete-order-btn" onclick="deleteOrder(${order.id})">Cancel Order</button>
+                    <button class="confirm-order-btn" onclick="confirmOrder(${order.id})">Confirm Order</button>
                     <button class="btn pending" onclick="updateOrderStatus(${order.id}, 'pending')">Pending</button>
                     <button class="btn cooking" onclick="updateOrderStatus(${order.id}, 'cooking')">Cooking</button>
                     <button class="btn ready" onclick="updateOrderStatus(${order.id}, 'ready')">Ready</button>
@@ -77,6 +78,22 @@ async function fetchOrders() {
     } catch (error) {
         console.error('Error fetching orders:', error);
         document.getElementById('orders-container').innerHTML = '<p>Error loading orders.</p>';
+    }
+}
+
+let ingredientStock = true; // Temporary until a stock system is implemented.
+function confirmOrder(orderId) {
+    if (ingredientStock) {
+        alert("Sufficient amount of ingredients to create the order.");
+        return null;
+    }
+    if (!ingredientStock) {
+        alert("Insufficient amount of ingredients to create the order. Please cancel the order.");
+        return null;
+    }
+    else {
+        alert("Error: Unable to check stock.");
+
     }
 }
 
