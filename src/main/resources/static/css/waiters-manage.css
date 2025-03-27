@@ -292,7 +292,7 @@ h2 {
 .table:hover {
     transform: scale(1.05);
     background-color: var(--primary);
-    color: var(--light);/
+    color: var(--light);
 }
 
 /* Header to keep dot next to table name */
@@ -411,7 +411,6 @@ h2 {
 .unassign-btn:hover {
     background-color: #7A1925;
 }
-
 
 /* Footer */
 footer {
