@@ -75,11 +75,16 @@ public class OrderController {
     response.put("tableNumber", savedOrder.getTableNumber());
     response.put("status", savedOrder.getStatus());
 
-    notificationService.createNotification(
-        "waiter",
-        "New order #" + savedOrder.getId() + " received",
-        "order"
-    );
+    notificationService.createNotification("waiter",
+        "New order #" + savedOrder.getId() + " received", "order");
+
+    notificationService.createNotification("waiter",
+        "New order #" + savedOrder.getId() + " received", "order");
+
+    notificationService.createNotification("kitchen",
+        "New order #" + savedOrder.getId() + " placed by Table " + savedOrder.getTableNumber(),
+        "order");
+
 
     return ResponseEntity.ok(response);
 
@@ -100,6 +105,12 @@ public class OrderController {
     Order order = optionalOrder.get();
     order.setStatus(status);
     Order updatedOrder = orderRepository.save(order);
+
+    if (status.equalsIgnoreCase("ready")) {
+      notificationService.createNotification("waiter",
+          "Order for Table " + order.getTableNumber() + " is ready", "status_update");
+    }
+
     return ResponseEntity.ok(updatedOrder);
   }
 
