@@ -18,6 +18,9 @@ import uk.ac.rhul.cs2810.RestaurantManager.model.Order;
 import uk.ac.rhul.cs2810.RestaurantManager.model.addItems;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.ItemRepository;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.OrderRepository;
+import uk.ac.rhul.cs2810.RestaurantManager.service.NotificationService;
+
+
 
 @RestController
 @RequestMapping("/api/CurrentOrders")
@@ -107,6 +110,8 @@ public class OrderGetController {
     return ResponseEntity.ok("addItem successful.");
   }
 
+
+
   @PostMapping("/removeItem")
   public ResponseEntity<?> removeItem(@RequestBody addItems request) {
     int orderID = request.getOrderID();
@@ -135,6 +140,9 @@ public class OrderGetController {
     return ResponseEntity.ok("Item is not in this order, it is not removed.");
   }
 
+  @Autowired
+  private NotificationService notificationService;
+
   @PostMapping("/confirmOrder")
   public ResponseEntity<?> confirmOrder(@RequestBody addItems request) {
     int orderID = request.getOrderID();
@@ -144,6 +152,9 @@ public class OrderGetController {
       Order order2 = order.get();
       order2.setConfirmed(confirm);
       this.orderRepository.save(order2);
+
+      notificationService.createNotification("kitchen",
+          "New order #" + order2.getId() + " placed by Table " + order2.getTableNumber(), "order");
       return ResponseEntity.ok("Order confirmed.");
     }
 

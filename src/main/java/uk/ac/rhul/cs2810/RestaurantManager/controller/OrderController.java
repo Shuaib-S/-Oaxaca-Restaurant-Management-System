@@ -81,9 +81,6 @@ public class OrderController {
     notificationService.createNotification("waiter",
         "New order #" + savedOrder.getId() + " received", "order");
 
-    notificationService.createNotification("kitchen",
-        "New order #" + savedOrder.getId() + " placed by Table " + savedOrder.getTableNumber(),
-        "order");
 
 
     return ResponseEntity.ok(response);
