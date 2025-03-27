@@ -99,7 +99,7 @@ function renderItems(items, tabSelector, isActive) {
     }
     
     itemDiv.innerHTML = `
-      <img src="../images/menu_placeholder.jpg" alt="${item.title}" class="item-image" loading="lazy" />
+      <img src="../images/${item.id}.png" alt="${item.title}" class="item-image" loading="lazy">
       <div class="item-content">
         <h3 class="item-title">${item.title}</h3>
         <p class="item-description">${item.description}</p>
