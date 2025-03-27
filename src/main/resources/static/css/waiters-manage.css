@@ -324,6 +324,40 @@ h2 {
     display: block;
 }
 
+.assign-btn {
+    background-color: #41a04d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.assign-btn:hover {
+    background-color: #24572b;
+}
+
+
+.unassign-btn {
+    background-color: #9B2335;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.unassign-btn:hover {
+    background-color: #7A1925;
+}
+
+
 /* Footer */
 footer {
     background-color: var(--primary);
