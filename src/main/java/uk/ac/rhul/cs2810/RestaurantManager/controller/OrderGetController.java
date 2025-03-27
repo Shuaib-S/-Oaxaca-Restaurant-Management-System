@@ -44,7 +44,7 @@ public class OrderGetController {
   @GetMapping("/all")
   public List<Map<String, Object>> getOrders() { // Depending on how status is handled @RequestParam
                                                  // may be needed
-    List<Order> orders = (List<Order>) orderRepository.findAll();
+    List<Order> orders = (List<Order>) orderRepository.findAllByOrderByOrderTimeDesc();
     List<Map<String, Object>> orderMAIN = new ArrayList<>();
     for (Order order : orders) {
       Map<String, Object> order2 = new HashMap<>();
