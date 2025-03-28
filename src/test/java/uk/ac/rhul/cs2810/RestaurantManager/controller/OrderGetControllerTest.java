@@ -2,14 +2,12 @@ package uk.ac.rhul.cs2810.RestaurantManager.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -21,13 +19,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Order;
 
 import uk.ac.rhul.cs2810.RestaurantManager.model.Item;
-import uk.ac.rhul.cs2810.RestaurantManager.model.Order;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.ItemRepository;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.OrderRepository;
 
@@ -129,7 +125,6 @@ public class OrderGetControllerTest {
                 "itemName": "Taco Tuesday"
             }
         """;
-
     MvcResult result = mockMvc
         .perform(
             MockMvcRequestBuilders.post("/api/CurrentOrders/removeItem").contentType("application/json")
@@ -212,7 +207,6 @@ public class OrderGetControllerTest {
                 "orderID": null
             }
         """;
-
     MvcResult result = mockMvc
         .perform(
             MockMvcRequestBuilders.post("/api/CurrentOrders/confirmOrder").contentType("application/json")
@@ -223,4 +217,10 @@ public class OrderGetControllerTest {
     String jsonResponse = result.getResponse().getContentAsString();
     assertTrue(jsonResponse.contains("Order not confirmed."));
   }
+
+  /**
+   * 99% Test coverage of this class,
+   * The only branch not tested is a single if statement in removeItem
+   */
+
 }
