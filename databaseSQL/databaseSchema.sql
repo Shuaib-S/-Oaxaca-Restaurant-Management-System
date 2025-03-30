@@ -182,3 +182,48 @@ CREATE TABLE table_assistance ( id SERIAL PRIMARY KEY,
                                                   table_No INT NOT NULL,
                                                                help BOOLEAN NOT NULL);
 
+-- The Stock table
+
+CREATE TABLE stock (
+  id SERIAL PRIMARY KEY,
+  Quantity INT NOT NULL,
+  category VARCHAR(255));
+
+INSERT INTO stock (id, title, quantity, category)
+VALUES (1, 'Chicken', 99, 'Meat'),
+(2, 'Steak', 99, 'Meat'),
+(3, 'Pork', 99, 'Meat'),
+(4, 'Chorizo', 99, 'Meat'),
+(5, 'Avocado', 99, 'Vegetable'),
+(6, 'Black Beans', 99, 'Vegetable'),
+(7, 'Tomato', 99, 'Vegetable'),
+(8, 'White Onion', 99, 'Vegetable'),
+(9, 'Red Onion', 99, 'Vegetable'),
+(10, 'Three Cheese Mix', 99, 'Dairy'),
+(11, 'Milk', 99, 'Dairy'),
+(12, 'Buttermilk', 99, 'Dairy'),
+(13, 'Sour Cream', 99, 'Dairy'),
+(14, 'Vanilla Ice cream', 99, 'Dairy'),
+(15, 'Chocolate Ice cream', 99, 'Dairy'),
+(16, 'Strawberry Ice cream', 99, 'Dairy'),
+(17, 'Tortilla', 99, 'Carbohydate'),
+(18, 'Buns', 99, 'Carbohydate'),
+(19, 'Churro Mix', 99, 'Carbohydate'),
+(20, 'Nachos', 99, 'Carbohydrate'),
+(21, 'Pineapple Juice', 99, 'Drink'),
+(22, 'OJ & Mango Juice', 99, 'Drink'),
+(23, 'Guava Juice', 99, 'Drink'),
+(24, 'English Tea', 99, 'Drink'),
+(25, 'Green Tea', 99, 'Drink'),
+(26, 'Mint Tea', 99, 'Drink'),
+(27, 'Pepsi', 99, 'Drink'),
+(28, 'Diet Pepsi', 99, 'Drink'),
+(29, 'Fanta', 99, 'Drink'),
+(30, '7up', 99, 'Drink'),
+(31, 'Pepsi Max', 99, 'Drink'),
+(32, 'Dr Pepper', 99, 'Drink'),
+(33, 'Corona', 99, 'Drink'),
+(34, 'Modelo', 99, 'Drink'),
+(35, 'Lucky Saint', 99, 'Drink'),
+(36, 'Chipotle Sauce', 99, 'Sauce'),
+(37, 'Chocolate Syrup', 99, 'Sauce');
