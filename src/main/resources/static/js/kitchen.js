@@ -109,29 +109,47 @@ async function fetchStock() {
 const beefGringa = ["Tortilla", "Steak"];
 
 let ingredientStock = true; // Temporary until a stock system is implemented.
-function confirmOrder(orderId) {
-    for (i = 0; i<allStock.length; i++) {
-        if (beefGringa.includes(allStock[i].title)) {
-            if (allStock.quantity <= 0) {
-                console.log("NOOOOOO");
-                break;
+async function confirmOrder(orderId) {
+    try {
+        const response = await fetch('/api/CurrentOrders/orderItems');
+        if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+        }
+        let i = 0;
+        let orderIdIndex = 0;
+        const orders = await response.json();
+        orders.forEach(order => {
+            if (order.id == orderId) {
+                orderIdIndex = i;
+                console.log(orders[orderIdIndex].items);
             }
-            console.log("YESSSSSS");
+            i++;
+        });
+        for (i = 0; i<allStock.length; i++) {
+            if (beefGringa.includes(allStock[i].title)) {
+                if (allStock.quantity <= 0) {
+                    console.log("NOOOOOO");
+                    break;
+                }
+                console.log("YESSSSSS");
+
+            }
 
         }
+        if (ingredientStock) {
+            alert("Sufficient amount of ingredients to create the order.");
+            return null;
+        }
+        if (!ingredientStock) {
+            alert("Insufficient amount of ingredients to create the order. Please cancel the order.");
+            return null;
+        }
+        else {
+            alert("Error: Unable to check stock.");
 
-    }
-    if (ingredientStock) {
-        alert("Sufficient amount of ingredients to create the order.");
-        return null;
-    }
-    if (!ingredientStock) {
-        alert("Insufficient amount of ingredients to create the order. Please cancel the order.");
-        return null;
-    }
-    else {
-        alert("Error: Unable to check stock.");
-
+        }
+    } catch (error) {
+        console.error('Error fetching items:', error);
     }
 }
 
