@@ -1,6 +1,8 @@
+let allStock = [];
+
 document.addEventListener('DOMContentLoaded', function () {
     fetchOrders();
-    generateTablesOverview();
+    fetchStock();
 });
 
 async function fetchOrders() {
@@ -81,8 +83,44 @@ async function fetchOrders() {
     }
 }
 
+async function fetchStock() {
+    try {
+        const response = await fetch('/api/stock', {
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        allStock = data;
+        console.log(allStock);
+        const beefGringa = ["Tortilla", "Steak"];
+        return data;
+    } catch (error) {
+        console.error('Error fetching items:', error);
+        return [];
+    }
+}
+
+const beefGringa = ["Tortilla", "Steak"];
+
 let ingredientStock = true; // Temporary until a stock system is implemented.
 function confirmOrder(orderId) {
+    for (i = 0; i<allStock.length; i++) {
+        if (beefGringa.includes(allStock[i].title)) {
+            if (allStock.quantity <= 0) {
+                console.log("NOOOOOO");
+                break;
+            }
+            console.log("YESSSSSS");
+
+        }
+
+    }
     if (ingredientStock) {
         alert("Sufficient amount of ingredients to create the order.");
         return null;
