@@ -146,7 +146,31 @@ VALUES (1,
 
 
 ALTER TABLE items ADD COLUMN active BOOLEAN DEFAULT TRUE;
+-- Made the card titles shorter
+UPDATE items
+SET title = 'Chicken Club',
+        description = 'Free range chicken club with avocado, melted cheese, and chipotle mayo'
+WHERE id = 4;
 
+UPDATE items
+SET title = 'Beef Burrito',
+        description = 'British, grass fed beef, slow cooked and combined with chipotle, ancho, herbs and spices'
+WHERE id = 6;
+
+UPDATE items 
+SET title = 'Pork Pibil Burrito',
+        description = 'Free range pork pibil with pink pickled onions in a burrito'
+WHERE id = 8;
+
+UPDATE items
+SET title = 'Chicken Burrito',
+        description = 'Free range chicken burrito with ancho rub'
+WHERE id = 7;
+
+UPDATE items
+SET title = 'Beans & Cheeses',
+        description = 'Smoky black beans and 3 cheeses with avocado leaf'
+WHERE id = 5; 
 -- Logins table
 
 CREATE TABLE logins (id SERIAL PRIMARY KEY,
