@@ -69,7 +69,7 @@ function filterStock() {
 // Change quantity
 async function updateQuantity(ingredient, newQuantity) {
   try {
-    const response = await fetch(`api/stock/${ingredient.id}`, {
+    const response = await fetch(`../../api/stock/${ingredient.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
