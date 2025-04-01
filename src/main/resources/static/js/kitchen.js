@@ -1,4 +1,7 @@
 let allStock = [];
+const ingredientList = [
+    {item : "Malcom", ingredients: "Reynolds"},
+  ];
 
 document.addEventListener('DOMContentLoaded', function () {
     fetchOrders();
@@ -106,7 +109,7 @@ async function fetchStock() {
     }
 }
 
-const beefGringa = ["Tortilla", "Steak"];
+const beefGringa = ["Tortilla", "Steak", "Three Cheese Mix", "White Onion", "Avocado"];
 
 let ingredientStock = true; // Temporary until a stock system is implemented.
 async function confirmOrder(orderId) {
@@ -125,17 +128,50 @@ async function confirmOrder(orderId) {
             }
             i++;
         });
-        for (i = 0; i<allStock.length; i++) {
-            if (beefGringa.includes(allStock[i].title)) {
-                if (allStock.quantity <= 0) {
-                    console.log("NOOOOOO");
-                    break;
+        const itemsToAdd = orders[orderIdIndex].items;
+        const orderedItems = Object.entries(itemsToAdd).flatMap(([itemName, quantity]) =>
+            Array(quantity).fill(itemName)
+        );
+        orderedItems.forEach(itemName => {
+            console.log(itemName);
+            fetch(`/api/recipes/name/${itemName}`, {
+                method: 'GET',
+                headers: {
+                    "Accept": "application/json"
                 }
-                console.log("YESSSSSS");
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`This item does not have ingredients assigned on the menu.`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data.ingredients);
 
-            }
+                let ingredients = data.ingredients;
+                    for (let k = 0; k<allStock.length; k++) {
+                        if (beefGringa.includes(allStock[k].title)) {
+                            console.log(allStock[k].quantity);
+                            console.log(allStock[k].title);
+                            console.log(allStock);
+                            if (allStock[k].quantity <= 95) {
+                                console.log("NOOOOOO");
+                                ingredientStock = false;
+                                break;
+                            }
+                            ingredientStock = true;
+                            allStock[k].quantity = allStock[k].quantity - 1;
+                            console.log("YESSSSSS");
+            
+                        }
+            
+                    }
+            })
+            .catch(error => console.error("Error fetching recipe:", error));
 
-        }
+        });
+        console.log(ingredientStock);
         if (ingredientStock) {
             alert("Sufficient amount of ingredients to create the order.");
             return null;
