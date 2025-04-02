@@ -103,7 +103,7 @@ public class TableAssignmentController {
         this.tableAssistanceRepositry.delete(entry);
       }
     }
-    return ResponseEntity.ok("POGGERS");
+    return ResponseEntity.ok("Sucessfully Removed Assistance");
   }
 
 }
