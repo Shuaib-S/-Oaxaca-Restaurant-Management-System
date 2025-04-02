@@ -89,4 +89,21 @@
         padding: 8px 20px;
         font-size: 1rem;
     }
+    @keyframes slideFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    #responseMessage {
+        animation: slideFadeIn 0.8s ease-out;
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-top: 20px;
+    }
 
