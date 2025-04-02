@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const urlParams = new URLSearchParams(window.location.search);
     const orderId = urlParams.get("orderId");
+    const isPaid = urlParams.get("paid") === "true";
 
     if (!orderId) {
         alert("Invalid order. Returning to menu.");
@@ -12,10 +13,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     const statusImage = document.getElementById("status-image");
     const orderIdDisplay = document.getElementById("order-id");
     const refreshButton = document.getElementById("refresh-status");
+    const paymentOptions = document.getElementById("payment-options");
+    const paymentConfirmation = document.getElementById("payment-confirmation");
     const payOnlineBtn = document.getElementById("pay-online-btn");
     const payWaiterBtn = document.getElementById("pay-waiter-btn");
 
     orderIdDisplay.textContent = orderId;
+
+    if (isPaid) {
+        showPaymentConfirmation();
+    }
 
     payOnlineBtn.addEventListener("click", function() {
         window.location.href = `/payment-form.html?orderId=${orderId}`;
@@ -34,13 +41,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             const status = order.status.toLowerCase();
             const tableNumber = order.tableNumber;
 
-            // Will just show this message instead of showing the other pages (Not tested, should work)
             if (order.paid) {
-                statusText.textContent = "Thank you for your payment! We hope you enjoyed your meal.";
-                statusImage.src = "images/payment_complete.gif"; // Needs to be added to the files (File currently missing)
-                document.getElementById('payment-options').style.display = 'none';
+                showPaymentConfirmation();
                 return;
             }
+
+            paymentConfirmation.style.display = 'none';
 
             switch (status) {
                 case 'delivered':
@@ -48,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     statusImage.src = "images/food_delivered.gif";
                     
                     // Displays the payment option
-                    document.getElementById('payment-options').style.display = 'block';
+                    paymentOptions.style.display = 'block';
                     
                     payOnlineBtn.onclick = function() {
                         window.location.href = `/payment-form.html?orderId=${orderId}&tableNumber=${tableNumber}`;
@@ -59,24 +65,24 @@ document.addEventListener("DOMContentLoaded", async function () {
                     statusImage.src = "images/food_loading.gif";
                     
                     // Hides the payment option (Copied for all cases for the status)
-                    document.getElementById('payment-options').style.display = 'none';
+                    paymentOptions.style.display = 'none';
                     break;
                 case 'cooking':
                     statusText.textContent = "We are making your delicious food!!";
                     statusImage.src = "images/food_cooking.gif";
                     
-                    document.getElementById('payment-options').style.display = 'none';
+                    paymentOptions.style.display = 'none';
                     break;
                 case 'ready':
                     statusText.textContent = "Your food is on the way!";
                     statusImage.src = "images/food_ready.gif";
                     
-                    document.getElementById('payment-options').style.display = 'none';
+                    paymentOptions.style.display = 'none';
                     break;
                 default:
                     statusImage.src = "images/default-status.png";
                     
-                    document.getElementById('payment-options').style.display = 'none';
+                    paymentOptions.style.display = 'none';
             }
         } catch (error) {
             console.error("Error fetching order status:", error);
@@ -84,9 +90,25 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
+    // Func to show payment confirmation UI (moved from inside try case)
+    function showPaymentConfirmation() {
+        statusText.textContent = "Thank you for your payment! We hope you enjoyed your meal.";
+        statusImage.src = "images/payment_complete.gif"; // This gif needs to be added into the files
+        paymentOptions.style.display = 'none';
+        paymentConfirmation.style.display = 'block';
+        
+        refreshButton.disabled = true;
+    }
+
     refreshButton.addEventListener("click", fetchOrderStatus);
     fetchOrderStatus();
 
-    // Auto-refresh order status every 5 seconds
-    setInterval(fetchOrderStatus, 5000);
+    // Auto-refresh order status every 5 seconds (If the order is not paid)
+    const refreshInterval = setInterval(function() {
+        if (paymentConfirmation.style.display === 'block') {
+            clearInterval(refreshInterval);
+        } else {
+            fetchOrderStatus();
+        }
+    }, 5000);
 });
