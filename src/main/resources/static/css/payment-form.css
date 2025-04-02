@@ -145,6 +145,33 @@ input[type="email"]:focus {
     background-color: #ddd;
 }
 
+.items-list {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.items-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-primary:disabled {
+    background-color: #bbb;
+    cursor: not-allowed;
+}
+
+.payment-success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 /* Responsiveness */
 @media (max-width: 768px) {
     .form-row {
