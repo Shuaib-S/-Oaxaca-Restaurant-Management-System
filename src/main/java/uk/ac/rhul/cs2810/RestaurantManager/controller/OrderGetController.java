@@ -21,7 +21,9 @@ import uk.ac.rhul.cs2810.RestaurantManager.repository.OrderRepository;
 import uk.ac.rhul.cs2810.RestaurantManager.service.NotificationService;
 
 
-
+/**
+ * Controller class for handling end points related to current orders.
+ */
 @RestController
 @RequestMapping("/api/CurrentOrders")
 public class OrderGetController {
@@ -41,9 +43,13 @@ public class OrderGetController {
     this.itemRepository = itemRepository;
   }
 
+  /**
+   * Retrieve all orders with detailed information.
+   *
+   * @return A list of maps containing order details.
+   */
   @GetMapping("/all")
-  public List<Map<String, Object>> getOrders() { // Depending on how status is handled @RequestParam
-                                                 // may be needed
+  public List<Map<String, Object>> getOrders() {
     List<Order> orders = (List<Order>) orderRepository.findAllByOrderByOrderTimeDesc();
     List<Map<String, Object>> orderMAIN = new ArrayList<>();
     for (Order order : orders) {
@@ -62,6 +68,11 @@ public class OrderGetController {
     return orderMAIN;
   }
 
+  /**
+   * Retrieve all orders with their respective item names.
+   *
+   * @return A list of maps containing order IDs and item names.
+   */
   @GetMapping("/orderItems")
   public List<Map<String, Object>> getItemNames() {
     List<Order> orders = (List<Order>) orderRepository.findAll();
@@ -76,11 +87,23 @@ public class OrderGetController {
     return orderItems;
   }
 
+  /**
+   * Retrieve orders by table number.
+   *
+   * @param tableId The ID of the table to retrieve orders for.
+   * @return A list of orders associated with the specified table ID.
+   */
   @GetMapping("/table/{tableId}")
   public List<Order> getOrderByTable(@PathVariable int tableId) {
     return orderRepository.findByTableNumber(tableId);
   }
 
+  /**
+   * Method to convert items in an order to a map with item titles and their quantities.
+   *
+   * @param order The order containing items.
+   * @return A map where keys are item titles and values are their quantities.
+   */
   public Map<String, Integer> itemsToMap(Order order) {
     Map<String, Integer> itemQuant = new HashMap<>();
     for (Item item : order.getItemList()) {
@@ -89,6 +112,12 @@ public class OrderGetController {
     return itemQuant;
   }
 
+  /**
+   * Add an item to an existing order.
+   *
+   * @param request The request object containing order ID and item name.
+   * @return ResponseEntity indicating success or failure of the operation.
+   */
   @PostMapping("/addItem")
   public ResponseEntity<?> addItem(@RequestBody addItems request) {
     int orderID = request.getOrderID();
@@ -110,8 +139,12 @@ public class OrderGetController {
     return ResponseEntity.ok("addItem successful.");
   }
 
-
-
+  /**
+   * Remove an item from an existing order.
+   *
+   * @param request The request object containing order ID and item name.
+   * @return ResponseEntity indicating success or failure of the operation.
+   */
   @PostMapping("/removeItem")
   public ResponseEntity<?> removeItem(@RequestBody addItems request) {
     int orderID = request.getOrderID();
@@ -143,6 +176,12 @@ public class OrderGetController {
   @Autowired
   private NotificationService notificationService;
 
+  /**
+   * Confirm an order and notify the kitchen.
+   *
+   * @param request The request object containing order ID.
+   * @return ResponseEntity indicating success or failure of the operation.
+   */
   @PostMapping("/confirmOrder")
   public ResponseEntity<?> confirmOrder(@RequestBody addItems request) {
     int orderID = request.getOrderID();

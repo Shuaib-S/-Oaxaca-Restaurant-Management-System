@@ -29,6 +29,13 @@ public class LoginController {
   private final LoginRepository loginRepository;
   private final SessionService sessionService;
 
+  /**
+   * Constructs a new LoginController with the necessary dependencies.
+   *
+   * @param loginRepository The repository for accessing login data.
+   * @param sessionService The service for handling session management.
+   * @return A ResponseEntity containing authentication success status and redirection details.
+   */
   @Autowired
   public LoginController(LoginRepository loginRepository, SessionService sessionService) {
     this.loginRepository = loginRepository;
@@ -80,6 +87,12 @@ public class LoginController {
     return ResponseEntity.ok(responseBody);
   }
 
+  /**
+   * Validates whether a user session is active.
+   *
+   * @param request The HTTP request containing session cookies.
+   * @return A ResponseEntity containing authentication status and username if valid.
+   */
   @GetMapping("/validate")
   public ResponseEntity<Map<String, Object>> validateSession(HttpServletRequest request) {
     Map<String, Object> responseBody = new HashMap<>();
@@ -107,6 +120,11 @@ public class LoginController {
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
   }
 
+  /**
+   * Retrieves a list of all waiters (staff members) in the system.
+   *
+   * @return A ResponseEntity containing a list of usernames.
+   */
   @GetMapping("/all")
   public ResponseEntity<List<String>> getAllWaiters() {
     List<Login> logins = (List<Login>) loginRepository.findAll();
@@ -114,7 +132,13 @@ public class LoginController {
     return ResponseEntity.ok(waiters);
   }
 
-
+  /**
+   * Logs out a user by invalidating the session and clearing the session cookie.
+   *
+   * @param request The HTTP request containing the session cookie.
+   * @param response The HTTP response where the session cookie is cleared.
+   * @return A ResponseEntity confirming the logout action.
+   */
   @PostMapping("/logout")
   public ResponseEntity<Map<String, Object>> logout(HttpServletRequest request,
       HttpServletResponse response) {
