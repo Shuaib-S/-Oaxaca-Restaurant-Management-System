@@ -131,6 +131,7 @@ async function confirmOrder(orderId) {
         const orderedItems = Object.entries(itemsToAdd).flatMap(([itemName, quantity]) =>
             Array(quantity).fill(itemName)
         );
+        let ingredientStock = true;
         orderedItems.forEach(itemName => {
             fetch(`/api/recipes/name/${itemName}`, {
                 method: 'GET',
@@ -146,40 +147,34 @@ async function confirmOrder(orderId) {
             })
             .then(data => {
                 let ingredients = data.ingredients;
-                    for (let k = 0; k<allStock.length; k++) {
-                        if (ingredients.includes(allStock[k].title)) {
-                            console.log(allStock[k].quantity);
-                            console.log(allStock[k].title);
-                            console.log(allStock);
-                            if (allStock[k].quantity <= 0) {
-                                ingredientStock = false;
-                                break;
-                            }
-                            ingredientStock = true;
-                            allStock[k].quantity = allStock[k].quantity - 1;
-            
+                for (let k = 0; k<allStock.length; k++) {
+                    if (ingredients.includes(allStock[k].title)) {
+                        console.log(allStock[k].quantity);
+                        console.log(allStock[k].title);
+                        console.log(allStock);
+                        if (allStock[k].quantity <= 0) {
+                            ingredientStock = false;
+                            break;
                         }
+                        allStock[k].quantity = allStock[k].quantity - 1;
             
                     }
-                    if (ingredientStock) {
-                        alert("Sufficient amount of ingredients to create the order.");
-                        return null;
-                    }
-                    if (!ingredientStock) {
-                        alert("Insufficient amount of ingredients to create the order. Please cancel the order.");
-                        throw "Not enough stock to complete the order.";
-                    }
-                    else {
-                        alert("Error: Unable to check stock.");
-            
-                    }
+                }
             })
             .catch(error => console.error("Error fetching recipe:", error));
             if (!ingredientStock) {
                 throw "Not enough stock.";
             }
 
+
         });
+        if (ingredientStock) {
+            alert("Sufficient amount of ingredients to create the order.");
+            return null;
+        }
+        if (!ingredientStock) {
+            alert("Insufficient amount of ingredients to create the order. Please cancel the order.");
+        }
     } catch (error) {
         console.error('Error fetching items:', error);
     }
