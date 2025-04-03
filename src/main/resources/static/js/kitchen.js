@@ -109,7 +109,6 @@ async function fetchStock() {
     }
 }
 
-const beefGringa = ["Tortilla", "Steak", "Three Cheese Mix", "White Onion", "Avocado"];
 
 let ingredientStock = true; // Temporary until a stock system is implemented.
 async function confirmOrder(orderId) {
@@ -133,7 +132,6 @@ async function confirmOrder(orderId) {
             Array(quantity).fill(itemName)
         );
         orderedItems.forEach(itemName => {
-            console.log(itemName);
             fetch(`/api/recipes/name/${itemName}`, {
                 method: 'GET',
                 headers: {
@@ -147,43 +145,41 @@ async function confirmOrder(orderId) {
                 return response.json();
             })
             .then(data => {
-                console.log(data.ingredients);
-
                 let ingredients = data.ingredients;
                     for (let k = 0; k<allStock.length; k++) {
-                        if (beefGringa.includes(allStock[k].title)) {
+                        if (ingredients.includes(allStock[k].title)) {
                             console.log(allStock[k].quantity);
                             console.log(allStock[k].title);
                             console.log(allStock);
-                            if (allStock[k].quantity <= 95) {
-                                console.log("NOOOOOO");
+                            if (allStock[k].quantity <= 0) {
                                 ingredientStock = false;
                                 break;
                             }
                             ingredientStock = true;
                             allStock[k].quantity = allStock[k].quantity - 1;
-                            console.log("YESSSSSS");
             
                         }
             
                     }
+                    if (ingredientStock) {
+                        alert("Sufficient amount of ingredients to create the order.");
+                        return null;
+                    }
+                    if (!ingredientStock) {
+                        alert("Insufficient amount of ingredients to create the order. Please cancel the order.");
+                        throw "Not enough stock to complete the order.";
+                    }
+                    else {
+                        alert("Error: Unable to check stock.");
+            
+                    }
             })
             .catch(error => console.error("Error fetching recipe:", error));
+            if (!ingredientStock) {
+                throw "Not enough stock.";
+            }
 
         });
-        console.log(ingredientStock);
-        if (ingredientStock) {
-            alert("Sufficient amount of ingredients to create the order.");
-            return null;
-        }
-        if (!ingredientStock) {
-            alert("Insufficient amount of ingredients to create the order. Please cancel the order.");
-            return null;
-        }
-        else {
-            alert("Error: Unable to check stock.");
-
-        }
     } catch (error) {
         console.error('Error fetching items:', error);
     }
