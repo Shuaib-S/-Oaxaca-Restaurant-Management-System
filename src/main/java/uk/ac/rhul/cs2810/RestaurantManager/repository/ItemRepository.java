@@ -4,6 +4,11 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Item;
 
+/**
+ * Repository interface for managing Item entities.
+ * 
+ * Provides methods for retrieving items based on category and availability status.
+ */
 public interface ItemRepository extends CrudRepository<Item, Integer> {
 
   /**
