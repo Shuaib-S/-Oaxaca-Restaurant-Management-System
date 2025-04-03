@@ -1,6 +1,11 @@
+let allStock = [];
+const ingredientList = [
+    {item : "Malcom", ingredients: "Reynolds"},
+  ];
+
 document.addEventListener('DOMContentLoaded', function () {
     fetchOrders();
-    generateTablesOverview();
+    fetchStock();
 });
 
 async function fetchOrders() {
@@ -81,21 +86,85 @@ async function fetchOrders() {
     }
 }
 
-let ingredientStock = true; // Temporary until a stock system is implemented.
-function confirmOrder(orderId) {
-    if (ingredientStock) {
-        alert("Sufficient amount of ingredients to create the order.");
-        return null;
-    }
-    if (!ingredientStock) {
-        alert("Insufficient amount of ingredients to create the order. Please cancel the order.");
-        return null;
-    }
-    else {
-        alert("Error: Unable to check stock.");
+async function fetchStock() {
+    try {
+        const response = await fetch('/api/stock', {
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
 
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        allStock = data;
+        console.log(allStock);
+        const beefGringa = ["Tortilla", "Steak"];
+        return data;
+    } catch (error) {
+        console.error('Error fetching items:', error);
+        return [];
     }
 }
+
+
+async function confirmOrder(orderId) {
+    let ingredientStock = true;
+    try {
+        const response = await fetch('/api/CurrentOrders/orderItems');
+        if (!response.ok) {
+            throw new Error('Failed to fetch orders');
+        }
+
+        const orders = await response.json();
+        const order = orders.find(order => order.id == orderId);
+        if (!order) throw new Error("Order not found");
+
+        const orderedItems = Object.entries(order.items).flatMap(([itemName, quantity]) =>
+            Array(quantity).fill(itemName)
+        );
+
+        await Promise.all(orderedItems.map(async (itemName) => {
+            try {
+                const res = await fetch(`/api/recipes/name/${itemName}`, {
+                    method: 'GET',
+                    headers: { "Accept": "application/json" }
+                });
+
+                if (!res.ok) {
+                    throw new Error(`This item does not have ingredients assigned on the menu.`);
+                }
+
+                const data = await res.json();
+                let ingredients = data.ingredients;
+
+                for (let k = 0; k < allStock.length; k++) {
+                    if (ingredients.includes(allStock[k].title)) {
+                        if (allStock[k].quantity <= 0) {
+                            ingredientStock = false;
+                            return;
+                        }
+                        allStock[k].quantity -= 1;
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching recipe:", error);
+            }
+        }));
+
+    } catch (error) {
+        console.error('Error fetching items:', error);
+    }
+
+    if (ingredientStock) {
+        alert("Sufficient amount of ingredients to create the order.");
+    } else {
+        alert("Insufficient amount of ingredients to create the order. Please cancel the order.");
+    }
+}
+
 
 function formatOrderItems(items) {
     return Object.entries(items).map(([name, quantity]) => `${name} x${quantity}`).join(', ');
