@@ -111,11 +111,25 @@ public class OrderController {
     return ResponseEntity.ok(updatedOrder);
   }
 
+  @PatchMapping("/{id}/pay")
+  public ResponseEntity<?> markOrderAsPaid(@PathVariable("id") Integer id) {
+      Optional<Order> optionalOrder = orderRepository.findById(id);
+      if (!optionalOrder.isPresent()) {
+          return ResponseEntity.notFound().build();
+      }
+      
+      Order order = optionalOrder.get();
+      order.setPaid(true);
+      Order updatedOrder = orderRepository.save(order);
+      
+      // Add notification here (Notification for paid order)
+      
+      return ResponseEntity.ok(updatedOrder);
+  }
 
   @GetMapping("/{id}")
   public ResponseEntity<Order> getOrderById(@PathVariable("id") Integer id) {
     Optional<Order> order = orderRepository.findById(id);
     return order.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
   }
-
 }
