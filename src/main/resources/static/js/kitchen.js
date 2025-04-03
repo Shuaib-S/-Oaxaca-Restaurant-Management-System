@@ -110,75 +110,61 @@ async function fetchStock() {
 }
 
 
-let ingredientStock = true; // Temporary until a stock system is implemented.
 async function confirmOrder(orderId) {
+    let ingredientStock = true;
     try {
         const response = await fetch('/api/CurrentOrders/orderItems');
         if (!response.ok) {
             throw new Error('Failed to fetch orders');
         }
-        let i = 0;
-        let orderIdIndex = 0;
+
         const orders = await response.json();
-        orders.forEach(order => {
-            if (order.id == orderId) {
-                orderIdIndex = i;
-                console.log(orders[orderIdIndex].items);
-            }
-            i++;
-        });
-        const itemsToAdd = orders[orderIdIndex].items;
-        const orderedItems = Object.entries(itemsToAdd).flatMap(([itemName, quantity]) =>
+        const order = orders.find(order => order.id == orderId);
+        if (!order) throw new Error("Order not found");
+
+        const orderedItems = Object.entries(order.items).flatMap(([itemName, quantity]) =>
             Array(quantity).fill(itemName)
         );
-        let ingredientStock = true;
-        orderedItems.forEach(itemName => {
-            fetch(`/api/recipes/name/${itemName}`, {
-                method: 'GET',
-                headers: {
-                    "Accept": "application/json"
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
+
+        await Promise.all(orderedItems.map(async (itemName) => {
+            try {
+                const res = await fetch(`/api/recipes/name/${itemName}`, {
+                    method: 'GET',
+                    headers: { "Accept": "application/json" }
+                });
+
+                if (!res.ok) {
                     throw new Error(`This item does not have ingredients assigned on the menu.`);
                 }
-                return response.json();
-            })
-            .then(data => {
+
+                const data = await res.json();
                 let ingredients = data.ingredients;
-                for (let k = 0; k<allStock.length; k++) {
+
+                for (let k = 0; k < allStock.length; k++) {
                     if (ingredients.includes(allStock[k].title)) {
-                        console.log(allStock[k].quantity);
-                        console.log(allStock[k].title);
-                        console.log(allStock);
                         if (allStock[k].quantity <= 0) {
                             ingredientStock = false;
-                            break;
+                            return;
                         }
-                        allStock[k].quantity = allStock[k].quantity - 1;
-            
+                        allStock[k].quantity -= 1;
                     }
                 }
-            })
-            .catch(error => console.error("Error fetching recipe:", error));
-            if (!ingredientStock) {
-                throw "Not enough stock.";
+            } catch (error) {
+                console.error("Error fetching recipe:", error);
             }
+        }));
 
-
-        });
-        if (ingredientStock) {
-            alert("Sufficient amount of ingredients to create the order.");
-            return null;
-        }
-        if (!ingredientStock) {
-            alert("Insufficient amount of ingredients to create the order. Please cancel the order.");
-        }
     } catch (error) {
         console.error('Error fetching items:', error);
     }
+
+    if (ingredientStock) {
+        alert("Sufficient amount of ingredients to create the order.");
+    } else {
+        alert("Insufficient amount of ingredients to create the order. Please cancel the order.");
+    }
 }
+
 
 function formatOrderItems(items) {
     return Object.entries(items).map(([name, quantity]) => `${name} x${quantity}`).join(', ');
