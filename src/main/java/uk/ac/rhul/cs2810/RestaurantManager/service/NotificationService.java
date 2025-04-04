@@ -16,6 +16,11 @@ public class NotificationService {
   @Autowired
   private NotificationRepository notificationRepository;
 
+  /**
+   * Constructs a new NotificationService with the NotificationRepository.
+   *
+   * @param notificationRepository The repository used to access and manage notifications.
+   */
   public NotificationService(NotificationRepository notificationRepository) {
     this.notificationRepository = notificationRepository;
   }

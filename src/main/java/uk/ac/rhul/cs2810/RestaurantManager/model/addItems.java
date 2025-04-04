@@ -1,12 +1,16 @@
 package uk.ac.rhul.cs2810.RestaurantManager.model;
 
 /**
- * Small class that bridges items and orders thats not a table.
- * 
+ * Class that bridges items and orders thats not a table.
  */
 public class addItems {
   private int OrderID;
   private String ItemName;
+
+  /**
+   * Default constructor required by spring.
+   */
+  public addItems() {}
 
   /**
    * Gets the ID of an order. .
@@ -20,7 +24,7 @@ public class addItems {
   /**
    * Sets the ID of an order.
    * 
-   * @param id the ID to set.
+   * @param orderID the ID to set.
    */
   public void setOrderID(int orderID) {
     this.OrderID = orderID;

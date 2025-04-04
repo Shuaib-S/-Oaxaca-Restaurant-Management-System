@@ -32,6 +32,9 @@ public class Login {
     this.password = password;
   }
 
+  /**
+   * Default constructor for Hibernate.
+   */
   public Login() {
 
   }

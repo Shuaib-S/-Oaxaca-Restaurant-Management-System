@@ -4,6 +4,9 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Stock;
 
+/**
+ * Repository interface for managing Stock entities.
+ */
 public interface StockRepository extends CrudRepository<Stock, Integer> {
 
   /**
