@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -27,15 +29,33 @@ public class OrderControllerTest {
 
   @MockBean
   private OrderRepository orderRepository;
+  private final ObjectMapper objectMapper = new ObjectMapper();
+  @Test
+  //Invalid input test
+  public void addOrderWithInvalidInputTest() throws Exception {
+    String invalidOrderJson = """
+      {
+        "id": 1,
+        "itemList": null,
+        "tableNo": 0
+      }
+      """;
+    MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/orders")
+                    .contentType("application/json")
+                    .content(invalidOrderJson))
+            .andReturn();
 
+    assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResponse().getStatus());
+  }
   // Test 1
+
   @Test
   public void addOrderTest() throws JsonProcessingException, Exception {
     Order mockOrder = new Order(0, null, 0);
     String OrderMock = """
         "id": 1,
         "itemList": null,
-        "tableNo": 0
+        "tableNumber": 0
 
         """;
     MvcResult result = mockMvc
