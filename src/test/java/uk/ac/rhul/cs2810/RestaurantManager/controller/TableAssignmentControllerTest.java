@@ -3,6 +3,7 @@ package uk.ac.rhul.cs2810.RestaurantManager.controller;
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,18 +16,29 @@ import uk.ac.rhul.cs2810.RestaurantManager.repository.TableAssignmentRepository;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.TableAssistanceRepository;
 import uk.ac.rhul.cs2810.RestaurantManager.service.NotificationService;
 
-
 public class TableAssignmentControllerTest {
 
     private TableAssignmentRepository tableAssignmentRepository;
     private TableAssistanceRepository tableAssistanceRepository;
+    private NotificationService notificationService;
     private TableAssignmentController controller;
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws Exception {
         tableAssignmentRepository = mock(TableAssignmentRepository.class);
         tableAssistanceRepository = mock(TableAssistanceRepository.class);
-        controller = new TableAssignmentController(tableAssignmentRepository, tableAssistanceRepository);
+        notificationService = mock(NotificationService.class);
+
+        controller = new TableAssignmentController();
+        injectMock(controller, "tableAssignmentRepository", tableAssignmentRepository);
+        injectMock(controller, "tableAssistanceRepositry", tableAssistanceRepository);
+        injectMock(controller, "notificationService", notificationService);
+    }
+
+    private void injectMock(Object target, String fieldName, Object mock) throws Exception {
+        Field field = target.getClass().getDeclaredField(fieldName);
+        field.setAccessible(true);
+        field.set(target, mock);
     }
 
     @Test
@@ -50,7 +62,7 @@ public class TableAssignmentControllerTest {
 
     @Test
     public void testGetAssignedTables_ByUsername() {
-        List<TableAssignment> dummyAssignments = Arrays.asList(new TableAssignment(1, "Marcus"));
+        List<TableAssignment> dummyAssignments = List.of(new TableAssignment(1, "Marcus"));
         when(tableAssignmentRepository.findByWaiterUsername("Marcus")).thenReturn(dummyAssignments);
 
         ResponseEntity<List<TableAssignment>> response = controller.getAssignedTables("Marcus");
@@ -61,7 +73,7 @@ public class TableAssignmentControllerTest {
 
     @Test
     public void testGetAllAssignedTables() {
-        List<TableAssignment> all = Arrays.asList(
+        List<TableAssignment> all = List.of(
                 new TableAssignment(1, "A"),
                 new TableAssignment(2, "B")
         );
@@ -75,7 +87,7 @@ public class TableAssignmentControllerTest {
     @Test
     public void testUnassignWaiter_Success() {
         TableAssignment ta = new TableAssignment(5, "Alice");
-        when(tableAssignmentRepository.findAll()).thenReturn(Collections.singletonList(ta));
+        when(tableAssignmentRepository.findAll()).thenReturn(List.of(ta));
 
         ResponseEntity<?> response = controller.unassignWaiter(5);
 
@@ -97,12 +109,17 @@ public class TableAssignmentControllerTest {
         ResponseEntity<?> response = controller.setAssistance(7);
 
         verify(tableAssistanceRepository, times(1)).save(any(TableAssistance.class));
+        verify(notificationService, times(1)).createNotification(
+                eq("waiter"),
+                eq("Table 7 needs assistance"),
+                eq("table_assistance")
+        );
         assertThat(response.getBody()).isEqualTo("Successuflly assisited someone");
     }
 
     @Test
     public void testGetAssistance() {
-        List<TableAssistance> dummyList = Arrays.asList(new TableAssistance());
+        List<TableAssistance> dummyList = List.of(new TableAssistance());
         when(tableAssistanceRepository.findAll()).thenReturn(dummyList);
 
         ResponseEntity<List<TableAssistance>> response = controller.getAssistance();
@@ -114,13 +131,25 @@ public class TableAssignmentControllerTest {
     public void testRemoveAssistance() {
         TableAssistance entry = new TableAssistance();
         entry.setTable(10);
-        when(tableAssistanceRepository.findAll()).thenReturn(Collections.singletonList(entry));
+        when(tableAssistanceRepository.findAll()).thenReturn(List.of(entry));
 
-        Map<String, Integer> req = new HashMap<>();
-        req.put("tableN", 10);
+        Map<String, Integer> req = Map.of("tableN", 10);
         ResponseEntity<?> response = controller.setAssistance(req);
 
         verify(tableAssistanceRepository, times(1)).delete(entry);
-        assertThat(response.getBody()).isEqualTo("POGGERS");
+        assertThat(response.getBody()).isEqualTo("Sucessfully Removed Assistance");
+    }
+
+    @Test
+    public void testRemoveAssistance_NoMatch() {
+        TableAssistance entry = new TableAssistance();
+        entry.setTable(3);
+        when(tableAssistanceRepository.findAll()).thenReturn(List.of(entry));
+
+        Map<String, Integer> req = Map.of("tableN", 99);
+        ResponseEntity<?> response = controller.setAssistance(req);
+
+        verify(tableAssistanceRepository, never()).delete(any());
+        assertThat(response.getBody()).isEqualTo("Sucessfully Removed Assistance");
     }
 }

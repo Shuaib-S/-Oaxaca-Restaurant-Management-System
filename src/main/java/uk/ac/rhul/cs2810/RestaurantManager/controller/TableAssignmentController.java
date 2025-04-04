@@ -1,19 +1,12 @@
 package uk.ac.rhul.cs2810.RestaurantManager.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import uk.ac.rhul.cs2810.RestaurantManager.model.TableAssignment;
 import uk.ac.rhul.cs2810.RestaurantManager.model.TableAssistance;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.TableAssignmentRepository;
@@ -35,7 +28,7 @@ public class TableAssignmentController {
 
   @PostMapping("/assign")
   public ResponseEntity<?> assignWaiter(@RequestParam int tableNumber,
-      @RequestParam String waiterUsername) {
+                                        @RequestParam String waiterUsername) {
     if (tableAssignmentRepository.existsByTableNumber(tableNumber)) {
       return ResponseEntity.badRequest().body("Table already assigned.");
     }
@@ -48,7 +41,7 @@ public class TableAssignmentController {
 
   @GetMapping("/assignedTables/{waiterUsername}")
   public ResponseEntity<List<TableAssignment>> getAssignedTables(
-      @PathVariable String waiterUsername) {
+          @PathVariable String waiterUsername) {
     return ResponseEntity.ok(tableAssignmentRepository.findByWaiterUsername(waiterUsername));
   }
 
@@ -62,7 +55,7 @@ public class TableAssignmentController {
     List<TableAssignment> assignments = tableAssignmentRepository.findAll();
 
     TableAssignment assignmentToRemove = assignments.stream()
-        .filter(a -> a.getTableNumber() == tableNumber).findFirst().orElse(null);
+            .filter(a -> a.getTableNumber() == tableNumber).findFirst().orElse(null);
 
     if (assignmentToRemove == null) {
       return ResponseEntity.badRequest().body("No waiter assigned to this table.");
@@ -72,7 +65,6 @@ public class TableAssignmentController {
     return ResponseEntity.ok("Waiter unassigned successfully!");
   }
 
-  // The Assistance Button assigning to tables stuff
   @PostMapping("/assistanceSet")
   public ResponseEntity<?> setAssistance(@RequestParam Integer tableNumber) {
     TableAssistance tableAssist = new TableAssistance();
@@ -81,9 +73,9 @@ public class TableAssignmentController {
     tableAssistanceRepositry.save(tableAssist);
 
     notificationService.createNotification(
-        "waiter",
-        "Table " + tableNumber + " needs assistance",
-        "table_assistance"
+            "waiter",
+            "Table " + tableNumber + " needs assistance",
+            "table_assistance"
     );
 
     return ResponseEntity.ok("Successuflly assisited someone");
@@ -97,13 +89,12 @@ public class TableAssignmentController {
   @PostMapping("/removeAssistance")
   public ResponseEntity<?> setAssistance(@RequestBody Map<String, Integer> assistanceN) {
     Integer tableNumberToRemove = assistanceN.get("tableN");
-    List<TableAssistance> wooo = this.tableAssistanceRepositry.findAll();
-    for (TableAssistance entry : wooo) {
+    List<TableAssistance> assistanceList = tableAssistanceRepositry.findAll();
+    for (TableAssistance entry : assistanceList) {
       if (entry.getTable() == tableNumberToRemove) {
-        this.tableAssistanceRepositry.delete(entry);
+        tableAssistanceRepositry.delete(entry);
       }
     }
     return ResponseEntity.ok("Sucessfully Removed Assistance");
   }
-
 }
