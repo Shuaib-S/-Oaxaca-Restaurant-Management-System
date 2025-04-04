@@ -1,6 +1,7 @@
 package uk.ac.rhul.cs2810.RestaurantManager.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +21,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Order;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.OrderRepository;
 
+import java.util.Optional;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 public class OrderControllerTest {
@@ -30,16 +33,17 @@ public class OrderControllerTest {
   @MockBean
   private OrderRepository orderRepository;
   private final ObjectMapper objectMapper = new ObjectMapper();
+
   @Test
-  //Invalid input test
   public void addOrderWithInvalidInputTest() throws Exception {
     String invalidOrderJson = """
-      {
-        "id": 1,
-        "itemList": null,
-        "tableNo": 0
-      }
-      """;
+    {
+      "id": 1,
+      "itemList": null,
+      "tableNumber": 0
+    }
+    """;
+
     MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/orders")
                     .contentType("application/json")
                     .content(invalidOrderJson))
@@ -47,23 +51,23 @@ public class OrderControllerTest {
 
     assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResponse().getStatus());
   }
-  // Test 1
 
   @Test
-  public void addOrderTest() throws JsonProcessingException, Exception {
-    Order mockOrder = new Order(0, null, 0);
-    String OrderMock = """
-        "id": 1,
-        "itemList": null,
-        "tableNumber": 0
+    public void updateOrderStatusNotFoundTest() throws Exception {
+      when(orderRepository.findById(99)).thenReturn(Optional.empty());
 
+      String patchJson = """
+        {
+          "status": "completed"
+        }
         """;
-    MvcResult result = mockMvc
-        .perform(MockMvcRequestBuilders.post("/api/orders")
-            .contentType("application/json")
-            .content(OrderMock))
-        .andReturn();
 
-    assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResponse().getStatus());
-  }
+      MvcResult result = mockMvc.perform(MockMvcRequestBuilders.patch("/api/orders/99/status")
+                      .contentType("application/json")
+                      .content(patchJson))
+              .andReturn();
+
+      assertEquals(HttpStatus.NOT_FOUND.value(), result.getResponse().getStatus());
+    }
+
 }

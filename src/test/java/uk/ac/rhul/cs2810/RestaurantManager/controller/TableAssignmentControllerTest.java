@@ -13,6 +13,8 @@ import uk.ac.rhul.cs2810.RestaurantManager.model.TableAssignment;
 import uk.ac.rhul.cs2810.RestaurantManager.model.TableAssistance;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.TableAssignmentRepository;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.TableAssistanceRepository;
+import uk.ac.rhul.cs2810.RestaurantManager.service.NotificationService;
+
 
 public class TableAssignmentControllerTest {
 
@@ -24,9 +26,7 @@ public class TableAssignmentControllerTest {
     public void setup() {
         tableAssignmentRepository = mock(TableAssignmentRepository.class);
         tableAssistanceRepository = mock(TableAssistanceRepository.class);
-        controller = new TableAssignmentController();
-        controller.tableAssignmentRepository = tableAssignmentRepository;
-        controller.tableAssistanceRepositry = tableAssistanceRepository;
+        controller = new TableAssignmentController(tableAssignmentRepository, tableAssistanceRepository);
     }
 
     @Test
@@ -61,7 +61,10 @@ public class TableAssignmentControllerTest {
 
     @Test
     public void testGetAllAssignedTables() {
-        List<TableAssignment> all = Arrays.asList(new TableAssignment(1, "A"), new TableAssignment(2, "B"));
+        List<TableAssignment> all = Arrays.asList(
+                new TableAssignment(1, "A"),
+                new TableAssignment(2, "B")
+        );
         when(tableAssignmentRepository.findAll()).thenReturn(all);
 
         ResponseEntity<List<TableAssignment>> response = controller.getAllAssignedTables();
