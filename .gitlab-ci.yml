@@ -1,9 +1,26 @@
 stages:
   - build
+  - test
+  - javadoc
+
 cache:
   paths:
     - .m2/repository
+
 build:
   stage: build
   script:
     - mvn compile
+
+test:
+  stage: test
+  script:
+    - mvn test
+
+javadoc:
+  stage: javadoc
+  script:
+    - mvn javadoc:javadoc
+  artifacts:
+    paths:
+      - target/site/apidocs
