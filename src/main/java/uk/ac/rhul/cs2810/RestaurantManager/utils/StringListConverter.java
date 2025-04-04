@@ -6,9 +6,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Converter to persist and retrieve List values as a single String in the database.
+ */
 @Converter(autoApply = true)
 public class StringListConverter implements AttributeConverter<List<String>, String> {
 
+  /**
+   * Default constructor.
+   */
+  public StringListConverter() {}
+
+  /**
+   * Converts a List of strings into a single comma separated String.
+   *
+   * @param attribute The list of strings to convert.
+   * @return A comma separated string.
+   */
   @Override
   public String convertToDatabaseColumn(List<String> attribute) {
     if (attribute == null || attribute.isEmpty()) {
@@ -19,6 +33,12 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
         .collect(Collectors.joining(","));
   }
 
+  /**
+   * Converts a comma separated String from the database back into a List of strings.
+   *
+   * @param dbData The string data retrieved from the database.
+   * @return A list of strings.
+   */
   @Override
   public List<String> convertToEntityAttribute(String dbData) {
     if (dbData == null || dbData.isEmpty()) {
@@ -31,6 +51,12 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
         .collect(Collectors.toList());
   }
 
+  /**
+   * Escapes and formats a string.
+   *
+   * @param s The string to clean and escape.
+   * @return The escaped string.
+   */
   private String cleanAndEscape(String s) {
     s = s.replaceAll("[{}]", "").trim();
 
@@ -40,6 +66,12 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
     return s;
   }
 
+  /**
+   * Unescapes a database string back to its original form.
+   *
+   * @param s The string to clean and unescape.
+   * @return The unescaped string.
+   */
   private String cleanAndUnescape(String s) {
     s = s.replaceAll("[{}]", "").trim();
 

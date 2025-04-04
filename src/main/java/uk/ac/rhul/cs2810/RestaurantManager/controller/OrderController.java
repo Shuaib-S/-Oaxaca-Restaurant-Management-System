@@ -29,6 +29,11 @@ public class OrderController {
 
   private final OrderRepository orderRepository;
 
+  /**
+   * Constructs an OrderController with the specified OrderRepository.
+   *
+   * @param orderRepository The repository used to manage order storage.
+   */
   @Autowired
   public OrderController(OrderRepository orderRepository) {
     this.orderRepository = orderRepository;

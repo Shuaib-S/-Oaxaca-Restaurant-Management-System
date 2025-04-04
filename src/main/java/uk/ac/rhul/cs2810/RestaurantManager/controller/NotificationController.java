@@ -22,6 +22,11 @@ public class NotificationController {
   private NotificationService notificationService;
 
   /**
+   * Default constructor for spring
+   */
+  public NotificationController() {}
+
+  /**
    * Retrieves a list of notifications for a specific staff type.
    *
    * @param staffType The type of staff to filter notifications.

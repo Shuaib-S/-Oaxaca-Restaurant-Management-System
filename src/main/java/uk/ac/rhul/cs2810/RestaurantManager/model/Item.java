@@ -21,10 +21,11 @@ public class Item {
   private int calories;
   private String allergens;
   private Boolean active = true;
+  
   /**
+   * Constructor that adds id, name, description, price, calories and allergens to an Item object.
    * 
-   * Constructor that adds name, description, price, calories and allergens to an Item object.
-   * 
+   * @param id The ID of the item.
    * @param title Name of the item.
    * @param description Description of the item.
    * @param price Price of the item.
@@ -44,6 +45,9 @@ public class Item {
     this.active = true;
   }
 
+  /**
+   * Default constructor required by Hibernate.
+   */
   public Item() {
     // Default constructor required by Hibernate
   }

@@ -36,6 +36,7 @@ public class OrderGetController {
    * orderRepository thaty holds the orders
    * 
    * @param orderRepository the repository object that has the order database in.
+   * @param itemRepository the repository object that has the item database.
    */
   @Autowired
   public OrderGetController(OrderRepository orderRepository, ItemRepository itemRepository) {

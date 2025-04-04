@@ -34,7 +34,6 @@ public class LoginController {
    *
    * @param loginRepository The repository for accessing login data.
    * @param sessionService The service for handling session management.
-   * @return A ResponseEntity containing authentication success status and redirection details.
    */
   @Autowired
   public LoginController(LoginRepository loginRepository, SessionService sessionService) {
@@ -46,6 +45,7 @@ public class LoginController {
    * Response from the front end.
    * 
    * @param login Login sent from the frontend.
+   * @param response HTTP response used to add the session.
    * @return The response code.
    */
   @PostMapping
