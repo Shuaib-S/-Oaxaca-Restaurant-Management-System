@@ -16,20 +16,30 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Stock;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.StockRepository;
 
+/**
+ * Controller for handling API endpoints related to stock management.
+ */
 @RestController
 @RequestMapping("/api/stock")
 public class StockController {
 
   private final StockRepository stockRepository;
 
+  /**
+   * Constructs a StockController with the given StockRepository.
+   *
+   * @param stockRepository The repository used to access and update stock data.
+   */
   @Autowired
   public StockController(StockRepository stockRepository) {
     this.stockRepository = stockRepository;
   }
 
   /**
-   * Gets a list of all the stocks.
-   * 
+   * Retrieves a list of all stock items in the system.
+   *
+   * @return A ResponseEntity containing a list of stock items represented as maps with fields: id,
+   *         title, quantity, and category.
    */
   @GetMapping
   public ResponseEntity<List<Map<String, Object>>> getStock() {
@@ -47,7 +57,11 @@ public class StockController {
   }
 
   /**
-   * Updates the Stock's details.
+   * Updates the details of a specific stock item.
+   *
+   * @param id The ID of the stock item to update.
+   * @param updatedStock A Stock object with updated values.
+   * @return A ResponseEntity containing the updated stock item, or 404 error.
    */
   @PatchMapping("/{id}")
   public ResponseEntity<Stock> updateStock(@PathVariable("id") Integer id, @RequestBody Stock updatedStock) {

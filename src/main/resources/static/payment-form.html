@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <title>Payment - OAXACA</title>
+    <link rel="stylesheet" href="css/payment-form.css">
+    <link rel="stylesheet" href="css/globals.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="js/payment-form.js" defer></script>
+</head>
+
+<body>
+    <nav class="nav">
+        <a href="/" class="nav-logo">OAXACA</a>
+        <div class="nav-links">
+            <a href="/menu.html" class="nav-link">Back to Menu</a>
+        </div>
+    </nav>
+
+    <main class="payment-container">
+        <h1>Complete Your Payment</h1>
+        <div class="order-summary">
+            <h2>Order #<span id="order-id"></span></h2>
+            <p>Table #<span id="table-number"></span></p>
+            <div id="order-items"></div>
+            <div class="order-total">
+                <p>Total Amount: <span id="order-amount">£0.00</span></p>
+            </div>
+        </div>
+
+        <form id="payment-form" class="payment-form">
+            <h2>Payment Details</h2>
+            
+            <div class="form-group">
+                <label for="card-holder">Cardholder Name</label>
+                <input type="text" id="card-holder" placeholder="John Smith" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="card-number">Card Number</label>
+                <div class="card-input-wrapper">
+                    <input type="text" id="card-number" placeholder="4242 4242 4242 4242" maxlength="19" required>
+                    <i class="fas fa-credit-card card-icon"></i>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group half">
+                    <label for="expiry-date">Expiry Date</label>
+                    <input type="text" id="expiry-date" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div class="form-group half">
+                    <label for="cvv">CVV</label>
+                    <div class="card-input-wrapper">
+                        <input type="text" id="cvv" placeholder="123" maxlength="3" required>
+                        <i class="fas fa-question-circle cvv-icon" title="3-digit security code on the back of your card"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Receipt</label>
+                <input type="email" id="email" placeholder="email@example.com">
+                <p class="form-hint">Optional: Receive a payment receipt by email</p>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" id="cancel-payment" class="btn-secondary">Cancel</button>
+                <button type="submit" id="submit-payment" class="btn-primary">Pay Now</button>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 OAXACA. All rights reserved.</p>
+    </footer>
+</body>
+</html>

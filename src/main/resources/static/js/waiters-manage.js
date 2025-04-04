@@ -31,6 +31,7 @@ async function fetchOrders() {
                     <p><strong>Items:</strong> ${formatOrderItems(order.items)}</p>
                     <p><strong>Ordered:</strong> ${formatOrderTime(order.orderTime)} 
                     (${formatTimeSinceOrder(order.timeSinceOrder)})</p>
+                    ${order.paid ? '<p class="paid-status"><strong>PAID</strong></p>' : ''}
                 </div>
                 <div class="order-card-footer">
                     <button class="edit-order-btn" onclick="editOrder(${order.id})">Edit Order</button>

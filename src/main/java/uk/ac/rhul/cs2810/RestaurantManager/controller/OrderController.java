@@ -19,12 +19,21 @@ import uk.ac.rhul.cs2810.RestaurantManager.model.Order;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.OrderRepository;
 import uk.ac.rhul.cs2810.RestaurantManager.service.NotificationService;
 
+/**
+ * A controller for managing orders in the restaurant system. This controller provides endpoints to
+ * create orders, update the status of orders, mark orders as paid, and retrieve specific orders.
+ */
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
 
   private final OrderRepository orderRepository;
 
+  /**
+   * Constructs an OrderController with the specified OrderRepository.
+   *
+   * @param orderRepository The repository used to manage order storage.
+   */
   @Autowired
   public OrderController(OrderRepository orderRepository) {
     this.orderRepository = orderRepository;
@@ -87,8 +96,13 @@ public class OrderController {
 
   }
 
+
   /**
-   * someone add a proper javadoc comment here please lol it updates the status of an order
+   * Updates the status of an order.
+   * 
+   * @param id The ID of the order to update.
+   * @param update A map containing the status to set for the order.
+   * @return A ResponseEntity containing the updated order.
    */
   @PatchMapping("/{id}/status")
   public ResponseEntity<?> updateOrderStatus(@PathVariable("id") Integer id,
@@ -111,11 +125,37 @@ public class OrderController {
     return ResponseEntity.ok(updatedOrder);
   }
 
+  /**
+   * Marks an order as paid.
+   * 
+   * @param id The ID of the order to mark as paid.
+   * @return A ResponseEntity containing the updated order.
+   */
+  @PatchMapping("/{id}/pay")
+  public ResponseEntity<?> markOrderAsPaid(@PathVariable("id") Integer id) {
+      Optional<Order> optionalOrder = orderRepository.findById(id);
+      if (!optionalOrder.isPresent()) {
+          return ResponseEntity.notFound().build();
+      }
+      
+      Order order = optionalOrder.get();
+      order.setPaid(true);
+      Order updatedOrder = orderRepository.save(order);
+      
+      // Add notification here (Notification for paid order)
+      
+      return ResponseEntity.ok(updatedOrder);
+  }
 
+  /**
+   * Retrieves an order by its ID.
+   * 
+   * @param id The ID of the order to retrieve.
+   * @return A ResponseEntity containing the order details if found, or a 404 status if not found.
+   */
   @GetMapping("/{id}")
   public ResponseEntity<Order> getOrderById(@PathVariable("id") Integer id) {
     Optional<Order> order = orderRepository.findById(id);
     return order.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
   }
-
 }

@@ -168,6 +168,10 @@ header {
     font-size: 14px;
 }
 
+.stock-image {
+    max-width: 100px;
+}
+
 
 /*  Placeholder text for errors because cool */
 .error-message {

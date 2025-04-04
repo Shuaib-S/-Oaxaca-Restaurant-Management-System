@@ -97,7 +97,7 @@ function createIngredientElement(ingredient, index) {
     element.dataset.itemId = index;
 
     element.innerHTML = `
-      <img src="../images/managers-images/${ingredient.id}.png" 
+      <img src="../images/stock-images/${ingredient.id}.png" 
            alt="${ingredient.title}" 
            class="stock-image"
            loading="lazy">

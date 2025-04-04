@@ -16,20 +16,31 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.ac.rhul.cs2810.RestaurantManager.model.Item;
 import uk.ac.rhul.cs2810.RestaurantManager.repository.ItemRepository;
 
+/**
+ * Controller that handles item related API endpoints for the restaurant system.
+ */
 @RestController
 @RequestMapping("/api/items")
 public class ResturantItemController {
 
   private final ItemRepository itemRepository;
 
+  /**
+   * Constructs a ResturantItemController with the given ItemRepository.
+   *
+   * @param itemRepository The repository used to manage items.
+   */
   @Autowired
   public ResturantItemController(ItemRepository itemRepository) {
     this.itemRepository = itemRepository;
   }
 
   /**
-   * Retrieves items filtered by active status (and category, if needed). For the waiters panel, you
-   * can call /api/items?active=true to get items currently on the menu.
+   * Retrieves a list of items filtered by their active status and optional category.
+   * 
+   * @param category The category to filter by.
+   * @param active Whether to include only active items.
+   * @return A list of matching Item objects.
    */
   @GetMapping
   public List<Item> getItems(
@@ -42,7 +53,11 @@ public class ResturantItemController {
   }
 
   /**
-   * Updates the active status of an item. Expected JSON: { "active": true } or { "active": false }
+   * Updates the active status of a specific item.
+   * 
+   * @param id The ID of the item to update.
+   * @param update A map containing the new active status.
+   * @return A ResponseEntity with the updated item, or 404/400 if not found/invalid.
    */
   @PatchMapping("/{id}/active")
   public ResponseEntity<Item> updateActiveStatus(@PathVariable("id") Integer id,
@@ -61,7 +76,11 @@ public class ResturantItemController {
   }
 
   /**
-   * Updates an item's details.
+   * Updates the details of a specific item.
+   *
+   * @param id The ID of the item to update.
+   * @param updatedItem The item object containing updated values.
+   * @return A ResponseEntity with the saved item or 404 if not found.
    */
   @PatchMapping("/{id}")
   public ResponseEntity<Item> updateItem(@PathVariable("id") Integer id, @RequestBody Item updatedItem) {
